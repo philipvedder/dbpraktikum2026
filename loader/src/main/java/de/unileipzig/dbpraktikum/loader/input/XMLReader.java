@@ -14,34 +14,67 @@ import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 public class XMLReader {
-    public static void mapXmlToObjects(Element rootElement) throws Exception {
+    private static void mapXmlNodeToitem(Node item) {
+        if (item.getNodeType() != Node.ELEMENT_NODE) return; //Only ELEMENT_NODE's can be valid items
+        String type = item.getAttributes().getNamedItem("pgroup").getNodeValue().toString().toLowerCase().trim();
 
-        for (Node item = rootElement.getFirstChild(); item != null; item = item.getNextSibling()) {
-            if (item.getNodeType() == Node.ELEMENT_NODE) {               
-                System.out.println(item.getAttributes().getNamedItem("pgroup"));
-                System.out.println(item.getAttributes().getNamedItem("asin"));
-                System.out.println(item.getAttributes().getNamedItem("salesrank"));
-                System.out.println(item.getAttributes().getNamedItem("picture"));
-                System.out.println(item.getAttributes().getNamedItem("ean"));
+        switch (type) {
+            case "dvd":
 
-                for (Node item2 = item.getFirstChild(); item2 != null; item2 = item2.getNextSibling()) {
-                    if (item2.getNodeType() != Node.ELEMENT_NODE) continue;
 
-                    System.out.println(item2.getLocalName());
+                break;
+            case "book":
+            case "buch":
 
-                    switch (item2.getLocalName()) {
-                        case "price":
-                            System.out.println("XXX");
-                            break;
-                    
-                        default:
-                            break;
-                    }
-                }
 
-                return;
-            }
+                break;
+            case "music":
+            case "musik":
+            case "musical":
+
+            
+                break;
+            default:
+                System.out.println("ERROR: Konnte XML-Eintrag mit typ " + type + "nicht verarbeiten.");
+                break;
         }
+    }
+
+    public static void mapXmlToObjects(Element rootElement) throws Exception {
+        int counter = 0;
+        for (Node item = rootElement.getFirstChild(); item != null; item = item.getNextSibling()) {
+            counter++;
+
+            mapXmlNodeToitem(item);
+            continue;
+
+            // if (item.getNodeType() == Node.ELEMENT_NODE) {
+            //     System.out.println(item.getAttributes().getNamedItem("pgroup"));
+            //     System.out.println(item.getAttributes().getNamedItem("asin"));
+            //     System.out.println(item.getAttributes().getNamedItem("salesrank"));
+            //     System.out.println(item.getAttributes().getNamedItem("picture"));
+            //     System.out.println(item.getAttributes().getNamedItem("ean"));
+
+            //     for (Node item2 = item.getFirstChild(); item2 != null; item2 = item2.getNextSibling()) {
+            //         if (item2.getNodeType() != Node.ELEMENT_NODE) continue;
+
+            //         System.out.println(item2.getLocalName());
+
+            //         switch (item2.getLocalName()) {
+            //             case "price":
+            //                 System.out.println("XXX");
+            //                 break;
+                    
+            //             default:
+            //                 break;
+            //         }
+            //     }
+
+            //     return;
+            // }
+        }
+
+        System.out.println(counter + " items in XML verarbeitet");
     }
 
     public static Element readXmlFile(Path xmlFile) throws ParserConfigurationException, IOException, SAXException {
