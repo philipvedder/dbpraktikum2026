@@ -31,8 +31,7 @@ public class MediaStoreLoader {
                 CSVReader.readCsv(inputFile);
             } else if (fileName.endsWith(".xml")) {
                 Element rootElement = XMLReader.readXmlFile(inputFile);
-                XMLReader.mapXmlToObjects(rootElement);
-                
+                XMLReader.parseXml(rootElement);
             } else {
                 System.err.println("ERROR: Nicht unterstütztes Dateiformat. Erwartet: .csv oder .xml");
                 System.exit(1);

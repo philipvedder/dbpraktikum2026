@@ -5,15 +5,14 @@ import java.util.List;
 
 import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
 
-public class Book extends Product {
-    int pages;
-    Timestamp publication;
-    String isbn;
-    String publisher;
-    List<String> authors;
+public class MusicRaw extends ProductRaw {
+    private Timestamp releaseDate;
+    private String label;
+    private List<String> artists;
+    private List<String> tracks;
 
     @Override
     public ProductType getType() {
-        return ProductType.BOOK;
+        return ProductType.MUSIC;
     }
 }
