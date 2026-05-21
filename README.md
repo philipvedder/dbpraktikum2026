@@ -2,7 +2,7 @@
 
 To run this project, you should have maven and at least JDK 17 installed. 
 
-Replace INPUT_FILE with the file you want to load and then execute from the root via
+Navigate to the "loader" directtory and then execute with a path to an INPUT_FILE via
 ```
-mvn exec:java -Dexec.mainClass=de.unileipzig.dbpraktikum.loader.MediaStoreLoader  -Dexec.args="data/INPUT_FILE"
+mvn exec:java -Dexec.mainClass=de.unileipzig.dbpraktikum.loader.MediaStoreLoader  -Dexec.args="../data/INPUT_FILE"
 ```
