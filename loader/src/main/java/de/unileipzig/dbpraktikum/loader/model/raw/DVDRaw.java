@@ -11,7 +11,7 @@ public class DVDRaw extends ProductRaw {
     private List<String> creators;
 
     public DVDRaw(
-        String id, 
+        String asin, 
         ProductType type, 
         String title, 
         String salesrank, 
@@ -23,11 +23,27 @@ public class DVDRaw extends ProductRaw {
         List<String> actors,
         List<String> creators
     ) {
-        super(id, type, title, salesrank, imgUrl, similarProductIds, offer);
+        super(asin, type, title, salesrank, imgUrl, similarProductIds, offer);
 
         this.dvdSpec = dvdSpec;
         this.directors = directors;
         this.actors = actors;
         this.creators = creators;
+    }
+
+    public DVDSpecRaw getDvdSpec() {
+        return dvdSpec;
+    }
+
+    public List<String> getDirectors() {
+        return directors;
+    }
+
+    public List<String> getActors() {
+        return actors;
+    }
+
+    public List<String> getCreators() {
+        return creators;
     }
 }

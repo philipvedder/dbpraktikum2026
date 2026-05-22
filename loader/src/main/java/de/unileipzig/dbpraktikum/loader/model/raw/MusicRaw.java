@@ -11,7 +11,7 @@ public class MusicRaw extends ProductRaw {
     private List<String> tracks;
 
     public MusicRaw(
-        String id, 
+        String asin, 
         ProductType type, 
         String title, 
         String salesrank, 
@@ -23,11 +23,29 @@ public class MusicRaw extends ProductRaw {
         List<String> artists, 
         List<String> tracks
     ) {
-        super(id, type, title, salesrank, imgUrl, similarProductIds, offer);
+        super(asin, type, title, salesrank, imgUrl, similarProductIds, offer);
 
         this.musicSpec = musicSpec;
         this.labels = labels;
         this.artists = artists;
         this.tracks = tracks;
     }
+
+    public MusicSpecRaw getMusicSpec() {
+        return musicSpec;
+    }
+
+    public List<String> getLabels() {
+        return labels;
+    }
+
+    public List<String> getArtists() {
+        return artists;
+    }
+
+    public List<String> getTracks() {
+        return tracks;
+    }
+
+    
 }

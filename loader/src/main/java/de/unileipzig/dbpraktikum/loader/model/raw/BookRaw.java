@@ -10,7 +10,7 @@ public class BookRaw extends ProductRaw {
     private List<String> authors;
 
     public BookRaw(
-        String id, 
+        String asin, 
         ProductType type, 
         String title, 
         String salesrank, 
@@ -21,10 +21,22 @@ public class BookRaw extends ProductRaw {
         List<String> publishers, 
         List<String> authors
     ) {
-        super(id, type, title, salesrank, imgUrl, similarProductIds, offer);
+        super(asin, type, title, salesrank, imgUrl, similarProductIds, offer);
 
         this.bookSpec = bookSpec;
         this.publishers = publishers;
         this.authors = authors;
+    }
+
+    public BookSpecRaw getBookSpec() {
+        return bookSpec;
+    }
+
+    public List<String> getPublishers() {
+        return publishers;
+    }
+
+    public List<String> getAuthors() {
+        return authors;
     }
 }
