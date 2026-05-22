@@ -13,14 +13,14 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-import de.unileipzig.dbpraktikum.loader.parser.ItemParser;
+import de.unileipzig.dbpraktikum.loader.parser.XMLItemParser;
 
 public class XMLReader {
     public static void parseXml(Element rootElement) throws Exception {
         int counter = 0;
         for (Node item = rootElement.getFirstChild(); item != null; item = item.getNextSibling()) {
             if (item.getNodeType() != Node.ELEMENT_NODE) continue; //Only ELEMENT_NODE's can be valid items
-            ItemParser.parseItem((Element) item);
+            XMLItemParser.parseItem((Element) item);
             counter++;
         }
 
@@ -46,6 +46,4 @@ public class XMLReader {
         System.out.println("XML erfolgreich gelesen. Root-Element: " + root.getTagName());
         return root;
     }
-
-
 }
