@@ -2,12 +2,14 @@ package de.unileipzig.dbpraktikum.loader;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Locale;
 
 import org.w3c.dom.Element;
 
 import de.unileipzig.dbpraktikum.loader.input.CSVReader;
 import de.unileipzig.dbpraktikum.loader.input.XMLReader;
+import de.unileipzig.dbpraktikum.loader.model.raw.ProductRaw;
 
 public class MediaStoreLoader {
 
@@ -31,7 +33,8 @@ public class MediaStoreLoader {
                 CSVReader.readCsv(inputFile);
             } else if (fileName.endsWith(".xml")) {
                 Element rootElement = XMLReader.readXmlFile(inputFile);
-                XMLReader.parseXml(rootElement);
+                List<ProductRaw> rawProducts = XMLReader.parseXml(rootElement);
+                
             } else {
                 System.err.println("ERROR: Nicht unterstütztes Dateiformat. Erwartet: .csv oder .xml");
                 System.exit(1);

@@ -8,13 +8,9 @@ import org.w3c.dom.Node;
 
 public class DOMUtil {
     public static String attr(Element element, String attributeName) {
-        if (element == null) return null;
-        if (!element.hasAttribute(attributeName)) {
-            return null;
-        }
+        if (element == null || !element.hasAttribute(attributeName)) return null;
 
         String value = element.getAttribute(attributeName).trim();
-
         return value.isBlank() ? null : value;
     }
 

@@ -7,12 +7,15 @@ import java.util.Map;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import de.unileipzig.dbpraktikum.loader.model.PriceRaw;
-import de.unileipzig.dbpraktikum.loader.model.ProductRaw;
 import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
+import de.unileipzig.dbpraktikum.loader.model.raw.BookRaw;
 import de.unileipzig.dbpraktikum.loader.model.raw.BookSpecRaw;
+import de.unileipzig.dbpraktikum.loader.model.raw.DVDRaw;
 import de.unileipzig.dbpraktikum.loader.model.raw.DVDSpecRaw;
+import de.unileipzig.dbpraktikum.loader.model.raw.MusicRaw;
 import de.unileipzig.dbpraktikum.loader.model.raw.MusicSpecRaw;
+import de.unileipzig.dbpraktikum.loader.model.raw.PriceRaw;
+import de.unileipzig.dbpraktikum.loader.model.raw.ProductRaw;
 import de.unileipzig.dbpraktikum.loader.util.DOMUtil;
 
 public class XMLItemParser {
@@ -23,8 +26,8 @@ public class XMLItemParser {
         String asin = DOMUtil.attr(item, "asin");
         String salesRank = DOMUtil.attr(item, "salesrank");
         String picture = DOMUtil.attr(item, "picture");
-        String detailPage = DOMUtil.attr(item, "detailpage");
-        String ean = DOMUtil.attr(item, "ean");
+        //String detailPage = DOMUtil.attr(item, "detailpage"); UNUSED
+        //String ean = DOMUtil.attr(item, "ean"); UNUSED
 
         // General Child Nodes
         Map<String, Element> childMap = DOMUtil.createChildMap(item);
@@ -38,10 +41,23 @@ public class XMLItemParser {
             case MUSIC:
                 List<String> labels = parseNamedEntities(childMap.get("labels"), "label");
                 List<String> artists = parseNamedEntities(childMap.get("artists"), "artist");
-                List<String> titles = parseTitles(childMap.get("tracks"));
+                List<String> tracks = parseTitles(childMap.get("tracks"));
 
                 MusicSpecRaw musicSpec = parseMusicSpec(childMap.get("musicspec"));
-                return null;
+
+                return new MusicRaw(
+                    asin, 
+                    type, 
+                    title,
+                    salesRank, 
+                    picture, 
+                    similars, 
+                    price, 
+                    musicSpec,
+                    labels,
+                    artists,
+                    tracks
+                );
 
             case DVD:
                 List<String> actors = parseNamedEntities(childMap.get("actors"), "actor");
@@ -50,14 +66,39 @@ public class XMLItemParser {
                 //List<String> studios = parseNamedEntities(childMap.get("studios"), "studio"); UNUSED
 
                 DVDSpecRaw dvdSpec = parseDVDSpec(childMap.get("dvdspec"));
-                return null;
+
+                return new DVDRaw(
+                    asin,
+                    type,
+                    title,
+                    salesRank,
+                    picture,
+                    similars,
+                    price,
+                    dvdSpec,
+                    directors,
+                    actors,
+                    creators
+                );
                 
             case BOOK:
                 List<String> authors = parseNamedEntities(childMap.get("authors"), "author");
                 List<String> publishers = parseNamedEntities(childMap.get("publishers"), "publisher");
 
                 BookSpecRaw bookSpec = parseBookSpec(childMap.get("bookspec"));
-                return null;
+                
+                return new BookRaw(
+                    asin, 
+                    type,
+                    title,
+                    salesRank,
+                    picture,
+                    similars,
+                    price,
+                    bookSpec,
+                    publishers,
+                    authors
+                );
                 
             default:
                 return null;
