@@ -24,11 +24,11 @@ public class ProductValidator {
 
         String asin = requireNonBlank(p.getAsin(), "asin", errors);
         String title = requireNonBlank(p.getTitle(), "title", errors);
-        String imgUrl = p.getImgUrl().trim();
+        String imgUrl = (p.getImgUrl() != null && !p.getImgUrl().isBlank()) ? p.getImgUrl().trim() : null;
         Integer salesrank = requireNonNegativeInt(p.getSalesrank(), "salesrank", errors);
         List<String> similarIds = filterBlanksFromList(p.getSimilarProductIds());
 
-        PriceRaw offer = requireNotNull(p.getOffer(), "price", errors);
+        Offer offer = validateOffer(p.getOffer(), errors);
 
         switch (type) {
             case BOOK:
@@ -43,7 +43,19 @@ public class ProductValidator {
         }
     }
 
-    private static void validateDVD(DVDRaw p, Map<String, String> errors) {
+    private static Offer validateOffer(PriceRaw p, Map<string, String> errors) {
+        p = requireNotNull(p, "price", errors);
+        if (p == null) return null;
+
+        Integer price = requireNonNegativeInt(p.price(), "price:value", errors);
+        String currency = (p.currency() != null && !p.currency().isBlank()) ? p.currency().trim() : null;
+        String state = requireNonBlank(p.state(), "price:state", errors);
+        double mult = requireNonNegativeDouble(p.mult(), "price:mult", errors);
+
+        return new Offer;
+    }
+
+    private static DVD validateDVD(DVDRaw p, Map<String, String> errors) {
         List<String> directors = filterBlanksFromList(p.getDirectors());
         List<String> actors = filterBlanksFromList(p.getActors());
         List<String> creators = filterBlanksFromList(p.getCreators());
@@ -61,7 +73,7 @@ public class ProductValidator {
         return new DVD();
     }
 
-    private static void validateMusic(MusicRaw p, Map<String, String> errors) {
+    private static Music validateMusic(MusicRaw p, Map<String, String> errors) {
         List<String> labels = filterBlanksFromList(p.getLabels());
         List<String> artists = filterBlanksFromList(p.getLabels());
         List<String> tracks = filterBlanksFromList(p.getLabels());
@@ -77,7 +89,7 @@ public class ProductValidator {
         return new Music();
     }
 
-    private static void validateBook(BookRaw p, Map<String, String> errors) {
+    private static Book validateBook(BookRaw p, Map<String, String> errors) {
         List<String> publisherNames = filterBlanksFromList(p.getPublishers());
         List<String> authorNames = filterBlanksFromList(p.getAuthors());
 
@@ -95,7 +107,7 @@ public class ProductValidator {
     }
 
     private static void reportErrors(ProductRaw p, Map<String, String> errors) {
-
+        
     }
 
     // Validation Methods
@@ -145,6 +157,31 @@ public class ProductValidator {
 
         if (result < 0) {
             errors.put(name, "Value must be >= 0");
+        }
+
+        return result;
+    }
+
+    private static Double requireDouble(String s, String name, Map<String, String> errors) {
+        s = requireNonBlank(s, name, errors);
+        Double result = null;
+
+        try {
+            result = Double.parseDouble(s);
+        } catch (NumberFormatException e) {
+            errors.put(name, "Value must be a floating point value");
+            return null;
+        }
+
+        return result;
+    }
+
+    private static Double requireNonNegativeDouble(String s, String name, Map<String, String> errors) {
+        Double result = requireDouble(s, name, errors);
+        if (result == null) return null;
+
+        if (result < 0) {
+            errors.put(name, "Value must be >= 0.0");
         }
 
         return result;
