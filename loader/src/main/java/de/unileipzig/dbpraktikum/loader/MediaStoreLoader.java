@@ -10,8 +10,11 @@ import org.w3c.dom.Element;
 import de.unileipzig.dbpraktikum.loader.input.CSVReader;
 import de.unileipzig.dbpraktikum.loader.input.XMLReader;
 import de.unileipzig.dbpraktikum.loader.model.Product;
+import de.unileipzig.dbpraktikum.loader.model.Category;
 import de.unileipzig.dbpraktikum.loader.model.raw.ProductRaw;
+import de.unileipzig.dbpraktikum.loader.parser.XMLCategoryParser;
 import de.unileipzig.dbpraktikum.loader.parser.XMLShopItemParser;
+import de.unileipzig.dbpraktikum.loader.validation.CategoryValidator;
 import de.unileipzig.dbpraktikum.loader.validation.ProductValidator;
 
 public class MediaStoreLoader {
@@ -37,8 +40,20 @@ public class MediaStoreLoader {
 
             } else if (fileName.endsWith(".xml")) {
                 Element rootElement = XMLReader.readXmlFile(inputFile);
-                List<ProductRaw> rawProducts = XMLShopItemParser.parseXmlRoot(rootElement);
-                List<Product> valProducts = ProductValidator.validateAll(rawProducts);
+
+                switch (rootElement.getTagName()) {
+                    case "shop":
+                        List<ProductRaw> rawProducts = XMLShopItemParser.parseXmlRoot(rootElement);
+                        List<Product> valProducts = ProductValidator.validateAll(rawProducts);
+                        break;
+                
+                    case "categories":
+                        List<Category> rawCategories = XMLCategoryParser.parseXmlRoot(rootElement);
+                        List<Category> valCategories = CategoryValidator.validateAll(rawCategories);
+                        break;
+                    default:
+                        break;
+                }
 
             } else {
                 System.err.println("ERROR: Nicht unterstütztes Dateiformat. Erwartet: .csv oder .xml");
