@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- developed from a project of the departmentof data bases of the University of Leipzig -->
+<shop name="Leipzig" street="Am Brühl" zip="04109">
+    <item pgroup="Music" asin="B0009VX4TE" salesrank="17585" picture="http://images.amazon.com/images/P/B0009VX4TE.03._SCMZZZZZZZ_.jpg" detailpage="http://www.amazon.de/exec/obidos/redirect?tag=ws%26link_code=xm2%26camp=2025%26creative=165953%26path=http://www.amazon.de/gp/redirect.html%253fASIN=B0009VX4TE%2526tag=ws%2526lcode=xm2%2526cID=2025%2526ccmID=165953%2526location=/o/ASIN/B0009VX4TE%25253FSubscriptionId=008VAFAFSK8GN837GT02" ean="0822334014429" state="new">
+        <price mult="0.01" state="new" currency="EUR">1968</price>
+        <title>Beach House 04. 05</title>
+        <bookspec/>
+        <dvdspec/>
+        <musicspec>
+            
+            <binding>CD</binding>
+            
+            <format value="DOPPEL-CD"/>
+            
+            <num_discs>2</num_discs>
+            
+            <releasedate>2005-08-08</releasedate>
+            
+            <upc>822334014429</upc>
+            
+        </musicspec>
+        <labels>
+            
+            <label name="Pinnacle I (rough trade)"/>
+            
+        </labels>
+        <publishers/>
+        <studios/>
+        <similars>
+            
+            <sim_product>
+                <asin>B0007KTIN8</asin>
+                <title>Disco Heaven 01. 05</title>
+            </sim_product>
+            
+            <sim_product>
+                <asin>B0007XTOOS</asin>
+                <title>Twisted Disco 02. 05</title>
+            </sim_product>
+            
+            <sim_product>
+                <asin>B0009FU17S</asin>
+                <title>Back to Love 03. 05</title>
+            </sim_product>
+            
+            <sim_product>
+                <asin>B000ANPX7C</asin>
+                <title>Hed Kandi 50: the Mix</title>
+            </sim_product>
+            
+            <sim_product>
+                <asin>B000B9UHRG</asin>
+                <title>Disco Kandi 05. 05</title>
+            </sim_product>
+            
+        </similars>
+        <tracks>
+            
+            <title>Eddy Meets Yannah - Reach The Sky - Album Mix</title>
+            
+            <title>Malena - Suavamente - 12" Mix</title>
+            
+            <title>Summer of Space - A New Start - Album Mix</title>
+            
+            <title>Bonnie Bailey - Rise - Eric Kupper Beach Mix</title>
+            
+            <title>Robina - A New Moon -</title>
+            
+            <title>Kuppercoco - Undone -</title>
+            
+            <title>Lisa Shaw - Let It Ride - jimpster remix</title>
+            
+            <title>Latrice - Hold The Light -</title>
+            
+            <title>King DK - Can't Read Your Mind - tinberbox radio mix</title>
+            
+            <title>Stephanie Mills - Free - Vocal Remix</title>
+            
+            <title>Aquanote - Nowhere - Gabrielle Drop 4 original</title>
+            
+            <title>Aya - Sean - Miguel Migs Mix</title>
+            
+            <title>StoneBridge - Show You How - Notion Remix</title>
+            
+            <title>Afterlife - Never Before - Bobby Blanco Mix</title>
+            
+            <title>Peyton - Need To Feel Wanted -</title>
+            
+            <title>D'Stephanie - Back To Us - Tinderbox Vocal Remix</title>
+            
+            <title>Late Night Alumni - Nothing Left To Say -</title>
+            
+            <title>Kaskade - Everything - Big Room Mix</title>
+            
+            <title>Mylo - In My Arms - 12" Mix</title>
+            
+            <title>Morris T feat. Janie Romer - Reach For The Sunshine -</title>
+            
+            <title>Roachford - The River of Love - Full Intention Vocal</title>
+            
+            <title>Steve Mac vs. Mosquito ft. Steve Smith - Lovin' You More - Vocal mix</title>
+            
+        </tracks>
+        <audiotext/>
+        <listmania>
+            
+            <list name="Meine aktuellen Dance, Techno, Trance, House &amp; Pop Favoriten"/>
+        </listmania>
+        <actors/>
+        <artists>
+            
+            <artist name="Va"/>
+            
+        </artists>
+        <authors/>
+        <creators/>
+        <directors/>
+    </item>
+    
+</shop>
