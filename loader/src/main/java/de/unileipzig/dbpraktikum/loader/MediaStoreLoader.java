@@ -9,7 +9,9 @@ import org.w3c.dom.Element;
 
 import de.unileipzig.dbpraktikum.loader.input.CSVReader;
 import de.unileipzig.dbpraktikum.loader.input.XMLReader;
+import de.unileipzig.dbpraktikum.loader.model.Product;
 import de.unileipzig.dbpraktikum.loader.model.raw.ProductRaw;
+import de.unileipzig.dbpraktikum.loader.parser.XMLShopItemParser;
 import de.unileipzig.dbpraktikum.loader.validation.ProductValidator;
 
 public class MediaStoreLoader {
@@ -32,10 +34,11 @@ public class MediaStoreLoader {
         try {
             if (fileName.endsWith(".csv")) {
                 CSVReader.readCsv(inputFile);
+
             } else if (fileName.endsWith(".xml")) {
                 Element rootElement = XMLReader.readXmlFile(inputFile);
-                List<ProductRaw> rawProducts = XMLReader.parseXml(rootElement);
-                ProductValidator.validateAll(rawProducts);
+                List<ProductRaw> rawProducts = XMLShopItemParser.parseXmlRoot(rootElement);
+                List<Product> valProducts = ProductValidator.validateAll(rawProducts);
 
             } else {
                 System.err.println("ERROR: Nicht unterstütztes Dateiformat. Erwartet: .csv oder .xml");
