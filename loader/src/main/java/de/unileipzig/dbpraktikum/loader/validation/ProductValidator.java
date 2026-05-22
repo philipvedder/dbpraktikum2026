@@ -1,11 +1,13 @@
 package de.unileipzig.dbpraktikum.loader.validation;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import de.unileipzig.dbpraktikum.loader.model.Book;
+import de.unileipzig.dbpraktikum.loader.model.Offer;
 import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
 import de.unileipzig.dbpraktikum.loader.model.raw.BookRaw;
 import de.unileipzig.dbpraktikum.loader.model.raw.BookSpecRaw;
@@ -17,6 +19,12 @@ import de.unileipzig.dbpraktikum.loader.model.raw.PriceRaw;
 import de.unileipzig.dbpraktikum.loader.model.raw.ProductRaw;
 
 public class ProductValidator {
+    public static void validateAll(List<ProductRaw> products) {
+        for (ProductRaw productRaw : products) {
+            validate(productRaw);
+        }
+    }
+
     public static void validate(ProductRaw p) {
         Map<String, String> errors = new HashMap<>();
 
@@ -25,37 +33,44 @@ public class ProductValidator {
         String asin = requireNonBlank(p.getAsin(), "asin", errors);
         String title = requireNonBlank(p.getTitle(), "title", errors);
         String imgUrl = (p.getImgUrl() != null && !p.getImgUrl().isBlank()) ? p.getImgUrl().trim() : null;
-        Integer salesrank = requireNonNegativeInt(p.getSalesrank(), "salesrank", errors);
+
+        Integer salesrank = requireNonNegativeInt(p.getSalesrank(), "salesrank", null);
         List<String> similarIds = filterBlanksFromList(p.getSimilarProductIds());
 
         Offer offer = validateOffer(p.getOffer(), errors);
 
         switch (type) {
             case BOOK:
-                return validateBook((BookRaw) p, errors);
+                validateBook((BookRaw) p, errors);
+                break;
             case MUSIC:
-                return validateMusic((MusicRaw) p, errors);
+                validateMusic((MusicRaw) p, errors);
+                break;
             case DVD:
-                return validateDVD((DVDRaw) p, errors);
+                validateDVD((DVDRaw) p, errors);
+                break;
             default:
                 reportErrors(p, errors);
-                return null;
+                //return null;
         }
     }
 
-    private static Offer validateOffer(PriceRaw p, Map<string, String> errors) {
-        p = requireNotNull(p, "price", errors);
-        if (p == null) return null;
+    private static Offer validateOffer(PriceRaw p, Map<String, String> errors) {
+        if (p == null) return null; //Items without prices are allowed by design
 
-        Integer price = requireNonNegativeInt(p.price(), "price:value", errors);
+        Integer price = requireNonNegativeInt(p.price(), "price:value", null);
+        if (price == null) return null; //Items without prices are allowed by design
+
         String currency = (p.currency() != null && !p.currency().isBlank()) ? p.currency().trim() : null;
         String state = requireNonBlank(p.state(), "price:state", errors);
-        double mult = requireNonNegativeDouble(p.mult(), "price:mult", errors);
+        Double mult = requireNonNegativeDouble(p.mult(), "price:mult", errors);
 
-        return new Offer;
+        if (!errors.isEmpty()) return null;
+
+        return new Offer(mult * price, currency, state);
     }
 
-    private static DVD validateDVD(DVDRaw p, Map<String, String> errors) {
+    private static void validateDVD(DVDRaw p, Map<String, String> errors) {
         List<String> directors = filterBlanksFromList(p.getDirectors());
         List<String> actors = filterBlanksFromList(p.getActors());
         List<String> creators = filterBlanksFromList(p.getCreators());
@@ -67,26 +82,26 @@ public class ProductValidator {
 
         if (errors.keySet().size() > 0) {
             reportErrors(p, errors);
-            return null;
+            //return null;
         }
 
-        return new DVD();
+        //return new DVD();
     }
 
-    private static Music validateMusic(MusicRaw p, Map<String, String> errors) {
+    private static void validateMusic(MusicRaw p, Map<String, String> errors) {
         List<String> labels = filterBlanksFromList(p.getLabels());
         List<String> artists = filterBlanksFromList(p.getLabels());
         List<String> tracks = filterBlanksFromList(p.getLabels());
 
         MusicSpecRaw spec = requireNotNull(p.getMusicSpec(), "musicspec", errors);
-        Timestamp releaseDate = requireTimestamp(spec.releasedate(), "musicspec:releasedate", errors);
+        Date releaseDate = requireDate(spec.releasedate(), "musicspec:releasedate", errors);
 
         if (errors.keySet().size() > 0) {
             reportErrors(p, errors);
-            return null;
+            //return null;
         }
 
-        return new Music();
+        //return new Music();
     }
 
     private static Book validateBook(BookRaw p, Map<String, String> errors) {
@@ -96,7 +111,7 @@ public class ProductValidator {
         BookSpecRaw spec = requireNotNull(p.getBookSpec(), "bookspec", errors);
         String isbn = requireNonBlank(spec.isbn(), "bookspec:isbn", errors);
         Integer pages = requireNonNegativeInt(spec.pages(), "bookspec:pages", errors);
-        Timestamp publication = requireTimestamp(spec.publication(), "bookspec:publication", errors);
+        Date publication = requireDate(spec.publication(), "bookspec:publication", errors);
 
         if (errors.keySet().size() > 0) {
             reportErrors(p, errors);
@@ -107,19 +122,26 @@ public class ProductValidator {
     }
 
     private static void reportErrors(ProductRaw p, Map<String, String> errors) {
-        
+        //TODO: write to file
+
+        if (errors.isEmpty()) return;
+
+        System.out.println("Errors while validating product: " + p.getAsin() + " - " + p.getTitle());
+        for (String key : errors.keySet()) {
+            System.out.println(key + " : " + errors.get(key));
+        }
+        System.out.println("================");
     }
 
     // Validation Methods
-
-    private static Timestamp requireTimestamp(String s, String name, Map<String, String> errors) {
+    private static Date requireDate(String s, String name, Map<String, String> errors) {
         s = requireNonBlank(s, name, errors);
-        Timestamp result = null;
+        Date result = null;
 
         try {
-            result = Timestamp.valueOf(s);
+            result = Date.valueOf(s);
         } catch (IllegalArgumentException e) {
-            errors.put(name, "Value must be in valid timestamp format yyyy-[m]m-[d]d hh:mm:ss[.f...]");
+            if (errors != null) errors.put(name, "Value must be in valid timestamp format yyyy-[m]m-[d]d. Got: " + s);
             return null;
         }
 
@@ -144,7 +166,7 @@ public class ProductValidator {
         try {
             result = Integer.parseInt(s);
         } catch (NumberFormatException e) {
-            errors.put(name, "Value must be Integer");
+            if (errors != null) errors.put(name, "Value must be Integer. Got: " + s);
             return null;
         }
 
@@ -156,7 +178,7 @@ public class ProductValidator {
         if (result == null) return null;
 
         if (result < 0) {
-            errors.put(name, "Value must be >= 0");
+            if (errors != null) errors.put(name, "Value must be >= 0. Got: " + s);
         }
 
         return result;
@@ -169,7 +191,7 @@ public class ProductValidator {
         try {
             result = Double.parseDouble(s);
         } catch (NumberFormatException e) {
-            errors.put(name, "Value must be a floating point value");
+            if (errors != null) errors.put(name, "Value must be a floating point value. Got: " + s);
             return null;
         }
 
@@ -181,7 +203,7 @@ public class ProductValidator {
         if (result == null) return null;
 
         if (result < 0) {
-            errors.put(name, "Value must be >= 0.0");
+            if (errors != null) errors.put(name, "Value must be >= 0.0. Got: " + s);
         }
 
         return result;
@@ -189,7 +211,7 @@ public class ProductValidator {
 
     private static <T> T requireNotNull(T o, String name, Map<String, String> errors) {
         if (o == null) {
-            errors.put(name, "Value must not be NULL");
+            if (errors != null) errors.put(name, "Value must not be NULL");
         }
 
         return o;
@@ -197,7 +219,8 @@ public class ProductValidator {
 
     private static String requireNonBlank(String s, String name, Map<String, String> errors) {
         if (s == null || s.isBlank()) {
-            errors.put(name, "Value must not be empty");
+            if (errors != null) errors.put(name, "Value must not be empty");
+            return null;
         }
 
         return s.trim();
