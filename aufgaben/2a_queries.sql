@@ -1,3 +1,5 @@
+ SET search_path TO media_store;
+ 
  --1. Anzahl der Produkte pro Typ
  
 SELECT 
