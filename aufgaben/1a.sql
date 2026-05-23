@@ -225,12 +225,13 @@ CREATE TABLE filiale (
 
 
 CREATE TABLE angebot (
-    filiale_id      BIGINT,
-    produkt_nr      BIGINT,
+    angebot_id      BIGINT GENERATED ALWAYS AS IDENTITY,
+    filiale_id      BIGINT NOT NULL,
+    produkt_nr      BIGINT NOT NULL,
     preis           NUMERIC,
     zustand         TEXT NOT NULL,
 
-    CONSTRAINT pk_angebot PRIMARY KEY (filiale_id, produkt_nr),
+    CONSTRAINT pk_angebot PRIMARY KEY (angebot_id),
 
     CONSTRAINT fk_angebot_filiale FOREIGN KEY (filiale_id) REFERENCES filiale (filiale_id)
     ON UPDATE CASCADE ON DELETE CASCADE,
@@ -255,7 +256,6 @@ CREATE TABLE kunde (
 CREATE TABLE bestellung (
     bestellung_id      BIGINT GENERATED ALWAYS AS IDENTITY,
     kunde_id           BIGINT NOT NULL,
-    produkt_id         BIGINT NOT NULL,
     kaufzeitpunkt      TIMESTAMP NOT NULL,
     kontonummer        VARCHAR(256) NOT NULL,
     strasse            VARCHAR(256) NOT NULL,
@@ -263,18 +263,35 @@ CREATE TABLE bestellung (
     plz                VARCHAR(16) NOT NULL,
     ort                VARCHAR(256) NOT NULL,
     land               VARCHAR(256) NOT NULL,
-    kontonummer        VARCHAR(256) NOT NULL,
 
     CONSTRAINT pk_bestellung PRIMARY KEY (bestellung_id),
 
     CONSTRAINT fk_bestellung_kunde FOREIGN KEY (kunde_id) REFERENCES kunde (kunde_id)
     ON UPDATE CASCADE ON DELETE RESTRICT,
 
-    CONSTRAINT fk_bestellung_produkt FOREIGN KEY (produkt_id) REFERENCES produkt (produkt_id)
-    ON UPDATE CASCADE ON DELETE RESTRICT,
-
     CONSTRAINT chk_bestellung_kaufzeitpunkt_nicht_zukunft CHECK (kaufzeitpunkt <= CURRENT_TIMESTAMP)
 );
+
+
+CREATE TABLE bestellposition (
+    bestellposition_id BIGINT GENERATED ALWAYS AS IDENTITY,
+    bestellung_id      BIGINT NOT NULL,
+    angebot_id         BIGINT NOT NULL,
+    preis_beim_kauf    NUMERIC NOT NULL,
+    menge              INTEGER NOT NULL DEFAULT 1,
+
+    CONSTRAINT pk_bestellposition PRIMARY KEY (bestellposition_id),
+
+    CONSTRAINT fk_bestellposition_bestellung FOREIGN KEY (bestellung_id) REFERENCES bestellung (bestellung_id)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+
+    CONSTRAINT fk_bestellposition_angebot FOREIGN KEY (angebot_id) REFERENCES angebot (angebot_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+
+    CONSTRAINT chk_bestellposition_preis_pos CHECK (preis_beim_kauf > 0),
+    CONSTRAINT chk_bestellposition_menge_pos CHECK (menge > 0)
+);
+
 
 -- Rezensionen
 
