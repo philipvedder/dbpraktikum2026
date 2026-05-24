@@ -43,45 +43,31 @@ Produkt getProduct(Long produktNr);
  */
 List<Produkt> getProducts(String pattern);
 /**
-
  * gibt den kompletten kategoriebaum zurück
-
  */
 Kategorie getCategoryTree();
 /**
-
  * gibt produkte für einen bestimmten kategoriepfad zurück
-
  */
 List<Produkt> getProductsByCategoryPath(List<String> categoryPath);
 /**
-
  * gibt die besten k produkte nach rating zurück
-
  */
 List<Produkt> getTopProducts(int k);
 /**
-
  * sucht ähnliche produkte, die günstiger sind
-
  */
 List<Produkt> getSimilarCheaperProduct(Long produktNr);
 /**
-
  * fügt eine neue rezension hinzu
-
  */
 Rezension addNewReview(Long produktNr, Long kundeId, int punkte, String rezensionstext);
 /**
-
  * gibt kunden mit niedriger durchschnittsbewertung zurück
-
  */
 List<Kunde> getTrolls(double maxRating);
 /**
-
  * gibt alle angebote für ein produkt zurück
-
  */
 List<Angebot> getOffers(Long produktNr);
 
