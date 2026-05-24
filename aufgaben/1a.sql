@@ -26,8 +26,9 @@ CREATE TABLE produkt (
     titel             TEXT NOT NULL,
     verkaufsrang      INTEGER,
     bild_url          TEXT,
+    durchschnittsbewertung NUMERIC DEFAULT 0,
 
-    CONSTRAINT pk_produkt PRIMARY KEY (produkt_nr),
+    CONSTRAINT pk_produkt PRIMARY KEY (produkt_nr)
 );
 
 
@@ -73,7 +74,7 @@ CREATE TABLE buch (
 CREATE TABLE musik_cd (
     produkt_nr          BIGINT,
     label               TEXT NOT NULL,
-    erscheinungsdatum   DATE NOY NULL,
+    erscheinungsdatum   DATE NOT NULL,
 
     CONSTRAINT pk_musik_cd PRIMARY KEY (produkt_nr),
 
@@ -153,7 +154,7 @@ CREATE TABLE musik_cd_titel (
     CONSTRAINT pk_musik_cd_titel PRIMARY KEY (track_id),
 
     CONSTRAINT fk_musik_cd_titel_musik_cd FOREIGN KEY (produkt_nr) REFERENCES musik_cd (produkt_nr)
-    ON UPDATE CASCADE ON DELETE CASCADE,
+    ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 
@@ -220,7 +221,7 @@ CREATE TABLE filiale (
     ort             VARCHAR(256) NOT NULL,
     land            VARCHAR(256) NOT NULL,
 
-    CONSTRAINT pk_filiale PRIMARY KEY (filiale_id),
+    CONSTRAINT pk_filiale PRIMARY KEY (filiale_id)
 );
 
 
@@ -312,5 +313,5 @@ CREATE TABLE rezension (
     ON UPDATE CASCADE ON DELETE CASCADE,
 
     CONSTRAINT chk_rezension_punkte CHECK (punkte BETWEEN 1 AND 5),
-    CONSTRAINT chk_rezension_zeitpunkt_nicht_zukunft CHECK (rezensionszeitpunkt <= CURRENT_TIMESTAMP),
+    CONSTRAINT chk_rezension_zeitpunkt_nicht_zukunft CHECK (rezensionszeitpunkt <= CURRENT_TIMESTAMP)
 );
