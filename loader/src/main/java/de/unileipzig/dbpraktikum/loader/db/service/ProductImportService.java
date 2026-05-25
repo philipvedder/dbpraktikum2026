@@ -19,10 +19,10 @@ public class ProductImportService {
     private final ProductRepository productRepository;
 
     public ProductImportService() {
+        this.productRepository = new ProductRepository();
         this.bookRepository = new BookRepository();
         this.musicRepository = new MusicRepository();
         this.dvdRepository = new DVDRepository();
-        this.productRepository = new ProductRepository();
     }
 
     public void importProduct(Connection con, Product p) throws SQLException {
