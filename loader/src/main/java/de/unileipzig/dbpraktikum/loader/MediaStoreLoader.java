@@ -2,11 +2,15 @@ package de.unileipzig.dbpraktikum.loader;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Locale;
 
 import org.w3c.dom.Element;
 
+import de.unileipzig.dbpraktikum.loader.db.DB;
+import de.unileipzig.dbpraktikum.loader.db.service.ProductImportService;
 import de.unileipzig.dbpraktikum.loader.input.CSVReader;
 import de.unileipzig.dbpraktikum.loader.input.XMLReader;
 import de.unileipzig.dbpraktikum.loader.model.Product;
@@ -18,6 +22,31 @@ import de.unileipzig.dbpraktikum.loader.validation.CategoryValidator;
 import de.unileipzig.dbpraktikum.loader.validation.ProductValidator;
 
 public class MediaStoreLoader {
+
+    private static void loadCategoryData(Element rootElement) {
+        List<Category> rawCategories = XMLCategoryParser.parseXmlRoot(rootElement);
+        List<Category> valCategories = CategoryValidator.validateAll(rawCategories);
+    }
+
+    private static void loadShopData(Element rootElement) {
+        List<ProductRaw> rawProducts = XMLShopItemParser.parseXmlRoot(rootElement);
+        List<Product> valProducts = ProductValidator.validateAll(rawProducts);
+        
+        DB db = new DB();
+        ProductImportService productImportService = new ProductImportService();
+
+        try (Connection connection = db.openConnection()) {
+            for (Product product : valProducts) {
+                try {
+                    productImportService.importProduct(connection, product);
+                } catch (SQLException ex) {
+                    System.out.println(ex);
+                }
+            }
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }
 
     public static void main(String[] args) {
         if (args.length != 1) {
@@ -43,13 +72,11 @@ public class MediaStoreLoader {
 
                 switch (rootElement.getTagName()) {
                     case "shop":
-                        List<ProductRaw> rawProducts = XMLShopItemParser.parseXmlRoot(rootElement);
-                        List<Product> valProducts = ProductValidator.validateAll(rawProducts);
+                        loadShopData(rootElement);
                         break;
                 
                     case "categories":
-                        List<Category> rawCategories = XMLCategoryParser.parseXmlRoot(rootElement);
-                        List<Category> valCategories = CategoryValidator.validateAll(rawCategories);
+                        loadCategoryData(rootElement);
                         break;
                     default:
                         break;

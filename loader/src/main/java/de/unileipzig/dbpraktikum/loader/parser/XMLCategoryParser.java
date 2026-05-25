@@ -10,7 +10,7 @@ import de.unileipzig.dbpraktikum.loader.model.Category;
 import de.unileipzig.dbpraktikum.loader.util.DOMUtil;
 
 public class XMLCategoryParser {
-    public static List<Category> parseXmlRoot(Element rootElement) throws Exception {
+    public static List<Category> parseXmlRoot(Element rootElement) {
         List<Category> results = new ArrayList<>();
 
         for (Node item = rootElement.getFirstChild(); item != null; item = item.getNextSibling()) {

@@ -42,4 +42,34 @@ public class Product {
         this.similarProductIds = similarProductIds;
         this.offer = offer;   
     }
+
+    public String getAsin() {
+        return asin;
+    }
+
+    public ProductType getType() {
+        return type;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public Integer getSalesrank() {
+        return salesrank;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public List<String> getSimilarProductIds() {
+        return similarProductIds;
+    }
+
+    public Offer getOffer() {
+        return offer;
+    }
+
+    
 }

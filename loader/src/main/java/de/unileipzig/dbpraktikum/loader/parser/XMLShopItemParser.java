@@ -19,7 +19,7 @@ import de.unileipzig.dbpraktikum.loader.model.raw.ProductRaw;
 import de.unileipzig.dbpraktikum.loader.util.DOMUtil;
 
 public class XMLShopItemParser {
-    public static List<ProductRaw> parseXmlRoot(Element rootElement) throws Exception {
+    public static List<ProductRaw> parseXmlRoot(Element rootElement) {
         List<ProductRaw> results = new ArrayList<>();
 
         for (Node item = rootElement.getFirstChild(); item != null; item = item.getNextSibling()) {
@@ -51,7 +51,7 @@ public class XMLShopItemParser {
 
         // Specific Child Nodes
         switch (type) {
-            case MUSIC:
+            case MUSIC_CD:
                 List<String> labels = parseNamedEntities(childMap.get("labels"), "label");
                 List<String> artists = parseNamedEntities(childMap.get("artists"), "artist");
                 List<String> tracks = parseTitles(childMap.get("tracks"));

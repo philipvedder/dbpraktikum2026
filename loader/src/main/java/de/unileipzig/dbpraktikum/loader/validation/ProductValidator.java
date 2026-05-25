@@ -24,12 +24,18 @@ import de.unileipzig.dbpraktikum.loader.model.raw.ProductRaw;
 public class ProductValidator {
     public static List<Product> validateAll(List<ProductRaw> products) {
         List<Product> results = new ArrayList<>();
+        int acceptedCounter = 0;
 
         for (ProductRaw productRaw : products) {
             Product p = validate(productRaw);
-            if (p != null) results.add(p);
+            if (p != null) {
+                results.add(p);
+                acceptedCounter++;
+            }
         }
 
+        System.out.println(acceptedCounter + " valid Products");
+        System.out.println(products.size() - acceptedCounter + " invalid Products");
         return results;
     }
 
@@ -39,10 +45,12 @@ public class ProductValidator {
         ProductType type = requireNotNull(p.getType(), "pgroup", errors);
 
         String asin = requireNonBlank(p.getAsin(), "asin", errors);
+        asin = requireStringMaxLength(asin, 10, "asin", errors);
+
         String title = requireNonBlank(p.getTitle(), "title", errors);
         String imgUrl = (p.getImgUrl() != null && !p.getImgUrl().isBlank()) ? p.getImgUrl().trim() : null;
-        Integer salesrank = requireNonNegativeInt(p.getSalesrank(), "salesrank", null);
-        List<String> similarIds = filterBlanksFromList(p.getSimilarProductIds());
+        Integer salesrank = requireNonNegativeInt(p.getSalesrank(), "salesrank", null); //optional
+        List<String> similarIds = filterBlanksFromList(p.getSimilarProductIds()); //TODO: length? name of function?
 
         Offer offer = validateOffer(p.getOffer(), errors);
 
@@ -52,7 +60,7 @@ public class ProductValidator {
                 if (book == null) return null;
                 book.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offer);
                 return book;
-            case MUSIC:
+            case MUSIC_CD:
                 Music music = validateMusic((MusicRaw) p, errors);
                 if (music == null) return null;
                 music.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offer);
@@ -128,7 +136,10 @@ public class ProductValidator {
         List<String> authorNames = filterBlanksFromList(p.getAuthors());
 
         BookSpecRaw spec = requireNotNull(p.getBookSpec(), "bookspec", errors);
+        
         String isbn = requireNonBlank(spec.isbn(), "bookspec:isbn", errors);
+        isbn = requireStringMaxLength(isbn, 10, "bookspec:isbn", errors);
+
         Integer pages = requireNonNegativeInt(spec.pages(), "bookspec:pages", errors);
         Date publication = requireDate(spec.publication(), "bookspec:publication", errors);
 
@@ -252,5 +263,16 @@ public class ProductValidator {
         }
 
         return s.trim();
+    }
+
+    private static String requireStringMaxLength(String s, int numberOfChars, String name, Map<String, String> errors) {
+        if (s == null) return null;
+
+        if (s.length() > numberOfChars) {
+            if (errors != null) errors.put(name, "Value must not have more than " + numberOfChars + " characters. Has: " + s.length());
+            return null;
+        }
+
+        return s;
     }
 }

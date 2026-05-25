@@ -45,4 +45,22 @@ public class Music extends Product {
         this.trackNames = trackNames;
         this.releaseDate = releaseDate;
     }
+
+    public String getLabelName() {
+        return labelName;
+    }
+
+    public List<String> getArtistNames() {
+        return artistNames;
+    }
+
+    public List<String> getTrackNames() {
+        return trackNames;
+    }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    
 }

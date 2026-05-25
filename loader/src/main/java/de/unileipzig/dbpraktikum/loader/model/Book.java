@@ -50,4 +50,26 @@ public class Book extends Product {
         this.publication = publication;
         this.publisherName = publisherName;
     }
+
+    public String getPublisherName() {
+        return publisherName;
+    }
+
+    public List<String> getAuthorNames() {
+        return authorNames;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public int getPages() {
+        return pages;
+    }
+
+    public Date getPublication() {
+        return publication;
+    }
+
+    
 }

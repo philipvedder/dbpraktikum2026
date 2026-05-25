@@ -54,4 +54,30 @@ public class DVD extends Product {
         this.runningtime = runningtime;
         this.regioncode = regioncode;
     }
+
+    public List<String> getDirectorNames() {
+        return directorNames;
+    }
+
+    public List<String> getActorNames() {
+        return actorNames;
+    }
+
+    public List<String> getCreatorNames() {
+        return creatorNames;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public int getRunningtime() {
+        return runningtime;
+    }
+
+    public int getRegioncode() {
+        return regioncode;
+    }
+
+    
 }
