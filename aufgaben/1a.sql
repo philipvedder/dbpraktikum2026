@@ -6,8 +6,8 @@ SET search_path TO media_store;
 -- ENUMS
 
 CREATE TYPE produkttyp_enum AS ENUM (
-    'BUCH',
-    'MUSIK_CD',
+    'BOOK',
+    'MUSIC_CD',
     'DVD'
 );
 
@@ -21,7 +21,7 @@ CREATE TYPE dvd_rolle_enum AS ENUM (
 -- MAIN
 
 CREATE TABLE produkt (
-    produkt_nr        BIGINT,
+    produkt_nr        VARCHAR(10),
     produkttyp        produkttyp_enum NOT NULL,
     titel             TEXT NOT NULL,
     verkaufsrang      INTEGER,
@@ -46,14 +46,21 @@ CREATE TABLE verlag (
     CONSTRAINT pk_verlag PRIMARY KEY (verlag_id)
 );
 
+CREATE TABLE label (
+    label_id         BIGINT GENERATED ALWAYS AS IDENTITY,
+    name              TEXT NOT NULL UNIQUE,
+
+    CONSTRAINT pk_label PRIMARY KEY (label_id)
+);
+
 
 -- SUB
 
 CREATE TABLE buch (
-    produkt_nr          BIGINT,
+    produkt_nr          VARCHAR(10),
     seitenzahl          INTEGER NOT NULL,
     erscheinungsdatum   DATE NOT NULL,
-    isbn                VARCHAR(32) NOT NULL UNIQUE,
+    isbn                VARCHAR(10) NOT NULL UNIQUE,
     verlag_id           BIGINT NOT NULL,
 
     CONSTRAINT pk_buch PRIMARY KEY (produkt_nr),
@@ -66,29 +73,29 @@ CREATE TABLE buch (
 
     CONSTRAINT uq_buch_isbn UNIQUE (isbn),
     CONSTRAINT chk_buch_seitenzahl_pos CHECK (seitenzahl > 0),
-    CONSTRAINT chk_buch_erscheinungsdatum_nicht_zukunft CHECK (erscheinungsdatum <= CURRENT_DATE)
 );
 
 
 CREATE TABLE musik_cd (
-    produkt_nr          BIGINT,
-    label               TEXT NOT NULL,
+    produkt_nr          VARCHAR(10),
+    label_id            BIGINT NOT NULL,
     erscheinungsdatum   DATE NOY NULL,
 
     CONSTRAINT pk_musik_cd PRIMARY KEY (produkt_nr),
 
+    CONSTRAINT fk_musik_cd_label FOREIGN KEY (label_id) REFERENCES label (label_id)
+    ON UPDATE CASCADE ON DELETE RESTRICT,
+
     CONSTRAINT fk_musik_cd_produkt FOREIGN KEY (produkt_nr) REFERENCES produkt (produkt_nr)
     ON UPDATE CASCADE ON DELETE CASCADE,
-
-    CONSTRAINT chk_musik_cd_erscheinungsdatum_nicht_zukunft CHECK (erscheinungsdatum <= CURRENT_DATE)
 );
 
 
 CREATE TABLE dvd (
-    produkt_nr          BIGINT,
-    format              VARCHAR(32) NOT NULL,
+    produkt_nr          VARCHAR(10),
+    format              TEXT NOT NULL,
     laufzeit_minuten    INTEGER NOT NULL,
-    region_code         VARCHAR(32) NOT NULL,
+    region_code         INTEGER NOT NULL,
 
     CONSTRAINT pk_dvd PRIMARY KEY (produkt_nr),
 
@@ -102,7 +109,7 @@ CREATE TABLE dvd (
 -- Personen
 
 CREATE TABLE buch_autor (
-    produkt_nr      BIGINT,
+    produkt_nr      VARCHAR(10),
     person_id       BIGINT,
 
     CONSTRAINT pk_buch_autor PRIMARY KEY (produkt_nr, person_id),
@@ -116,7 +123,7 @@ CREATE TABLE buch_autor (
 
 
 CREATE TABLE musik_cd_kuenstler (
-    produkt_nr      BIGINT,
+    produkt_nr      VARCHAR(10),
     person_id       BIGINT,
 
     CONSTRAINT pk_musik_cd_kuenstler PRIMARY KEY (produkt_nr, person_id),
@@ -130,7 +137,7 @@ CREATE TABLE musik_cd_kuenstler (
 
 
 CREATE TABLE dvd_beteiligung (
-    produkt_nr      BIGINT,
+    produkt_nr      VARCHAR(10),
     person_id       BIGINT,
     rolle           dvd_rolle_enum NOT NULL,
 
@@ -147,7 +154,7 @@ CREATE TABLE dvd_beteiligung (
 
 CREATE TABLE musik_cd_titel (
     track_id        BIGINT GENERATED ALWAYS AS IDENTITY,
-    produkt_nr      BIGINT NOT NULL,
+    produkt_nr      VARCHAR(10) NOT NULL,
     name            TEXT NOT NULL,
 
     CONSTRAINT pk_musik_cd_titel PRIMARY KEY (track_id),
@@ -177,7 +184,7 @@ CREATE TABLE kategorie (
 
 
 CREATE TABLE produkt_kategorie (
-    produkt_nr      BIGINT,
+    produkt_nr      VARCHAR(10),
     kategorie_id    BIGINT,
 
     CONSTRAINT pk_produkt_kategorie PRIMARY KEY (produkt_nr, kategorie_id),
@@ -193,8 +200,8 @@ CREATE TABLE produkt_kategorie (
 -- Similar Products
 
 CREATE TABLE aehnliches_produkt (
-    produkt_nr_1    BIGINT,
-    produkt_nr_2    BIGINT,
+    produkt_nr_1    VARCHAR(10),
+    produkt_nr_2    VARCHAR(10),
 
     CONSTRAINT pk_aehnliches_produkt PRIMARY KEY (produkt_nr_1, produkt_nr_2),
 
@@ -226,7 +233,7 @@ CREATE TABLE filiale (
 
 CREATE TABLE angebot (
     filiale_id      BIGINT,
-    produkt_nr      BIGINT,
+    produkt_nr      VARCHAR(10),
     preis           NUMERIC,
     zustand         TEXT NOT NULL,
 
@@ -281,7 +288,7 @@ CREATE TABLE bestellung (
 CREATE TABLE rezension (
     rezension_id            BIGINT GENERATED ALWAYS AS IDENTITY,
     kunde_id                BIGINT NOT NULL,
-    produkt_nr              BIGINT NOT NULL,
+    produkt_nr              VARCHAR(10) NOT NULL,
     rezensionszeitpunkt     TIMESTAMP NOT NULL,
     punkte                  INTEGER NOT NULL,
     rezensionstext          TEXT,
