@@ -3,7 +3,6 @@ package de.unileipzig.dbpraktikum.loader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Locale;
 
@@ -36,28 +35,23 @@ public class MediaStoreLoader {
         ProductImportService productImportService = new ProductImportService();
 
         try (Connection connection = db.openConnection()) {
-            for (Product product : valProducts) {
-                try {
-                    productImportService.importProduct(connection, product);
-                } catch (SQLException ex) {
-                    System.out.println(ex);
-                }
-            }
+            productImportService.importAll(connection, valProducts);
         } catch (Exception ex) {
-            System.out.println(ex);
+            System.out.println("ERROR: Error while establishing SQL Connection.");
+            System.out.println(ex.getMessage());
         }
     }
 
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.out.println("Bitte aufrufen mit einem Dateipfad zu einer XML oder CSV Datei als Argument.");
+            System.out.println("ERROR: Please execute with a filepath to a CSV or XML file as first argument.");
             System.exit(1);
         }
 
         Path inputFile = Path.of(args[0]);
 
         if (!Files.isRegularFile(inputFile)) {
-            System.err.println("ERROR: Datei existiert nicht oder ist keine reguläre Datei: " + inputFile);
+            System.err.println("ERROR: File does not exist or is not a regular file: " + inputFile);
             System.exit(1);
         }
 
@@ -78,17 +72,18 @@ public class MediaStoreLoader {
                     case "categories":
                         loadCategoryData(rootElement);
                         break;
+
                     default:
                         break;
                 }
 
             } else {
-                System.err.println("ERROR: Nicht unterstütztes Dateiformat. Erwartet: .csv oder .xml");
+                System.err.println("ERROR: Filetype not supported. Required: .csv or .xml");
                 System.exit(1);
             }
-        } catch (Exception e) {
-            System.err.println("ERROR: Datei konnte nicht gelesen werden.");
-            System.err.println("Grund: " + e.getMessage());
+        } catch (Exception ex) {
+            System.err.println("ERROR: Could not read file.");
+            System.err.println(ex.getMessage());
             System.exit(1);
         }
     }

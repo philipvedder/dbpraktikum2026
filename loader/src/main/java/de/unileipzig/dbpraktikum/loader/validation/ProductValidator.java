@@ -2,10 +2,20 @@ package de.unileipzig.dbpraktikum.loader.validation;
 
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import de.unileipzig.dbpraktikum.exception.BlankException;
+import de.unileipzig.dbpraktikum.exception.ListEmptyException;
+import de.unileipzig.dbpraktikum.exception.MultipleValidationException;
+import de.unileipzig.dbpraktikum.exception.NotANonNegativeIntegerException;
+import de.unileipzig.dbpraktikum.exception.NotAValidDateFormatException;
+import de.unileipzig.dbpraktikum.exception.NotAnDoubleException;
+import de.unileipzig.dbpraktikum.exception.NotAnIntegerException;
+import de.unileipzig.dbpraktikum.exception.NotAnNonNegativeDoubleException;
+import de.unileipzig.dbpraktikum.exception.NullException;
+import de.unileipzig.dbpraktikum.exception.StringMaxLengthException;
+import de.unileipzig.dbpraktikum.exception.ValidationException;
+import de.unileipzig.dbpraktikum.loader.logger.ErrorLogger;
 import de.unileipzig.dbpraktikum.loader.model.Book;
 import de.unileipzig.dbpraktikum.loader.model.DVD;
 import de.unileipzig.dbpraktikum.loader.model.Music;
@@ -23,253 +33,258 @@ import de.unileipzig.dbpraktikum.loader.model.raw.ProductRaw;
 
 public class ProductValidator {
     public static List<Product> validateAll(List<ProductRaw> products) {
+        System.out.println("Validating " + products.size() + " products...");
+
         List<Product> results = new ArrayList<>();
-        int acceptedCounter = 0;
+        int invalidCounter = 0;
 
         for (ProductRaw productRaw : products) {
-            Product p = validate(productRaw);
-            if (p != null) {
-                results.add(p);
-                acceptedCounter++;
+            try {
+                Product p = validate(productRaw);
+                if (p != null)
+                    results.add(p);
+                
+            } catch (MultipleValidationException e) {
+                ErrorLogger.reportErrors(productRaw.getAsin(), productRaw.getType(), e.getExceptions());
+                invalidCounter++;
             }
         }
 
-        System.out.println(acceptedCounter + " valid Products");
-        System.out.println(products.size() - acceptedCounter + " invalid Products");
+        System.out.println(products.size() - invalidCounter + " valid Products");
+        System.out.println(invalidCounter + " invalid Products");
         return results;
     }
 
-    public static Product validate(ProductRaw p) {
-        Map<String, String> errors = new HashMap<>();
+    public static Product validate(ProductRaw p) throws MultipleValidationException {
+        List<ValidationException> exceptions = new ArrayList<>(); //List of all Exceptions which occur during the validation.
 
-        ProductType type = requireNotNull(p.getType(), "pgroup", errors);
+        //Validation of all general Product fields
+        ProductType type = requireNotNull(p.getType(), "pgroup", exceptions);
 
-        String asin = requireNonBlank(p.getAsin(), "asin", errors);
-        asin = requireStringMaxLength(asin, 10, "asin", errors);
+        String asin = requireNonBlank(p.getAsin(), "asin", exceptions);
+        asin = requireStringMaxLength(asin, 10, "asin", exceptions);
 
-        String title = requireNonBlank(p.getTitle(), "title", errors);
-        String imgUrl = (p.getImgUrl() != null && !p.getImgUrl().isBlank()) ? p.getImgUrl().trim() : null;
+        String title = requireNonBlank(p.getTitle(), "title", exceptions);
+        String imgUrl = (p.getImgUrl() != null && !p.getImgUrl().isBlank()) ? p.getImgUrl().trim() : null; //optional
         Integer salesrank = requireNonNegativeInt(p.getSalesrank(), "salesrank", null); //optional
-        List<String> similarIds = filterBlanksFromList(p.getSimilarProductIds()); //TODO: length? name of function?
+        List<String> similarIds = cleanList(p.getSimilarProductIds());
 
-        Offer offer = validateOffer(p.getOffer(), errors);
+        Offer offer = validateOffer(p.getOffer(), exceptions);
 
+        //Specific fields for the different types
+        Product finalProduct = null;
         switch (type) {
             case BOOK:
-                Book book = validateBook((BookRaw) p, errors);
-                if (book == null) return null;
-                book.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offer);
-                return book;
+                Book book = validateBook((BookRaw) p, exceptions);
+                if (book != null)
+                    book.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offer);
+                finalProduct = null;
+                break;
+
             case MUSIC_CD:
-                Music music = validateMusic((MusicRaw) p, errors);
-                if (music == null) return null;
-                music.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offer);
-                return music;
+                Music music = validateMusic((MusicRaw) p, exceptions);
+                if (music != null)
+                    music.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offer);
+                finalProduct = music;
+                break;
+                
             case DVD:
-                DVD dvd = validateDVD((DVDRaw) p, errors);
-                if (dvd == null) return null;
-                dvd.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offer);
-                return dvd;
+                DVD dvd = validateDVD((DVDRaw) p, exceptions);
+                if (dvd != null)
+                    dvd.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offer);
+                finalProduct = dvd;
+                break;
+
             default:
-                reportErrors(p, errors);
-                return null;
+                finalProduct = null;
         }
+
+        //Throw combined Exception for Validation Errors if existent
+        if (!exceptions.isEmpty()) {
+            throw new MultipleValidationException(exceptions);
+        }
+
+        //Return the final Product
+        return finalProduct;
     }
 
-    private static Offer validateOffer(PriceRaw p, Map<String, String> errors) {
+    private static Offer validateOffer(PriceRaw p, List<ValidationException> exceptions) {
         if (p == null) return null; // Items without prices are allowed by design
 
         Integer price = requireNonNegativeInt(p.price(), "price:value", null);
         if (price == null) return null; // Items without prices are allowed by design
 
         String currency = (p.currency() != null && !p.currency().isBlank()) ? p.currency().trim() : null;
-        String state = requireNonBlank(p.state(), "price:state", errors);
-        Double mult = requireNonNegativeDouble(p.mult(), "price:mult", errors);
+        String state = requireNonBlank(p.state(), "price:state", exceptions);
+        Double mult = requireNonNegativeDouble(p.mult(), "price:mult", exceptions);
 
-        if (!errors.isEmpty()) return null;
+        if (!exceptions.isEmpty()) return null;
 
         return new Offer(mult * price, currency, state);
     }
 
-    private static DVD validateDVD(DVDRaw p, Map<String, String> errors) {
-        List<String> directors = filterBlanksFromList(p.getDirectors());
-        List<String> actors = filterBlanksFromList(p.getActors());
-        List<String> creators = filterBlanksFromList(p.getCreators());
+    private static DVD validateDVD(DVDRaw p, List<ValidationException> exceptions) {
+        List<String> directors = cleanList(p.getDirectors());
+        List<String> actors = cleanList(p.getActors());
+        List<String> creators = cleanList(p.getCreators());
 
-        DVDSpecRaw spec = requireNotNull(p.getDvdSpec(), "dvdspec", errors);
-        String format = requireNonBlank(spec.format(), "dvdspec:format", errors);
-        Integer regioncode = requireNonNegativeInt(spec.regioncode(), "dvdspec:regioncode", errors);
-        Integer runningtime = requireNonNegativeInt(spec.runningtime(), "dvdspec:runningtime", errors);
+        DVDSpecRaw spec = requireNotNull(p.getDvdSpec(), "dvdspec", exceptions);
+        String format = requireNonBlank(spec.format(), "dvdspec:format", exceptions);
+        Integer regioncode = requireNonNegativeInt(spec.regioncode(), "dvdspec:regioncode", exceptions);
+        Integer runningtime = requireNonNegativeInt(spec.runningtime(), "dvdspec:runningtime", exceptions);
 
-        if (errors.keySet().size() > 0) {
-            reportErrors(p, errors);
-            return null;
-        }
+        if (!exceptions.isEmpty()) return null;
 
         return new DVD(directors, actors, creators, format, runningtime, regioncode);
     }
 
-    private static Music validateMusic(MusicRaw p, Map<String, String> errors) {
-        List<String> labels = filterBlanksFromList(p.getLabels());
-        String label = getFirstFromList(labels, "labels", errors);
+    private static Music validateMusic(MusicRaw p, List<ValidationException> exceptions) {
+        List<String> labels = cleanList(p.getLabels());
+        String label = getFirstFromList(labels, "labels", exceptions);
 
-        List<String> artists = filterBlanksFromList(p.getLabels());
-        getFirstFromList(artists, "artists", errors); // Implicitly checks if there is at least one item in the list. 
+        List<String> artists = cleanList(p.getLabels());
+        getFirstFromList(artists, "artists", exceptions); // Implicitly checks if there is at least one item in the list. 
 
-        List<String> tracks = filterBlanksFromList(p.getLabels());
+        List<String> tracks = cleanList(p.getLabels());
 
-        MusicSpecRaw spec = requireNotNull(p.getMusicSpec(), "musicspec", errors);
-        Date releaseDate = requireDate(spec.releasedate(), "musicspec:releasedate", errors);
+        MusicSpecRaw spec = requireNotNull(p.getMusicSpec(), "musicspec", exceptions);
+        Date releaseDate = requireDate(spec.releasedate(), "musicspec:releasedate", exceptions);
 
-        if (errors.keySet().size() > 0) {
-            reportErrors(p, errors);
-            return null;
-        }
+        if (!exceptions.isEmpty()) return null;
 
         return new Music(label, artists, tracks, releaseDate);
     }
 
-    private static Book validateBook(BookRaw p, Map<String, String> errors) {
-        List<String> publisherNames = filterBlanksFromList(p.getPublishers());
-        String publisherName = getFirstFromList(publisherNames, "publisher", errors);
+    private static Book validateBook(BookRaw p, List<ValidationException> exceptions) {
+        List<String> publisherNames = cleanList(p.getPublishers());
+        String publisherName = getFirstFromList(publisherNames, "publisher", exceptions);
 
-        List<String> authorNames = filterBlanksFromList(p.getAuthors());
+        List<String> authorNames = cleanList(p.getAuthors());
 
-        BookSpecRaw spec = requireNotNull(p.getBookSpec(), "bookspec", errors);
+        BookSpecRaw spec = requireNotNull(p.getBookSpec(), "bookspec", exceptions);
         
-        String isbn = requireNonBlank(spec.isbn(), "bookspec:isbn", errors);
-        isbn = requireStringMaxLength(isbn, 10, "bookspec:isbn", errors);
+        String isbn = requireNonBlank(spec.isbn(), "bookspec:isbn", exceptions);
+        isbn = requireStringMaxLength(isbn, 10, "bookspec:isbn", exceptions);
 
-        Integer pages = requireNonNegativeInt(spec.pages(), "bookspec:pages", errors);
-        Date publication = requireDate(spec.publication(), "bookspec:publication", errors);
+        Integer pages = requireNonNegativeInt(spec.pages(), "bookspec:pages", exceptions);
+        Date publication = requireDate(spec.publication(), "bookspec:publication", exceptions);
 
-        if (errors.keySet().size() > 0) {
-            reportErrors(p, errors);
-            return null;
-        }
+        if (!exceptions.isEmpty()) return null;
 
         return new Book(publisherName, authorNames, isbn, pages, publication);
     }
 
-    private static void reportErrors(ProductRaw p, Map<String, String> errors) {
-        //TODO: write to file
-
-        if (errors.isEmpty()) return;
-
-        System.out.println("Error: " + p.getType().name() + " - " + p.getAsin());
-        for (String key : errors.keySet()) {
-            System.out.println(key + " : " + errors.get(key));
-        }
-        System.out.println("================");
-    }
-
     // Validation Methods
-    private static Date requireDate(String s, String name, Map<String, String> errors) {
-        s = requireNonBlank(s, name, errors);
+    private static Date requireDate(String s, String name, List<ValidationException> exceptions) {
+        s = requireNonBlank(s, name, exceptions);
         Date result = null;
 
         try {
             result = Date.valueOf(s);
         } catch (IllegalArgumentException e) {
-            if (errors != null) errors.put(name, "Value must be in valid timestamp format yyyy-[m]m-[d]d. Got: " + s);
+            if (exceptions != null) exceptions.add(new NotAValidDateFormatException(name, s));
             return null;
         }
 
         return result;
     }
 
-    private static <T> T getFirstFromList(List<T> list, String name, Map<String, String> errors) {
+    private static <T> T getFirstFromList(List<T> list, String name, List<ValidationException> exceptions) {
         if (list == null || list.size() == 0) {
-            if (errors != null) errors.put(name, "List is empty.");
+            if (exceptions != null) exceptions.add(new ListEmptyException(name));
             return null;
         }
 
         return list.get(0);
     }
 
-    private static List<String> filterBlanksFromList(List<String> list) {
+    private static List<String> cleanList(List<String> list) {
         if (list == null) return null;
 
         List<String> result = list.stream()
                                 .filter((s) -> (s != null && !s.isBlank()))
                                 .map((s) -> s.trim())
+                                .distinct()
                                 .toList();
 
         return result;
     }
 
-    private static Integer requireInt(String s, String name, Map<String, String> errors) {
-        s = requireNonBlank(s, name, errors);
+    private static Integer requireInt(String s, String name, List<ValidationException> exceptions) {
+        s = requireNonBlank(s, name, exceptions);
         Integer result = null;
 
         try {
             result = Integer.parseInt(s);
         } catch (NumberFormatException e) {
-            if (errors != null) errors.put(name, "Value must be Integer. Got: " + s);
+            if (exceptions != null) exceptions.add(new NotAnIntegerException(name, s));
             return null;
         }
 
         return result;
     }
 
-    private static Integer requireNonNegativeInt(String s, String name, Map<String, String> errors) {
-        Integer result = requireInt(s, name, errors);
+    private static Integer requireNonNegativeInt(String s, String name, List<ValidationException> exceptions) {
+        Integer result = requireInt(s, name, exceptions);
         if (result == null) return null;
 
         if (result < 0) {
-            if (errors != null) errors.put(name, "Value must be >= 0. Got: " + s);
+            if (exceptions != null) exceptions.add(new NotANonNegativeIntegerException(name, s));
         }
 
         return result;
     }
 
-    private static Double requireDouble(String s, String name, Map<String, String> errors) {
-        s = requireNonBlank(s, name, errors);
+    private static Double requireDouble(String s, String name, List<ValidationException> exceptions) {
+        s = requireNonBlank(s, name, exceptions);
         Double result = null;
 
         try {
             result = Double.parseDouble(s);
         } catch (NumberFormatException e) {
-            if (errors != null) errors.put(name, "Value must be a floating point value. Got: " + s);
+            if (exceptions != null) exceptions.add(new NotAnDoubleException(name, s));
             return null;
         }
 
         return result;
     }
 
-    private static Double requireNonNegativeDouble(String s, String name, Map<String, String> errors) {
-        Double result = requireDouble(s, name, errors);
+    private static Double requireNonNegativeDouble(String s, String name, List<ValidationException> exceptions) {
+        Double result = requireDouble(s, name, exceptions);
         if (result == null) return null;
 
         if (result < 0) {
-            if (errors != null) errors.put(name, "Value must be >= 0.0. Got: " + s);
+            if (exceptions != null) exceptions.add(new NotAnNonNegativeDoubleException(name, s));
         }
 
         return result;
     }
 
-    private static <T> T requireNotNull(T o, String name, Map<String, String> errors) {
+    private static <T> T requireNotNull(T o, String name, List<ValidationException> exceptions) {
         if (o == null) {
-            if (errors != null) errors.put(name, "Value must not be NULL");
+            if (exceptions != null) exceptions.add(new NullException(name));
         }
 
         return o;
     }
 
-    private static String requireNonBlank(String s, String name, Map<String, String> errors) {
-        if (s == null || s.isBlank()) {
-            if (errors != null) errors.put(name, "Value must not be empty");
+    private static String requireNonBlank(String s, String name, List<ValidationException> exceptions) {
+        s = requireNotNull(s, name, exceptions);
+        if (s == null) return null;
+
+        if (s.isBlank()) {
+            if (exceptions != null) exceptions.add(new BlankException(name));
             return null;
         }
 
         return s.trim();
     }
 
-    private static String requireStringMaxLength(String s, int numberOfChars, String name, Map<String, String> errors) {
+    private static String requireStringMaxLength(String s, int numberOfChars, String name, List<ValidationException> exceptions) {
         if (s == null) return null;
 
         if (s.length() > numberOfChars) {
-            if (errors != null) errors.put(name, "Value must not have more than " + numberOfChars + " characters. Has: " + s.length());
+            if (exceptions != null) exceptions.add(new StringMaxLengthException(name, s, numberOfChars));
             return null;
         }
 
