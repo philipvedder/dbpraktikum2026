@@ -4,6 +4,10 @@ import java.util.List;
 
 import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
 
+/**
+ * Raw model class for parsed <item> XML element of type DVD. 
+ * All information stored in Strings, and will be converted during validation. 
+ */
 public class DVDRaw extends ProductRaw {
     private DVDSpecRaw dvdSpec;
     private List<String> directors;
@@ -31,6 +35,7 @@ public class DVDRaw extends ProductRaw {
         this.creators = creators;
     }
 
+    //Getters
     public DVDSpecRaw getDvdSpec() {
         return dvdSpec;
     }

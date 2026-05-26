@@ -4,6 +4,10 @@ import java.util.List;
 
 import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
 
+/**
+ * Typed DVD model class. 
+ * Extends Product with specific attributes. 
+ */
 public class DVD extends Product {
     private List<String> directorNames;
     private List<String> actorNames;
@@ -37,6 +41,7 @@ public class DVD extends Product {
         this.regioncode = regioncode;
     }
 
+    // Constructor for only DVD specific variables
     public DVD(
         List<String> directorNames,
         List<String> actorNames,
@@ -55,6 +60,7 @@ public class DVD extends Product {
         this.regioncode = regioncode;
     }
 
+    //Getter
     public List<String> getDirectorNames() {
         return directorNames;
     }

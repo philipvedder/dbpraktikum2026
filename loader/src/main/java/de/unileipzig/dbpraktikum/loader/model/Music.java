@@ -5,6 +5,10 @@ import java.util.List;
 
 import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
 
+/**
+ * Typed Music model class. 
+ * Extends Product with specific attributes. 
+ */
 public class Music extends Product {
     private String labelName;
     private List<String> artistNames;
@@ -32,6 +36,7 @@ public class Music extends Product {
         this.releaseDate = releaseDate;
     }
 
+    // Constructor for only Music specific variables
     public Music(
         String labelName,
         List<String> artistNames,
@@ -46,6 +51,7 @@ public class Music extends Product {
         this.releaseDate = releaseDate;
     }
 
+    //Getters
     public String getLabelName() {
         return labelName;
     }

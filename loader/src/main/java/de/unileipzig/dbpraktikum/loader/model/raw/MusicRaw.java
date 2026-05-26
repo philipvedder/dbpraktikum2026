@@ -4,6 +4,10 @@ import java.util.List;
 
 import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
 
+/**
+ * Raw model class for parsed <item> XML element of type MusicCD. 
+ * All information stored in Strings, and will be converted during validation. 
+ */
 public class MusicRaw extends ProductRaw {
     private MusicSpecRaw musicSpec;
     private List<String> labels;
@@ -31,6 +35,7 @@ public class MusicRaw extends ProductRaw {
         this.tracks = tracks;
     }
 
+    //Getters
     public MusicSpecRaw getMusicSpec() {
         return musicSpec;
     }

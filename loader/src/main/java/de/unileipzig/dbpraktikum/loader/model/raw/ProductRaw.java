@@ -4,6 +4,10 @@ import java.util.List;
 
 import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
 
+/**
+ * Raw model class for parsed <item> XML element. Extended by Type specific classes BookRaw, MusicRaw and DVDRaw.  
+ * All information stored in Strings, and will be converted during validation. 
+ */
 public class ProductRaw {
     private String asin;
     private ProductType type;
@@ -24,6 +28,7 @@ public class ProductRaw {
         this.offer = offer;
     }
 
+    //Getters
     public String getAsin() {
         return asin;
     }

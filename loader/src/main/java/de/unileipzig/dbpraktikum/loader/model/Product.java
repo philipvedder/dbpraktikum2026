@@ -4,14 +4,17 @@ import java.util.List;
 
 import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
 
+/**
+ * Product base model class. Extended by Music, Book and DVD. 
+ */
 public class Product {
-    private String asin;
-    private ProductType type;
+    private String asin; //ID
+    private ProductType type; //Type IN (Book, Music, DVD)
     private String title;
-    private Integer salesrank;
-    private String imgUrl;
+    private Integer salesrank; //Optional
+    private String imgUrl; //Optional
     private List<String> similarProductIds;
-    private Offer offer;
+    private Offer offer; //Price information
 
     public Product() {};
     
@@ -25,6 +28,7 @@ public class Product {
         this.offer = offer;
     }
 
+    //Method to set the product data late, for subclasses. 
     public void lateSetProductData(
         String asin, 
         ProductType type, 
@@ -43,6 +47,7 @@ public class Product {
         this.offer = offer;   
     }
 
+    //Getters
     public String getAsin() {
         return asin;
     }
