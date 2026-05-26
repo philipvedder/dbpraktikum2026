@@ -22,15 +22,29 @@ import de.unileipzig.dbpraktikum.loader.parser.XMLShopParser;
 import de.unileipzig.dbpraktikum.loader.validation.CategoryValidator;
 import de.unileipzig.dbpraktikum.loader.validation.ShopValidator;
 
+/**
+ * Main Class of Media Store XML and CSV Loader. 
+ * 
+ * Run with from /loader directory with
+ * mvn exec:java -Dexec.mainClass=de.unileipzig.dbpraktikum.loader.MediaStoreLoader -Dexec.args="../data/FILEPATH"
+ */
 public class MediaStoreLoader {
 
+    /**
+     * Loading procedure for <categories> XML Files
+     * @param rootElement <categories> XML root element
+     */
     private static void loadCategoryData(Element rootElement) {
+        //Read file content to objects. Here, every filetype is still a String, and nothing is validated.
         List<Category> rawCategories = XMLCategoryParser.parseXmlRoot(rootElement);
+        //Validate to typed Objects.
         List<Category> valCategories = CategoryValidator.validateAll(rawCategories);
 
+        //Initialize DB Connection and Import Service
         DB db = new DB();
         CategoriesImportService categoriesImportService = new CategoriesImportService();
 
+        //Establish DB connection and insert all new Elements
         try (Connection connection = db.openConnection()) {
             categoriesImportService.importCategories(connection, valCategories);
         } catch (Exception ex) {
@@ -39,13 +53,21 @@ public class MediaStoreLoader {
         }
     }
 
+    /**
+     * Loading procedure for <shop> XML Files
+     * @param rootElement <shop ...> XML root element
+     */
     private static void loadShopData(Element rootElement) {
+        //Read file content to objects. Here, every filetype is still a String, and nothing is validated.
         ShopRaw shopRaw = XMLShopParser.parseXmlRoot(rootElement);
+        //Validate to typed Objects.
         Shop shopVal = ShopValidator.validate(shopRaw);
         
+        //Initialize DB Connection and Import Service
         DB db = new DB();
         ShopImportService shopImportService = new ShopImportService();
 
+        //Establish DB connection and insert all new Elements
         try (Connection connection = db.openConnection()) {
             shopImportService.importShop(connection, shopVal);
         } catch (Exception ex) {
@@ -54,16 +76,22 @@ public class MediaStoreLoader {
         }
     }
 
+    /**
+     * Entry method for Loader. Checks if input file exists and then calls specific CSV or XML methods on it.  
+     * @param args Index 0: Path to XML or CSV File
+     */
     public static void main(String[] args) {
+        //Check if Path it given
         if (args.length != 1) {
             System.out.println("ERROR: Please execute with a filepath to a CSV or XML file as first argument.");
             System.exit(1);
         }
-
-        ErrorLogger.clear();
-
         Path inputFile = Path.of(args[0]);
 
+        //Clear Error TXT
+        ErrorLogger.clear();
+
+        //Check if File is Valid
         if (!Files.isRegularFile(inputFile)) {
             System.err.println("ERROR: File does not exist or is not a regular file: " + inputFile);
             System.exit(1);
@@ -71,13 +99,16 @@ public class MediaStoreLoader {
 
         String fileName = inputFile.getFileName().toString().toLowerCase(Locale.ROOT);
 
+        //Load specific methods on File, depending on Filename and input type
         try {
             if (fileName.endsWith(".csv")) {
-                CSVReader.readCsv(inputFile);
+                CSVReader.readCsv(inputFile); //TODO
 
             } else if (fileName.endsWith(".xml")) {
+                //Read XML File
                 Element rootElement = XMLReader.readXmlFile(inputFile);
 
+                //Call loader method, depending on rootElement TagName. 
                 switch (rootElement.getTagName()) {
                     case "shop":
                         loadShopData(rootElement);
@@ -101,6 +132,7 @@ public class MediaStoreLoader {
             System.exit(1);
         }
 
+        //Print Error summary
         ErrorLogger.printSummary();
     }
 }

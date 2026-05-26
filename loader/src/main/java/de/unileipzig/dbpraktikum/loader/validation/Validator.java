@@ -15,8 +15,21 @@ import de.unileipzig.dbpraktikum.exception.NullException;
 import de.unileipzig.dbpraktikum.exception.StringMaxLengthException;
 import de.unileipzig.dbpraktikum.exception.ValidationException;
 
-public class Validator {
-    // Validation Methods
+/**
+ * Abstract Validator class providing general validation methods. 
+ * All these methods are following an equal logic: If validation fails, return null, and add the corresponding exception to the exceptions list.
+ * These are not thrown to prevent the validation to end on the first error. We want to collect and report all errors on every object. 
+ */
+public abstract class Validator {
+    /**
+     * Converts a String to a Date if possible. Otherwise, adds NotAValidDateFormatException to exceptions.
+     * Adds BlankException if input String is Blank.
+     * Adds NullException if input String is NULL. 
+     * @param s String to validate
+     * @param name String with name of Parameter, which is getting checked. This is only for Error reporting.
+     * @param exceptions List<ValidationException>, where exceptions will be added. 
+     * @return Valid Date or NULL
+     */
     protected static Date requireDate(String s, String name, List<ValidationException> exceptions) {
         s = requireNonBlank(s, name, exceptions);
         if (s == null) return null;
@@ -33,6 +46,13 @@ public class Validator {
         return result;
     }
 
+    /**
+     * Returns the first Element of a List<T>. Otherwise, adds ListEmptyException to exceptions.
+     * @param list list to get first item from
+     * @param name String with name of Parameter, which is getting checked. This is only for Error reporting.
+     * @param exceptions List<ValidationException>, where exceptions will be added. 
+     * @return Valid Element of Type T (Type of input List), or NULL
+     */
     protected static <T> T getFirstFromList(List<T> list, String name, List<ValidationException> exceptions) {
         if (list == null || list.size() == 0) {
             if (exceptions != null) exceptions.add(new ListEmptyException(name));
@@ -42,6 +62,14 @@ public class Validator {
         return list.get(0);
     }
 
+    /**
+     * Returns a cleaned List<String> object. Cleaning includes:
+     * - Removal of distinct objects
+     * - String Trimming
+     * - Removal of NULL and Blank Strings
+     * @param list list to clean
+     * @return Cleaned up List
+     */
     protected static List<String> cleanList(List<String> list) {
         if (list == null) return null;
 
@@ -54,10 +82,20 @@ public class Validator {
         return result;
     }
 
+    /**
+     * Converts a String to a Integer if possible. 
+     * Otherwise, adds NotAnIntegerException to exceptions.
+     * Adds BlankException if String is Blank
+     * Adds NullException if String is NULL
+     * @param s String to validate
+     * @param name String with name of Parameter, which is getting checked. This is only for Error reporting.
+     * @param exceptions List<ValidationException>, where exceptions will be added. 
+     * @return Valid Integer or NULL
+     */
     protected static Integer requireInt(String s, String name, List<ValidationException> exceptions) {
         s = requireNonBlank(s, name, exceptions);
         if (s == null) return null;
-        
+
         Integer result = null;
 
         try {
@@ -70,6 +108,17 @@ public class Validator {
         return result;
     }
 
+    /**
+     * Converts a String to a Non-Negative Integer if possible. 
+     * Otherwise, adds NotANonNegativeIntegerException to exceptions. 
+     * Adds NotAnIntegerException if String is no Integer.
+     * Adds BlankException if String is Blank
+     * Adds NullException if String is NULL
+     * @param s String to validate
+     * @param name String with name of Parameter, which is getting checked. This is only for Error reporting.
+     * @param exceptions List<ValidationException>, where exceptions will be added. 
+     * @return Valid Integer >= 0 or NULL
+     */
     protected static Integer requireNonNegativeInt(String s, String name, List<ValidationException> exceptions) {
         Integer result = requireInt(s, name, exceptions);
         if (result == null) return null;
@@ -82,6 +131,17 @@ public class Validator {
         return result;
     }
 
+    /**
+     * Converts a String to a Positive Integer if possible. 
+     * Otherwise, adds NotAPositiveIntegerException to exceptions. 
+     * Adds NotAnIntegerException if String is no Integer.
+     * Adds BlankException if String is Blank
+     * Adds NullException if String is NULL
+     * @param s String to validate
+     * @param name String with name of Parameter, which is getting checked. This is only for Error reporting.
+     * @param exceptions List<ValidationException>, where exceptions will be added. 
+     * @return Valid Integer >0 or NULL
+     */
     protected static Integer requirePositiveInt(String s, String name, List<ValidationException> exceptions) {
         Integer result = requireInt(s, name, exceptions);
         if (result == null) return null;
@@ -94,6 +154,16 @@ public class Validator {
         return result;
     }
 
+    /**
+     * Converts a String to a Double if possible. 
+     * Otherwise, adds NotAnDoubleException to exceptions.
+     * Adds BlankException if String is Blank
+     * Adds NullException if String is NULL
+     * @param s String to validate
+     * @param name String with name of Parameter, which is getting checked. This is only for Error reporting.
+     * @param exceptions List<ValidationException>, where exceptions will be added. 
+     * @return Valid Double or NULL
+     */
     protected static Double requireDouble(String s, String name, List<ValidationException> exceptions) {
         s = requireNonBlank(s, name, exceptions);
         Double result = null;
@@ -108,6 +178,17 @@ public class Validator {
         return result;
     }
 
+    /**
+     * Converts a String to a Non-Negative Double if possible. 
+     * Otherwise, adds NotAnNonNegativeDoubleException to exceptions.
+     * Adds NotAnDoubleException if String is not a Double
+     * Adds BlankException if String is Blank
+     * Adds NullException if String is NULL
+     * @param s String to validate
+     * @param name String with name of Parameter, which is getting checked. This is only for Error reporting.
+     * @param exceptions List<ValidationException>, where exceptions will be added. 
+     * @return Valid Double >= 0 or NULL
+     */
     protected static Double requireNonNegativeDouble(String s, String name, List<ValidationException> exceptions) {
         Double result = requireDouble(s, name, exceptions);
         if (result == null) return null;
@@ -119,6 +200,14 @@ public class Validator {
         return result;
     }
 
+    /**
+     * Checks that the Input object is not null. 
+     * Otherwise, adds NullException to exceptions.
+     * @param o Object to validate
+     * @param name String with name of Parameter, which is getting checked. This is only for Error reporting.
+     * @param exceptions List<ValidationException>, where exceptions will be added. 
+     * @return The input object
+     */
     protected static <T> T requireNotNull(T o, String name, List<ValidationException> exceptions) {
         if (o == null) {
             if (exceptions != null) exceptions.add(new NullException(name));
@@ -127,6 +216,15 @@ public class Validator {
         return o;
     }
 
+    /**
+     * Checks that the Input String is not Blank. 
+     * Otherwise, adds BlankException to exceptions.
+     * Adds NullException if input String is null.
+     * @param o String to validate
+     * @param name String with name of Parameter, which is getting checked. This is only for Error reporting.
+     * @param exceptions List<ValidationException>, where exceptions will be added. 
+     * @return Non-Blank String or NULL
+     */
     protected static String requireNonBlank(String s, String name, List<ValidationException> exceptions) {
         s = requireNotNull(s, name, exceptions);
         if (s == null) return null;
@@ -139,6 +237,15 @@ public class Validator {
         return s.trim();
     }
 
+    /**
+     * Checks that the Input String is not longer that numberOfChars. 
+     * Otherwise, adds StringMaxLengthException to exceptions.
+     * @param o String to validate
+     * @param numberOfChars Maximum alowed number of characters
+     * @param name String with name of Parameter, which is getting checked. This is only for Error reporting.
+     * @param exceptions List<ValidationException>, where exceptions will be added. 
+     * @return Input String or NULL if too long. 
+     */
     protected static String requireStringMaxLength(String s, int numberOfChars, String name, List<ValidationException> exceptions) {
         if (s == null) return null;
 

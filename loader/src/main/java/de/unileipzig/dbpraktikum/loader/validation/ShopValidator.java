@@ -11,10 +11,15 @@ import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
 import de.unileipzig.dbpraktikum.loader.model.raw.*;
 
 public class ShopValidator extends Validator {
+    /**
+     * Validates the input shop object by validating and converting all its variables.
+     * @param shop ShopRaw input, where all variabels are of Type String. 
+     * @return Shop object with correct types.
+     */
     public static Shop validate(ShopRaw shop) {
         System.out.println("Validating Shop with " + shop.products().size() + " products...");
 
-        //Shop obj Validation
+        //Shop object Validation
         List<ValidationException> shopExceptions = new ArrayList<>(); //List of all Exceptions which occur during the validation.
         String name = requireNonBlank(shop.name(), "name", shopExceptions);
         String street = requireNonBlank(shop.street(), "street", shopExceptions);
@@ -26,7 +31,7 @@ public class ShopValidator extends Validator {
             System.exit(1);
         }
 
-        //Product obj Validation
+        //Product objects Validation
         List<Product> productResults = new ArrayList<>();
         int invalidCounter = 0;
 
@@ -48,6 +53,12 @@ public class ShopValidator extends Validator {
         return new Shop(name, street, zip, productResults);
     }
 
+    /**
+     * Validates the input ProductRaw object by validating and converting all its variables.
+     * @param p ProductRaw input, where all variabels are of Type String. 
+     * @return Object of Subtype of Product with correct Types and validated. 
+     * @throws MultipleValidationException, if any Validation threw an error. MultipleValidationException contains a list of all ValidationExceptions that occured on this Product. s
+     */
     public static Product validateProduct(ProductRaw p) throws MultipleValidationException {
         List<ValidationException> exceptions = new ArrayList<>(); //List of all Exceptions which occur during the validation.
 
@@ -60,7 +71,7 @@ public class ShopValidator extends Validator {
         String title = requireNonBlank(p.getTitle(), "title", exceptions);
         String imgUrl = (p.getImgUrl() != null && !p.getImgUrl().isBlank()) ? p.getImgUrl().trim() : null; //optional
         Integer salesrank = requireNonNegativeInt(p.getSalesrank(), "salesrank", null); //optional
-        List<String> similarIds = validateSimilars(asin, p.getSimilarProductIds(), exceptions);
+        List<String> similarIds = validateSimilars(asin, p.getSimilarProductIds());
 
         Offer offer = validateOffer(p.getOffer(), exceptions);
 
@@ -101,7 +112,13 @@ public class ShopValidator extends Validator {
         return finalProduct;
     }
 
-    private static List<String> validateSimilars(String productId, List<String> similarIds, List<ValidationException> exceptions) {
+    /**
+     * Validates a List of Similar Product IDs. This includes the cleanList procedure and the removal of the parent product id. 
+     * @param productId Id of parent Product
+     * @param similarIds List of similar Product IDs.
+     * @return Validated and cleaned List of similar IDS.
+     */
+    private static List<String> validateSimilars(String productId, List<String> similarIds) {
         similarIds = cleanList(similarIds);
         if (similarIds.contains(productId)) {
             similarIds.remove(productId);
@@ -110,6 +127,12 @@ public class ShopValidator extends Validator {
         return similarIds;
     }
 
+    /**
+     * 
+     * @param p
+     * @param exceptions
+     * @return
+     */
     private static Offer validateOffer(PriceRaw p, List<ValidationException> exceptions) {
         if (p == null) return null; // Items without prices are allowed
         if (p.price() == null || p.price().isBlank()) return null; // Items without prices are allowed
