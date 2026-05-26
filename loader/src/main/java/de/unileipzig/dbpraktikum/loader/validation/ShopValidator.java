@@ -4,58 +4,51 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.unileipzig.dbpraktikum.exception.BlankException;
-import de.unileipzig.dbpraktikum.exception.ListEmptyException;
-import de.unileipzig.dbpraktikum.exception.MultipleValidationException;
-import de.unileipzig.dbpraktikum.exception.NotANonNegativeIntegerException;
-import de.unileipzig.dbpraktikum.exception.NotAValidDateFormatException;
-import de.unileipzig.dbpraktikum.exception.NotAnDoubleException;
-import de.unileipzig.dbpraktikum.exception.NotAnIntegerException;
-import de.unileipzig.dbpraktikum.exception.NotAnNonNegativeDoubleException;
-import de.unileipzig.dbpraktikum.exception.NullException;
-import de.unileipzig.dbpraktikum.exception.StringMaxLengthException;
-import de.unileipzig.dbpraktikum.exception.ValidationException;
+import de.unileipzig.dbpraktikum.exception.*;
 import de.unileipzig.dbpraktikum.loader.logger.ErrorLogger;
-import de.unileipzig.dbpraktikum.loader.model.Book;
-import de.unileipzig.dbpraktikum.loader.model.DVD;
-import de.unileipzig.dbpraktikum.loader.model.Music;
-import de.unileipzig.dbpraktikum.loader.model.Offer;
-import de.unileipzig.dbpraktikum.loader.model.Product;
+import de.unileipzig.dbpraktikum.loader.model.*;
 import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
-import de.unileipzig.dbpraktikum.loader.model.raw.BookRaw;
-import de.unileipzig.dbpraktikum.loader.model.raw.BookSpecRaw;
-import de.unileipzig.dbpraktikum.loader.model.raw.DVDRaw;
-import de.unileipzig.dbpraktikum.loader.model.raw.DVDSpecRaw;
-import de.unileipzig.dbpraktikum.loader.model.raw.MusicRaw;
-import de.unileipzig.dbpraktikum.loader.model.raw.MusicSpecRaw;
-import de.unileipzig.dbpraktikum.loader.model.raw.PriceRaw;
-import de.unileipzig.dbpraktikum.loader.model.raw.ProductRaw;
+import de.unileipzig.dbpraktikum.loader.model.raw.*;
 
-public class ProductValidator {
-    public static List<Product> validateAll(List<ProductRaw> products) {
-        System.out.println("Validating " + products.size() + " products...");
+public class ShopValidator {
+    public static Shop validate(ShopRaw shop) {
+        System.out.println("Validating Shop with " + shop.products().size() + " products...");
 
-        List<Product> results = new ArrayList<>();
+        //Shop obj Validation
+        List<ValidationException> shopExceptions = new ArrayList<>(); //List of all Exceptions which occur during the validation.
+        String name = requireNonBlank(shop.name(), "name", shopExceptions);
+        String street = requireNonBlank(shop.street(), "street", shopExceptions);
+        String zip = requireNonBlank(shop.zip(), "zip", shopExceptions);
+
+        if (!shopExceptions.isEmpty()) {
+            ErrorLogger.reportErrors("Shop " + shop.name(), shopExceptions);
+            System.out.println("Shop encoding invalid. Stopping early.");
+            System.exit(1);
+        }
+
+        //Product obj Validation
+        List<Product> productResults = new ArrayList<>();
         int invalidCounter = 0;
 
-        for (ProductRaw productRaw : products) {
+        for (ProductRaw productRaw : shop.products()) {
             try {
-                Product p = validate(productRaw);
+                Product p = validateProduct(productRaw);
                 if (p != null)
-                    results.add(p);
+                    productResults.add(p);
                 
             } catch (MultipleValidationException e) {
-                ErrorLogger.reportErrors(productRaw.getAsin(), productRaw.getType(), e.getExceptions());
+                ErrorLogger.reportErrors(productRaw.getAsin() + " - " + productRaw.getType().name(), e.getExceptions());
                 invalidCounter++;
             }
         }
 
-        System.out.println(products.size() - invalidCounter + " valid Products");
+        //Result
+        System.out.println(shop.products().size() - invalidCounter + " valid Products");
         System.out.println(invalidCounter + " invalid Products");
-        return results;
+        return new Shop(name, street, zip, productResults);
     }
 
-    public static Product validate(ProductRaw p) throws MultipleValidationException {
+    public static Product validateProduct(ProductRaw p) throws MultipleValidationException {
         List<ValidationException> exceptions = new ArrayList<>(); //List of all Exceptions which occur during the validation.
 
         //Validation of all general Product fields
@@ -67,7 +60,7 @@ public class ProductValidator {
         String title = requireNonBlank(p.getTitle(), "title", exceptions);
         String imgUrl = (p.getImgUrl() != null && !p.getImgUrl().isBlank()) ? p.getImgUrl().trim() : null; //optional
         Integer salesrank = requireNonNegativeInt(p.getSalesrank(), "salesrank", null); //optional
-        List<String> similarIds = cleanList(p.getSimilarProductIds());
+        List<String> similarIds = validateSimilars(asin, p.getSimilarProductIds(), exceptions);
 
         Offer offer = validateOffer(p.getOffer(), exceptions);
 
@@ -78,7 +71,7 @@ public class ProductValidator {
                 Book book = validateBook((BookRaw) p, exceptions);
                 if (book != null)
                     book.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offer);
-                finalProduct = null;
+                finalProduct = book;
                 break;
 
             case MUSIC_CD:
@@ -108,13 +101,21 @@ public class ProductValidator {
         return finalProduct;
     }
 
+    private static List<String> validateSimilars(String productId, List<String> similarIds, List<ValidationException> exceptions) {
+        similarIds = cleanList(similarIds);
+        if (similarIds.contains(productId)) {
+            similarIds.remove(productId);
+        }
+
+        return similarIds;
+    }
+
     private static Offer validateOffer(PriceRaw p, List<ValidationException> exceptions) {
-        if (p == null) return null; // Items without prices are allowed by design
+        if (p == null) return null; // Items without prices are allowed
+        if (p.price() == null || p.price().isBlank()) return null; // Items without prices are allowed
 
-        Integer price = requireNonNegativeInt(p.price(), "price:value", null);
-        if (price == null) return null; // Items without prices are allowed by design
-
-        String currency = (p.currency() != null && !p.currency().isBlank()) ? p.currency().trim() : null;
+        Integer price = requirePositiveInt(p.price(), "price:value", exceptions);
+        String currency = requireNonBlank(p.currency(), "price:currency", exceptions);
         String state = requireNonBlank(p.state(), "price:state", exceptions);
         Double mult = requireNonNegativeDouble(p.mult(), "price:mult", exceptions);
 
@@ -230,6 +231,19 @@ public class ProductValidator {
 
         if (result < 0) {
             if (exceptions != null) exceptions.add(new NotANonNegativeIntegerException(name, s));
+            return null;
+        }
+
+        return result;
+    }
+
+    private static Integer requirePositiveInt(String s, String name, List<ValidationException> exceptions) {
+        Integer result = requireInt(s, name, exceptions);
+        if (result == null) return null;
+
+        if (result <= 0) {
+            if (exceptions != null) exceptions.add(new NotAPositiveIntegerException(name, s));
+            return null;
         }
 
         return result;

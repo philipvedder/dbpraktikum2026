@@ -1,0 +1,2627 @@
+ERROR: B00005YH0L - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B0000061MY - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: 389830695X - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B000006MIG - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B00008F5FA - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000005CRA - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B00000DLX7 - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000067NR4 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000DKKVL - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0000UM0HG - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00065VRX8 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0006BLIYA - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0009JOOZE - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BM7U6Y - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B000AMF7X8 - BOOK
+bookspec:isbn : Value must not be NULL
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B000850GZQ - BOOK
+bookspec:isbn : Value must not be NULL
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B000AGK83S - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B000AMF7XI - BOOK
+bookspec:isbn : Value must not be NULL
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B0001XLXRU - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B00006L746 - BOOK
+bookspec:isbn : Value must not be NULL
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B00017YYFE - BOOK
+bookspec:isbn : Value must not be NULL
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B000BYVJUA - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B000007OWQ - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B00007L6R5 - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B000C1OYU4 - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B000BJ7CHO - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B00006L748 - BOOK
+bookspec:isbn : Value must not be NULL
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B00000D9VP - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000C8VDH4 - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B000CNF4YC - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B000069KNL - BOOK
+bookspec:isbn : Value must not be NULL
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B00008G4IU - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000AC5B1G - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B0000506SC - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000003D1R - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000056PR7 - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000005IW3 - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B00006GEL7 - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B0000015IZ - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000003LW1 - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B0009MWB60 - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: 3899406788 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3895849995 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3895847011 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3593376946 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3866151187 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3898303039 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3895847038 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 386615111X - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3866151071 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3866040733 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3866151098 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3898304590 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3800051664 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3866040156 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3785555474 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3833959819 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3866151179 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 051 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 398081890X - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3466457513 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3866040687 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3866040555 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3899407180 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3899035119 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 386615108X - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 340780945X - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3866151160 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3491911818 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3593379031 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3866040113 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3899401719 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B0001WGER0 - BOOK
+bookspec:isbn : Value must not be NULL
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3935036787 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3886985113 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3466456681 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3593376881 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3866151101 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 378910079X - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3876513006 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 389830583X - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3899401883 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3893859861 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3899400461 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3897154935 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3831814767 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3866040059 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3898303446 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B0001WGERU - BOOK
+bookspec:isbn : Value must not be NULL
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 349188795X - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3899035100 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B000003LVO - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000007SLA - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B00005NTTQ - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B00001WRKN - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B00006GEL8 - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B0006OL5E0 - BOOK
+bookspec:isbn : Value must not be NULL
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B00005Q673 - MUSIC_CD
+price:value : Value must be >= 0. Got: -1037
+================
+ERROR: B000BGIAY6 - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00013YWH8 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BX0Z9M - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0007QS1VW - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0009VJVJG - DVD
+price:value : Value must be >= 0. Got: 0
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000BRBH90 - DVD
+price:value : Value must be >= 0. Got: 0
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000BW9BZW - DVD
+price:value : Value must be >= 0. Got: 0
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00009LW5L - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000B5KEE6 - DVD
+price:value : Value must be >= 0. Got: 0
+================
+ERROR: B0009NSATG - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0007QGSD0 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000YWHOI - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BPNCXQ - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000C50MRY - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BOG1N0 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0007DDPWK - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00007FOO0 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BV5XGO - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0009HL8EQ - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0000E3HLD - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000A6C23W - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BKHF8E - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BLI5XC - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000BM3YA0 - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000BEZR94 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000068RQ5 - DVD
+price:value : Value must be >= 0. Got: 0
+================
+ERROR: B0000DG7BZ - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00007DXEC - DVD
+title : Value must not be NULL
+================
+ERROR: B000BRY67U - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000BQ5J8Q - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0009HLB3O - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BOIV4W - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0007Z0ZBM - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00006316A - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BKSHIG - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000B6699O - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BPLPXA - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000B5KSN8 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000B7AOUS - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0001EQHGG - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000B7VZU6 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000DB56Q - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00061S0K0 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BYNESA - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0003HGWNE - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000DBDJP - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BUEP6Y - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BEVDR4 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00006RJSG - DVD
+price:value : Value must be >= 0. Got: 0
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000B9TVDW - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000BNDBMK - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0000C03DD - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000B7VZUG - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0009JDS4M - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000A3OONQ - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000075AIV - DVD
+price:value : Value must be >= 0. Got: 0
+================
+ERROR: B000051SAY - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00005RFTS - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0000CGP44 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0009ZE7PA - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000A9QL1I - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000AANB9M - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000094HLU - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00007BHOE - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0000A0I94 - DVD
+price:value : Value must be >= 0. Got: 0
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0001ELYGO - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000A1IE5C - MUSIC_CD
+price:value : Value must be >= 0. Got: 0
+================
+ERROR: B000BNTAWK - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00005NYAY - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00005U0GD - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000BITGHE - DVD
+price:value : Value must be >= 0. Got: 0
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00062ICW0 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0006O9MWW - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00005R7UI - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BFH6HY - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00005JDG7 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000176N1W - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0006BLIYK - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0001KZN74 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00007KGAO - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0006JJFG0 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00005TQ47 - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00063F7OK - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0001NNLQ6 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00011MK7Y - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0007UPSZ0 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000D7ZDY - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000CCNU1 - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000ATJYZ8 - DVD
+price:value : Value must be >= 0. Got: 0
+================
+ERROR: B0002OWWSW - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000PCBFW - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0002W19UG - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00008IDM1 - DVD
+price:value : Value must be >= 0. Got: 0
+================
+ERROR: B000BWPQZ6 - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0001NDIZ0 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000A5CEPO - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00006OA4U - DVD
+price:value : Value must be >= 0. Got: 0
+================
+ERROR: B0002A4J3W - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000079DF7 - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00005JRTD - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000V76CE - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0006ICFI6 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0009QYRY0 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000683TJK - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000640P64 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0001OGUJA - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0007N4MRW - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00008IDM9 - DVD
+price:value : Value must be >= 0. Got: 0
+================
+ERROR: B0000CDUJT - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000ULZQ8 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0001CVJ3O - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000A7KJP4 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000BDIW9M - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BZFPF4 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0007MSOZE - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0007DDPWU - DVD
+price:value : Value must be >= 0. Got: 0
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000DKQWR - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0001KZO00 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000ARNCR - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00005QIUL - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000A3VTXY - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000BYNCZA - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0000AZSWW - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0006675GA - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0006PTT6K - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0009X3334 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00068C7VQ - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0007SMEQ8 - MUSIC_CD
+price:value : Value must be >= 0. Got: 0
+================
+ERROR: B000B9PW76 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BZFPNQ - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000160Z76 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000679QWK - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00009PBJA - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0009QYQ8W - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000CFWGFK - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000063DMI - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00008XUU5 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000B9EYKM - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000C6IZ0 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000TEUO8 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0007YP0WC - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00008Y4J9 - DVD
+price:value : Value must be >= 0. Got: 0
+================
+ERROR: B00030EK4O - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00008WD7G - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000B7VYMK - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0000EWQ12 - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B0000DZHJD - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B00004T9Z1 - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000056K7X - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B00001SIBF - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B000087DTI - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000087DT8 - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000B6TRT8 - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000001NMN - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B000000C9M - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000001JDJ - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B00001NTLK - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B0000300MP - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B00005M1HM - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B0000033LO - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B00000EGTV - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B00000ES8F - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: null - MUSIC_CD
+asin : Value must not be NULL
+================
+ERROR: 3866040695 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B00008CQOP - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B0000AAL8G - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000005E53 - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: 3551551936 - BOOK
+bookspec:publication : Value must not be NULL
+bookspec:publication : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B0000047DA - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: 3898134709 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3898309703 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3491886104 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3593374536 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3866151136 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3491888077 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3898134180 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3593378973 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B00003G1O4 - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B0007YP0XQ - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0006OL5DQ - BOOK
+bookspec:isbn : Value must not be NULL
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+bookspec:publication : Value must not be NULL
+bookspec:publication : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B00005T7AQ - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0000W3N8E - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0001M65JC - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00078JZ9W - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00066VMC8 - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00080JD4G - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00067OLN4 - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000BM3Y0A - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00005QX8J - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BW9BZM - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B000A0GRH0 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000003I9V - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B00005JGSR - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B00009YW8X - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000001NS4 - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: 3491911575 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3899407334 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3551355711 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B000BKHF9I - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000AXSN6U - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000ANRYEM - DVD
+price:value : Value must be >= 0. Got: 0
+================
+ERROR: B000BRY684 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00005YTBB - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000W3N8O - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00008XUU6 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000E6XLU - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BM3YAA - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BITGHY - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0000CAPTZ - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000084H9O - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00005UDFU - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00094OC3S - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BV5RD8 - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B00000EG78 - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000001LZK - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B000BYMHBA - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B0006ULVPM - MUSIC_CD
+title : Value must not be NULL
+================
+ERROR: 3866151470 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B000850GXI - BOOK
+bookspec:isbn : Value must not be NULL
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3938333006 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B000CCB13G - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B0007YP0YA - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00008Y4JA - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0007X6SGK - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000BGH18M - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B00005QZGP - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B000654UJG - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0001BGV4M - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B000001NU5 - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B0009VJWN6 - DVD
+dvdspec:regioncode : Value must not be NULL
+dvdspec:regioncode : Value must be a Integer. Got: null
+================
+ERROR: B0007VCZ50 - DVD
+dvdspec:runningtime : Value must not be NULL
+dvdspec:runningtime : Value must be a Integer. Got: null
+================
+ERROR: B00008VDUA - DVD
+price:value : Value must be >= 0. Got: 0
+================
+ERROR: 3898307166 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3593379007 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: 3935036590 - BOOK
+bookspec:pages : Value must not be NULL
+bookspec:pages : Value must be a Integer. Got: null
+================
+ERROR: B00005AU53 - MUSIC_CD
+labels : List must not be empty
+artists : List must not be empty
+================
+ERROR: B0001CKQXS - MUSIC_CD
+musicspec:releasedate : Value must not be NULL
+musicspec:releasedate : Value must be in valid Date format yyyy-[m]m-[d]d. Got: null
+================
+ERROR: B000068C4V
+Similar Product : B000064229 not found in DB.
+================
+ERROR: B00067ZPBG
+Similar Product : B00064RU2Q not found in DB.
+================
+ERROR: B000050ADO
+Similar Product : B000094HLU not found in DB.
+================
+ERROR: B000ALCG06
+Similar Product : B0001J0BC2 not found in DB.
+================
+ERROR: B00008MLSH
+Similar Product : B0002K70BA not found in DB.
+================
+ERROR: B00005U8E6
+Similar Product : B0002T1E4A not found in DB.
+================
+ERROR: B00004CWTY
+Similar Product : B000A3OONQ not found in DB.
+================
+ERROR: B000BICM84
+Similar Product : B0009HLB3O not found in DB.
+================
+ERROR: B000BR4LJI
+Similar Product : B000BM7U82 not found in DB.
+================
+ERROR: B00003JA0U
+Similar Product : B0002S3084 not found in DB.
+================
+ERROR: B000003ZVF
+Similar Product : B00003ZL2S not found in DB.
+================
+ERROR: B0000C8X6E
+Similar Product : B0002J48A2 not found in DB.
+================
+ERROR: 3833900903
+Similar Product : 3821228482 not found in DB.
+================
+ERROR: B0000AN1A3
+Similar Product : B000025JNV not found in DB.
+================
+ERROR: B0000E39MZ
+Similar Product : B00013YWH8 not found in DB.
+================
+ERROR: B00006GOCT
+Similar Product : B0000262I8 not found in DB.
+================
+ERROR: B0000E39MD
+Similar Product : B0002K7204 not found in DB.
+================
+ERROR: B000069CVK
+Similar Product : B000696Q2G not found in DB.
+================
+ERROR: B000001GQY
+Similar Product : B0000012YO not found in DB.
+================
+ERROR: B00009KV0W
+Similar Product : B000295TXC not found in DB.
+================
+ERROR: B00030EK76
+Similar Product : B0009ZE7PA not found in DB.
+================
+ERROR: B0002WYS6S
+Similar Product : B000286SCO not found in DB.
+================
+ERROR: 3765318043
+Similar Product : 3558720814 not found in DB.
+================
+ERROR: B000006YH1
+Duplicate Similar Product found with ID: B000006YH1,B000006YGZ
+================
+ERROR: 3401054457
+Similar Product : 3401055712 not found in DB.
+================
+ERROR: 6305610460
+Similar Product : B0002Y4T92 not found in DB.
+================
+ERROR: B000BSNPRG
+Similar Product : B0000DKKVL not found in DB.
+================
+ERROR: B0007W22M0
+Similar Product : B0009HL8EQ not found in DB.
+================
+ERROR: B000B9PW6M
+Similar Product : B0002CPF74 not found in DB.
+================
+ERROR: 380941834X
+Similar Product : 3809414263 not found in DB.
+================
+ERROR: B000BSNPR6
+Similar Product : B0000DKKVL not found in DB.
+================
+ERROR: 3440079856
+Similar Product : 3440080226 not found in DB.
+================
+ERROR: B000A7X7PI
+Similar Product : B0009S4X42 not found in DB.
+================
+ERROR: 3800051680
+Similar Product : 3800020882 not found in DB.
+================
+ERROR: B00004RYTK
+Similar Product : B0000C6IZ0 not found in DB.
+================
+ERROR: 3577151331
+Similar Product : 376530218X not found in DB.
+================
+ERROR: B00007BHME
+Similar Product : B0002VF6AG not found in DB.
+================
+ERROR: 344007983X
+Similar Product : 3440080226 not found in DB.
+================
+ERROR: 3407780567
+Duplicate Similar Product found with ID: 3407780567,3407784570
+================
+ERROR: B0002W36F2
+Similar Product : B0006N20RC not found in DB.
+================
+ERROR: B00004YA0K
+Similar Product : B0002XDOGM not found in DB.
+================
+ERROR: B0000014HE
+Similar Product : B0000263B9 not found in DB.
+================
+ERROR: B000C5RRQI
+Similar Product : B000BYVJS2 not found in DB.
+================
+ERROR: 3440077896
+Similar Product : 3440080218 not found in DB.
+================
+ERROR: B00008GQTQ
+Similar Product : B0002SZVUY not found in DB.
+================
+ERROR: B0009VK41K
+Similar Product : B00006OA2V not found in DB.
+================
+ERROR: B0000014HX
+Duplicate Similar Product found with ID: B0000014HX,B0000014HZ
+================
+ERROR: B00065VU58
+Similar Product : B000053ZL2 not found in DB.
+================
+ERROR: B000C5RRQS
+Similar Product : B000BYVJS2 not found in DB.
+================
+ERROR: 3440099016
+Similar Product : 3440102386 not found in DB.
+================
+ERROR: B0007YH7QE
+Similar Product : B000B2XZ22 not found in DB.
+================
+ERROR: B00004WIID
+Similar Product : B000295TXC not found in DB.
+================
+ERROR: B0000014F5
+Duplicate Similar Product found with ID: B0000014F5,B0000014F6
+================
+ERROR: B00016W8A8
+Similar Product : B00064RU2Q not found in DB.
+================
+ERROR: B000654OVA
+Similar Product : B000028DL4 not found in DB.
+================
+ERROR: B00004R7UX
+Similar Product : B000024KJF not found in DB.
+================
+ERROR: B0000631LF
+Duplicate Similar Product found with ID: B0000631LF,B00005MNO3
+================
+ERROR: B00000417N
+Similar Product : B000025JNV not found in DB.
+================
+ERROR: B0007XZUUA
+Duplicate Similar Product found with ID: B0007XZUUA,B0000UMLRU
+================
+ERROR: B00005KK4M
+Duplicate Similar Product found with ID: B00005KK4M,B00004SA8A
+================
+ERROR: 630463949X
+Similar Product : B000064229 not found in DB.
+================
+ERROR: B0000014H6
+Duplicate Similar Product found with ID: B0000014H6,B0000014H7
+================
+ERROR: 3831814775
+Similar Product : 3831814767 not found in DB.
+================
+ERROR: B00005KBE5
+Duplicate Similar Product found with ID: B00005KBE5,B000025OWS
+================
+ERROR: 351845689X
+Similar Product : 3446205160 not found in DB.
+================
+ERROR: B0000DZRNE
+Duplicate Similar Product found with ID: B0000DZRNE,B0001Z65CG
+================
+ERROR: 3551554013
+Similar Product : 3551552878 not found in DB.
+================
+ERROR: 378555169X
+Similar Product : 3785555342 not found in DB.
+================
+ERROR: B00008Y4IT
+Similar Product : B000024MAQ not found in DB.
+================
+ERROR: B0002TB60W
+Similar Product : B0002TB60M not found in DB.
+================
+ERROR: B0009U55X8
+Similar Product : B000BS6Y2E not found in DB.
+================
+ERROR: B00018TIOA
+Similar Product : B0002QXS6K not found in DB.
+================
+ERROR: B00027LEJW
+Similar Product : B0000258L4 not found in DB.
+================
+ERROR: 3473580031
+Duplicate Similar Product found with ID: 3473580031,3473580058
+================
+ERROR: B0008ENMW6
+Similar Product : B0007N4MRW not found in DB.
+================
+ERROR: B00004RYZT
+Similar Product : B0000YWHOI not found in DB.
+================
+ERROR: B0000A9ZUQ
+Similar Product : B000621OL6 not found in DB.
+================
+ERROR: B00005RDSY
+Similar Product : B0007QGSD0 not found in DB.
+================
+ERROR: B00004YMNB
+Duplicate Similar Product found with ID: B00004YMNB,B000005IEG
+================
+ERROR: B000001GKB
+Similar Product : B00002DE0S not found in DB.
+================
+ERROR: B00008LPHF
+Similar Product : B0000TEUO8 not found in DB.
+================
+ERROR: B000AANBG0
+Similar Product : B0007VCZ50 not found in DB.
+================
+ERROR: 3789105090
+Similar Product : 3596803926 not found in DB.
+================
+ERROR: B000003CZD
+Similar Product : B00009IL23 not found in DB.
+================
+ERROR: B00005UJYW
+Similar Product : B0000SZLJ2 not found in DB.
+================
+ERROR: B00004S5QR
+Similar Product : B0001NNLQ6 not found in DB.
+================
+ERROR: B0000A1H3Y
+Similar Product : B0001290MQ not found in DB.
+================
+ERROR: B00005UDN7
+Similar Product : B00005QC21 not found in DB.
+================
+ERROR: 3548604854
+Similar Product : 3570127761 not found in DB.
+================
+ERROR: 3789141186
+Duplicate Similar Product found with ID: 3789141186,3789141143
+================
+ERROR: 3551555559
+Similar Product : 3551551936 not found in DB.
+================
+ERROR: B0006JJFBU
+Duplicate Similar Product found with ID: B0006JJFBU,B000BVLFRU
+================
+ERROR: 3785548486
+Duplicate Similar Product found with ID: 3785548486,3785551886
+================
+ERROR: B0000A01J6
+Similar Product : B00000423X not found in DB.
+================
+ERROR: B000AQQHQ0
+Similar Product : B00062ICW0 not found in DB.
+================
+ERROR: 3765330817
+Similar Product : 3785550286 not found in DB.
+================
+ERROR: B000A6OB1S
+Similar Product : B000B7VZU6 not found in DB.
+================
+ERROR: B00006IU5S
+Similar Product : B00061S0K0 not found in DB.
+================
+ERROR: B00006IU5R
+Similar Product : B0006IGJ2Y not found in DB.
+================
+ERROR: B0000AKOWN
+Similar Product : B0007XT3G2 not found in DB.
+================
+ERROR: B00004R78O
+Similar Product : B0000D7ZDY not found in DB.
+================
+ERROR: B00002DGW7
+Similar Product : B00004LN02 not found in DB.
+================
+ERROR: B000BM3YBO
+Similar Product : B0007QGSD0 not found in DB.
+================
+ERROR: B0000AKP5F
+Similar Product : B0002K70BA not found in DB.
+================
+ERROR: B0000C4LZM
+Duplicate Similar Product found with ID: B0000C4LZM,B0000C4LZN
+================
+ERROR: B00006L9Z4
+Similar Product : B000642JG8 not found in DB.
+================
+ERROR: 3570300099
+Similar Product : 357030258X not found in DB.
+================
+ERROR: B00011RU0Q
+Similar Product : B00008Y4J9 not found in DB.
+================
+ERROR: B000009IT3
+Similar Product : B00004NK26 not found in DB.
+================
+ERROR: B000BRFAN4
+Similar Product : B000BQ5J8Q not found in DB.
+================
+ERROR: B00007B6WD
+Similar Product : B0000VB2E2 not found in DB.
+================
+ERROR: B0000D1EY1
+Similar Product : B000BKSHIG not found in DB.
+================
+ERROR: B000BS31QQ
+Similar Product : 389830695X not found in DB.
+================
+ERROR: B00067GKEM
+Similar Product : B0002SZVV8 not found in DB.
+================
+ERROR: B0009WPCAM
+Similar Product : B000ATJYZ8 not found in DB.
+================
+ERROR: B000BL1PV6
+Similar Product : B000BU2DC2 not found in DB.
+================
+ERROR: B0000BX8BI
+Similar Product : B000024RPE not found in DB.
+================
+ERROR: B0000BXBVQ
+Similar Product : B0002SZVV8 not found in DB.
+================
+ERROR: B0000CAPXD
+Similar Product : B0002VF6AG not found in DB.
+================
+ERROR: B00008ZPE9
+Duplicate Similar Product found with ID: B00008ZPE9,B000005EB0
+================
+ERROR: 3401087916
+Similar Product : 3401086472 not found in DB.
+================
+ERROR: 3898357066
+Duplicate Similar Product found with ID: 3898357066,389835704X
+================
+ERROR: B00079QXQO
+Similar Product : B0007YP0XQ not found in DB.
+================
+ERROR: B000003JBI
+Duplicate Similar Product found with ID: B000003JBI,B000003JB7
+================
+ERROR: B000065CST
+Similar Product : B0006675GA not found in DB.
+================
+ERROR: B0000041NC
+Duplicate Similar Product found with ID: B0000041NC,B000001GX5
+================
+ERROR: B0001FYRLM
+Similar Product : B0002CPF74 not found in DB.
+================
+ERROR: B0000E6YQY
+Similar Product : B0000VB2E2 not found in DB.
+================
+ERROR: B000AC5S4G
+Similar Product : B000A5CEPO not found in DB.
+================
+ERROR: B000024SWP
+Duplicate Similar Product found with ID: B000024SWP,B00000416O
+================
+ERROR: 3789111376
+Similar Product : 3423079819 not found in DB.
+================
+ERROR: B0007KVAZM
+Similar Product : B00002ZMNV not found in DB.
+================
+ERROR: B0000041KV
+Similar Product : B0006TN9G2 not found in DB.
+================
+ERROR: B000065TWQ
+Similar Product : B000AXSN6U not found in DB.
+================
+ERROR: B0001J04H4
+Duplicate Similar Product found with ID: B0001J04H4,B000068CCI
+================
+ERROR: B000099156
+Duplicate Similar Product found with ID: B000099156,B00004R9DC
+================
+ERROR: B000BRY6HA
+Duplicate Similar Product found with ID: B000BRY6HA,B000BGHBJG
+================
+ERROR: B000BO0VX6
+Similar Product : B000BRBH90 not found in DB.
+================
+ERROR: B000050GJX
+Similar Product : B000295TXC not found in DB.
+================
+ERROR: B0007VEPXK
+Duplicate Similar Product found with ID: B0007VEPXK,B00093CGCS
+================
+ERROR: B000A6QY40
+Duplicate Similar Product found with ID: B000A6QY40,B0007VEPY4
+================
+ERROR: B00061GYN0
+Duplicate Similar Product found with ID: B00061GYN0,B0007RUT7U
+================
+ERROR: 3407788738
+Similar Product : 357030258X not found in DB.
+================
+ERROR: 3785549741
+Duplicate Similar Product found with ID: 3785549741,3785549733
+================
+ERROR: B0000CGCXP
+Similar Product : B0002Y4T92 not found in DB.
+================
+ERROR: B00066KWNS
+Duplicate Similar Product found with ID: B00066KWNS,B000B5IOSE
+================
+ERROR: B00004RYF1
+Duplicate Similar Product found with ID: B00004RYF1,B0009JPQ56
+================
+ERROR: B00004YSFQ
+Similar Product : B00004NK26 not found in DB.
+================
+ERROR: B0006QAI5K
+Duplicate Similar Product found with ID: B0006QAI5K,B00007GQGQ
+================
+ERROR: 3897773058
+Duplicate Similar Product found with ID: 3897773058,3788630671
+================
+ERROR: B000640PO6
+Similar Product : B00062RBZE not found in DB.
+================
+ERROR: B00000IIXM
+Similar Product : B00005IA25 not found in DB.
+================
+ERROR: B00008NR79
+Duplicate Similar Product found with ID: B00008NR79,B0000041DG
+================
+ERROR: B0009ENGJ4
+Similar Product : B0000PCBFW not found in DB.
+================
+ERROR: B0000U6K90
+Similar Product : B0006BLIYA not found in DB.
+================
+ERROR: B0000DK4QA
+Similar Product : B0002XDOGM not found in DB.
+================
+ERROR: B0000DG7C0
+Similar Product : B00068C7VQ not found in DB.
+================
+ERROR: B000AS1H9K
+Similar Product : B0007UPSZ0 not found in DB.
+================
+ERROR: 3788604107
+Similar Product : 3788602953 not found in DB.
+================
+ERROR: B0007KVDF4
+Duplicate Similar Product found with ID: B0007KVDF4,B000AP4GY6
+================
+ERROR: B000AYQJ38
+Duplicate Similar Product found with ID: B000AYQJ38,B0007QS1YO
+================
+ERROR: B00005RFHC
+Duplicate Similar Product found with ID: B00005RFHC,B0009S6QV0
+================
+ERROR: B00028F85W
+Similar Product : B0002XV2XO not found in DB.
+================
+ERROR: 3134843080
+Similar Product : 3827413524 not found in DB.
+================
+ERROR: B0000A9DZV
+Similar Product : B00028F848 not found in DB.
+================
+ERROR: B0000DK4OL
+Duplicate Similar Product found with ID: B0000DK4OL,B000740554
+================
+ERROR: B0000DK4OO
+Similar Product : B000A6C24Q not found in DB.
+================
+ERROR: B0000DK4ON
+Similar Product : B000A6C24Q not found in DB.
+================
+ERROR: B0000DK4OP
+Similar Product : B000A6C24G not found in DB.
+================
+ERROR: B000058USV
+Similar Product : B000295TXC not found in DB.
+================
+ERROR: B000AGK9FU
+Duplicate Similar Product found with ID: B000AGK9FU,B000BL99KA
+================
+ERROR: B000BS6XZW
+Duplicate Similar Product found with ID: B000BS6XZW,B000BUNW8Q
+================
+ERROR: B000A3VU5Q
+Similar Product : B000BNTAWK not found in DB.
+================
+ERROR: B00061I0ZA
+Similar Product : B00006316A not found in DB.
+================
+ERROR: B0000DJUS5
+Similar Product : B0000258L4 not found in DB.
+================
+ERROR: 3577103884
+Similar Product : 376530218X not found in DB.
+================
+ERROR: B00006QDN5
+Similar Product : B00000K2F3 not found in DB.
+================
+ERROR: B000654U46
+Duplicate Similar Product found with ID: B000654U46,B000066I6X
+================
+ERROR: 3785540078
+Similar Product : 3785541872 not found in DB.
+================
+ERROR: B0009HL8BE
+Similar Product : B0007NOKY2 not found in DB.
+================
+ERROR: B00007G75C
+Similar Product : B0002JZ32E not found in DB.
+================
+ERROR: 3551363056
+Similar Product : 357030261X not found in DB.
+================
+ERROR: B00000I9W2
+Duplicate Similar Product found with ID: B00000I9W2,B00005PJJE
+================
+ERROR: B00004WGZG
+Similar Product : B00019RAG2 not found in DB.
+================
+ERROR: B00000142W
+Similar Product : B0000270EO not found in DB.
+================
+ERROR: 3897771136
+Similar Product : 3811222929 not found in DB.
+================
+ERROR: 3785555350
+Duplicate Similar Product found with ID: 3785555350,3785553390
+================
+ERROR: B00004RIN0
+Duplicate Similar Product found with ID: B00004RIN0,B00006JYJJ
+================
+ERROR: 3401057413
+Duplicate Similar Product found with ID: 3401057413,340105743X
+================
+ERROR: B0001CH7S0
+Duplicate Similar Product found with ID: B0001CH7S0,B00008OES9
+================
+ERROR: B00009LWLU
+Similar Product : B0009VJVJG not found in DB.
+================
+ERROR: B000BW9HLK
+Similar Product : B000BUEP6Y not found in DB.
+================
+ERROR: 3440077934
+Similar Product : 3440080218 not found in DB.
+================
+ERROR: B000095J89
+Similar Product : B00004LN02 not found in DB.
+================
+ERROR: B00005O41T
+Similar Product : B000B7VZU6 not found in DB.
+================
+ERROR: B00008CLNQ
+Similar Product : B000025802 not found in DB.
+================
+ERROR: B00005N570
+Duplicate Similar Product found with ID: B00005N570,B000001G4R
+================
+ERROR: B00006JYLL
+Similar Product : B0002Q054S not found in DB.
+================
+ERROR: B00005ND45
+Duplicate Similar Product found with ID: B00005ND45,B000009I87
+================
+ERROR: B0007QCGT0
+Duplicate Similar Product found with ID: B0007QCGT0,B0007VCV68
+================
+ERROR: 3791530143
+Similar Product : 3791530127 not found in DB.
+================
+ERROR: 3800050048
+Similar Product : 3800020882 not found in DB.
+================
+ERROR: 3785530471
+Similar Product : 3789111252 not found in DB.
+================
+ERROR: B00005QHUZ
+Duplicate Similar Product found with ID: B00005QHUZ,B000063X5K
+================
+ERROR: B000066JMV
+Duplicate Similar Product found with ID: B000066JMV,B0000A01L7
+================
+ERROR: B00005OC01
+Duplicate Similar Product found with ID: B00005OC01,B00005OCH6
+================
+ERROR: B00004UB8A
+Similar Product : B000024926 not found in DB.
+================
+ERROR: B000009NIX
+Similar Product : B000295TXC not found in DB.
+================
+ERROR: B0009NZ1BG
+Similar Product : B000BW9BZM not found in DB.
+================
+ERROR: B000053ZRR
+Similar Product : B000620NB8 not found in DB.
+================
+ERROR: B0000AGDZ4
+Similar Product : B000025OBV not found in DB.
+================
+ERROR: 3870676590
+Duplicate Similar Product found with ID: 3870676590,3870677376
+================
+ERROR: 3785553374
+Similar Product : 3785555342 not found in DB.
+================
+ERROR: B000AS1JHA
+Similar Product : B00005UQZ2 not found in DB.
+================
+ERROR: B00005NYAW
+Similar Product : B000024FD2 not found in DB.
+================
+ERROR: B00005RCIV
+Similar Product : B0002TB5V2 not found in DB.
+================
+ERROR: B00008HE5S
+Similar Product : B0002ISFNO not found in DB.
+================
+ERROR: 3431036341
+Similar Product : 3431035620 not found in DB.
+================
+ERROR: B0000CBBWK
+Similar Product : B0002Y64FE not found in DB.
+================
+ERROR: B00005QX8H
+Duplicate Similar Product found with ID: B00005QX8H,6305610444
+================
+ERROR: B000BKSHQ8
+Similar Product : B000BM7U82 not found in DB.
+================
+ERROR: B00000I9LV
+Similar Product : B0007XT3G2 not found in DB.
+================
+ERROR: 3789119547
+Similar Product : 3789142336 not found in DB.
+================
+ERROR: B0007LPJSK
+Similar Product : B00021LQ6Y not found in DB.
+================
+ERROR: B000069KJ0
+Similar Product : B00002DE0S not found in DB.
+================
+ERROR: B00000I7JM
+Similar Product : B000024V3S not found in DB.
+================
+ERROR: B0000DC15K
+Similar Product : B0002TKFS6 not found in DB.
+================
+ERROR: B0007OP69E
+Duplicate Similar Product found with ID: B0007OP69E,B0009U55PG
+================
+ERROR: B000024KWC
+Similar Product : B0000267X8 not found in DB.
+================
+ERROR: B000BJRJ4A
+Duplicate Similar Product found with ID: B000BJRJ4A,B000BJRJ40
+================
+ERROR: B00005AWFB
+Duplicate Similar Product found with ID: B00005AWFB,B0000DGDMF
+================
+ERROR: B00008G9GX
+Similar Product : B0002ZUIMI not found in DB.
+================
+ERROR: B000ANDA18
+Duplicate Similar Product found with ID: B000ANDA18,B000ANDA1I
+================
+ERROR: B000056FG6
+Similar Product : B00083D4K2 not found in DB.
+================
+ERROR: B000BJA91A
+Similar Product : B000BGIAY6 not found in DB.
+================
+ERROR: B000007RQN
+Duplicate Similar Product found with ID: B000007RQN,B0007DHQ66
+================
+ERROR: B00004XR5E
+Duplicate Similar Product found with ID: B00004XR5E,B00000DBVG
+================
+ERROR: 3401075446
+Similar Product : 3401086472 not found in DB.
+================
+ERROR: B000BRY67A
+Duplicate Similar Product found with ID: B000BRY67A,B00006FN58
+================
+ERROR: B00006OA69
+Similar Product : B0002QXRJS not found in DB.
+================
+ERROR: B0000CAWBE
+Duplicate Similar Product found with ID: B0000CAWBE,B00061I0RI
+================
+ERROR: B0009FHKPO
+Duplicate Similar Product found with ID: B0009FHKPO,B00009RG5C
+================
+ERROR: 3401400010
+Similar Product : 3423703148 not found in DB.
+================
+ERROR: B000063769
+Duplicate Similar Product found with ID: B000063769,B000BGH8XK
+================
+ERROR: B000679OGS
+Similar Product : B000679OH2 not found in DB.
+================
+ERROR: B00005NJJ9
+Similar Product : B000266XCQ not found in DB.
+================
+ERROR: 3570130185
+Similar Product : 3570130215 not found in DB.
+================
+ERROR: B000069KNN
+Similar Product : B00012HOC4 not found in DB.
+================
+ERROR: 378554393X
+Similar Product : 3785546238 not found in DB.
+================
+ERROR: B000AMUUHG
+Similar Product : B000ATJZK2 not found in DB.
+================
+ERROR: 3570130193
+Similar Product : 357013024X not found in DB.
+================
+ERROR: B0006IGIXE
+Duplicate Similar Product found with ID: B0006IGIXE,B00004U68B
+================
+ERROR: B000B9PUY6
+Duplicate Similar Product found with ID: B000B9PUY6,B000B3MJ4G
+================
+ERROR: B0007ZIYWE
+Duplicate Similar Product found with ID: B0007ZIYWE,B000A7KM5Q
+================
+ERROR: B0000041YE
+Similar Product : B00000I92V not found in DB.
+================
+ERROR: 3570301931
+Similar Product : 357030261X not found in DB.
+================
+ERROR: B00004TTIJ
+Similar Product : B000025O8I not found in DB.
+================
+ERROR: B00005RD3W
+Similar Product : B0007DDPWU not found in DB.
+================
+ERROR: B0007LF4FS
+Similar Product : B00005NYAY not found in DB.
+================
+ERROR: B00008AWUZ
+Similar Product : B00013YWH8 not found in DB.
+================
+ERROR: 3570130177
+Similar Product : 357013024X not found in DB.
+================
+ERROR: 3190041954
+Similar Product : 3468839286 not found in DB.
+================
+ERROR: B0000C9V3K
+Similar Product : B0002TB5V2 not found in DB.
+================
+ERROR: B0007NB9CI
+Similar Product : B00013T782 not found in DB.
+================
+ERROR: B00000ASSO
+Duplicate Similar Product found with ID: B00000ASSO,B00000ASSP
+================
+ERROR: B0000D7ZE8
+Similar Product : B0009V8V2Y not found in DB.
+================
+ERROR: B0000D7ZE0
+Similar Product : B000053ZL2 not found in DB.
+================
+ERROR: B000ALM1RO
+Duplicate Similar Product found with ID: B000ALM1RO,B000ALM1RE
+================
+ERROR: B0000AIT8G
+Similar Product : B0000ARNCR not found in DB.
+================
+ERROR: B00009Y30Z
+Similar Product : B0000258L4 not found in DB.
+================
+ERROR: B000BL99LO
+Similar Product : B000BKFED2 not found in DB.
+================
+ERROR: B000AGK9XC
+Duplicate Similar Product found with ID: B000AGK9XC,B0001BUCUG
+================
+ERROR: B00069KW58
+Similar Product : B0002Z7K24 not found in DB.
+================
+ERROR: B000001GHC
+Similar Product : B00002DE0S not found in DB.
+================
+ERROR: B000059LOL
+Similar Product : B0000247PV not found in DB.
+================
+ERROR: B0007X9T5M
+Duplicate Similar Product found with ID: B0007X9T5M,B0009NVRKK
+================
+ERROR: B000001GGV
+Similar Product : B0000012VI not found in DB.
+================
+ERROR: B00006HARW
+Duplicate Similar Product found with ID: B00006HARW,B00004LCAV
+================
+ERROR: B000003GAU
+Similar Product : B00000K2F3 not found in DB.
+================
+ERROR: B0000014BA
+Similar Product : B0002XV2XO not found in DB.
+================
+ERROR: B000679QWA
+Duplicate Similar Product found with ID: B000679QWA,B000051YI5
+================
+ERROR: B00008ZZ71
+Similar Product : B00003ZL2S not found in DB.
+================
+ERROR: B0007M8HS8
+Duplicate Similar Product found with ID: B0007M8HS8,B0009NDGRW
+================
+ERROR: B00005J6SK
+Similar Product : B0002S3084 not found in DB.
+================
+ERROR: 3800050870
+Duplicate Similar Product found with ID: 3800050870,3800050897
+================
+ERROR: 3833901101
+Duplicate Similar Product found with ID: 3833901101,3833901055
+================
+ERROR: B000000SBV
+Duplicate Similar Product found with ID: B000000SBV,B000000SJD
+================
+ERROR: 3551363730
+Duplicate Similar Product found with ID: 3551363730,3551361789
+================
+ERROR: B0007R8A9E
+Similar Product : B0002VF5D4 not found in DB.
+================
+ERROR: B00005NZOO
+Duplicate Similar Product found with ID: B00005NZOO,B0000DIMWX
+================
+ERROR: B00006HATR
+Duplicate Similar Product found with ID: B00006HATR,B00005LKGL
+================
+ERROR: B000683TPO
+Similar Product : B00004XN2T not found in DB.
+================
+ERROR: B00005UW50
+Duplicate Similar Product found with ID: B00005UW50,B00005UW52
+================
+ERROR: B0009Z5TZW
+Duplicate Similar Product found with ID: B0009Z5TZW,B00035W08M
+================
+ERROR: B00003JAAK
+Similar Product : B0001KZN74 not found in DB.
+================
+ERROR: B000060O5B
+Duplicate Similar Product found with ID: B000060O5B,B000001GS1
+================
+ERROR: B00006HASP
+Similar Product : B000295TXC not found in DB.
+================
+ERROR: 3833936401
+Similar Product : 3833936428 not found in DB.
+================
+ERROR: B00005M1BG
+Similar Product : B0000DKKVL not found in DB.
+================
+ERROR: 3190053588
+Similar Product : 3125611881 not found in DB.
+================
+ERROR: 344010169X
+Similar Product : 3440102386 not found in DB.
+================
+ERROR: B0001IN080
+Similar Product : B00030EK4O not found in DB.
+================
+ERROR: B00006589U
+Similar Product : B0002SZVV8 not found in DB.
+================
+ERROR: 3551553475
+Similar Product : 3791522353 not found in DB.
+================
+ERROR: B00006L744
+Similar Product : B00017YYFE not found in DB.
+================
+ERROR: B000BUNYWK
+Duplicate Similar Product found with ID: B000BUNYWK,B000BUNYXE
+================
+ERROR: B000056TKC
+Duplicate Similar Product found with ID: B000056TKC,B00005MJ13
+================
+ERROR: B0000E5SLB
+Similar Product : B000BS2ZTU not found in DB.
+================
+ERROR: B000B6OJGY
+Similar Product : B0002U9JIM not found in DB.
+================
+ERROR: B0000CAXIE
+Similar Product : B0009ZE7PA not found in DB.
+================
+ERROR: B0000E5SLF
+Similar Product : B0007XT3G2 not found in DB.
+================
+ERROR: B000094HLD
+Similar Product : B0002TB6L6 not found in DB.
+================
+ERROR: B0000CGV49
+Similar Product : B0002VE1RA not found in DB.
+================
+ERROR: B000001GCR
+Similar Product : B00000C2KM not found in DB.
+================
+ERROR: B00008S7KC
+Duplicate Similar Product found with ID: B00008S7KC,B00009QNXX
+================
+ERROR: B0007UARJW
+Similar Product : 3473344702 not found in DB.
+================
+ERROR: B00005B5MC
+Duplicate Similar Product found with ID: B00005B5MC,B00005J7DB
+================
+ERROR: B00004YMTH
+Similar Product : B000002RSX not found in DB.
+================
+ERROR: 3760748449
+Duplicate Similar Product found with ID: 3760748449,376074818X
+================
+ERROR: 3473530190
+Similar Product : 3499203235 not found in DB.
+================
+ERROR: B0009NDARS
+Duplicate Similar Product found with ID: B0009NDARS,B00064HR0Q
+================
+ERROR: B00009OOJT
+Similar Product : B0000261KA not found in DB.
+================
+ERROR: B0000E5SK9
+Duplicate Similar Product found with ID: B0000E5SK9,B0000E5SKD
+================
+ERROR: 3880105367
+Duplicate Similar Product found with ID: 3880105367,3880105464
+================
+ERROR: B000005E4I
+Duplicate Similar Product found with ID: B000005E4I,B00001SIBN
+================
+ERROR: 3791504673
+Duplicate Similar Product found with ID: 3791504673,3791504657
+================
+ERROR: B00005B5MZ
+Similar Product : B0002C5Y8E not found in DB.
+================
+ERROR: B0000TI3RS
+Similar Product : B0002K7204 not found in DB.
+================
+ERROR: B00005NMYY
+Similar Product : B000BRBH90 not found in DB.
+================
+ERROR: 3551553440
+Similar Product : 3791522353 not found in DB.
+================
+ERROR: B0007P35FU
+Duplicate Similar Product found with ID: B0007P35FU,B000BQV8MC
+================
+ERROR: B00008Y4QR
+Duplicate Similar Product found with ID: B00008Y4QR,B000028DW8
+================
+ERROR: B000BGHASS
+Duplicate Similar Product found with ID: B000BGHASS,B000B8ITDQ
+================
+ERROR: B00006L77E
+Similar Product : B000025JNV not found in DB.
+================
+ERROR: B00005OM5G
+Similar Product : B0002Q054S not found in DB.
+================
+ERROR: 3505116084
+Duplicate Similar Product found with ID: 3505116084,3505117366
+================
+ERROR: B00005OM5L
+Similar Product : B0002Y4T92 not found in DB.
+================
+ERROR: B00005OM5N
+Duplicate Similar Product found with ID: B00005OM5N,B00004RJEG
+================
+ERROR: B000006NAS
+Similar Product : B00002DGVQ not found in DB.
+================
+ERROR: 3866151055
+Similar Product : 386615108X not found in DB.
+================
+ERROR: B0009OJ9A4
+Duplicate Similar Product found with ID: B0009OJ9A4,B000AS1HKY
+================
+ERROR: B000ASAEK8
+Duplicate Similar Product found with ID: B000ASAEK8,B000ASAEPI
+================
+ERROR: 3473347531
+Similar Product : 3473347523 not found in DB.
+================
+ERROR: B00005UJAV
+Similar Product : B0002X7BE8 not found in DB.
+================
+ERROR: B000AMVY7Q
+Similar Product : B0009299KQ not found in DB.
+================
+ERROR: 3190033137
+Duplicate Similar Product found with ID: 3190033137,3190033145
+================
+ERROR: B00006ALCH
+Similar Product : B0002I8UCA not found in DB.
+================
+ERROR: B0009JDRO8
+Similar Product : B0009QYQ8W not found in DB.
+================
+ERROR: 3791504606
+Similar Product : 3791507028 not found in DB.
+================
+ERROR: 3866151063
+Similar Product : 386615108X not found in DB.
+================
+ERROR: B000068PFH
+Duplicate Similar Product found with ID: B000068PFH,B000079DFI
+================
+ERROR: B00012BCW2
+Duplicate Similar Product found with ID: B00012BCW2,B0000CDNR8
+================
+ERROR: B000068VS3
+Duplicate Similar Product found with ID: B000068VS3,B00006HATH
+================
+ERROR: B00008PW4A
+Similar Product : B000025802 not found in DB.
+================
+ERROR: 3866151039
+Similar Product : 386615108X not found in DB.
+================
+ERROR: B00004TT5A
+Similar Product : B000621OL6 not found in DB.
+================
+ERROR: B000006L7U
+Similar Product : B000025JNV not found in DB.
+================
+ERROR: B00009P55P
+Duplicate Similar Product found with ID: B00009P55P,B00009P55M
+================
+ERROR: B0007SK9OW
+Duplicate Similar Product found with ID: B0007SK9OW,B0000BZSXT
+================
+ERROR: 3866151047
+Similar Product : 3866151101 not found in DB.
+================
+ERROR: B00004STZB
+Similar Product : B0000258L4 not found in DB.
+================
+ERROR: B00005UVZN
+Duplicate Similar Product found with ID: B00005UVZN,B00007EBC8
+================
+ERROR: B0000505HK
+Similar Product : B000068RQ5 not found in DB.
+================
+ERROR: B00005N96K
+Similar Product : B0007DDPWK not found in DB.
+================
+ERROR: B0000505HM
+Similar Product : B0000DB56Q not found in DB.
+================
+ERROR: B00007KMNF
+Duplicate Similar Product found with ID: B00007KMNF,B0000ADYDR
+================
+ERROR: B0001B0VDE
+Similar Product : B0000DKKY2 not found in DB.
+================
+ERROR: B00005A797
+Duplicate Similar Product found with ID: B00005A797,B00005UOVD
+================
+ERROR: B0001BUC10
+Similar Product : B000025JNV not found in DB.
+================
+ERROR: B00009V91I
+Similar Product : B0000246DI not found in DB.
+================
+ERROR: B00004VX9C
+Similar Product : B00023BHHK not found in DB.
+================
+ERROR: B000BNDBS4
+Similar Product : B0002ONAZQ not found in DB.
+================
+ERROR: B00030GMQ8
+Duplicate Similar Product found with ID: B00030GMQ8,B000031WTO
+================
+ERROR: 3473377147
+Similar Product : 3473377120 not found in DB.
+================
+ERROR: 3401045571
+Similar Product : 357013024X not found in DB.
+================
+ERROR: 3596851599
+Similar Product : 3596851602 not found in DB.
+================
+ERROR: 3440077918
+Similar Product : 3440080218 not found in DB.
+================
+ERROR: B0000CFYEJ
+Duplicate Similar Product found with ID: B0000CFYEJ,B0000VS0HE
+================
+ERROR: B0007D09GK
+Similar Product : B0002QXS6U not found in DB.
+================
+ERROR: B00000IX6O
+Similar Product : B00002498X not found in DB.
+================
+ERROR: B000C1YLRA
+Duplicate Similar Product found with ID: B000C1YLRA,B000BSNH1U
+================
+ERROR: B00008WDAI
+Duplicate Similar Product found with ID: B00008WDAI,B0001J0BA4
+================
+ERROR: B00008O8B0
+Duplicate Similar Product found with ID: B00008O8B0,B00000IX7A
+================
+ERROR: B000003G6Q
+Similar Product : B0007XT3G2 not found in DB.
+================
+ERROR: B00008K4FA
+Similar Product : B00067OLN4 not found in DB.
+================
+ERROR: B0001KZNYW
+Similar Product : B0002I8UCA not found in DB.
+================
+ERROR: B000083GOJ
+Duplicate Similar Product found with ID: B000083GOJ,B0003HGJ7I
+================
+ERROR: B000083GOG
+Similar Product : B000026I5K not found in DB.
+================
+ERROR: B0000C8XJD
+Duplicate Similar Product found with ID: B0000C8XJD,B00006GEOU
+================
+ERROR: 3473344435
+Similar Product : 3473344702 not found in DB.
+================
+ERROR: B000059X54
+Duplicate Similar Product found with ID: B000059X54,B0000AKGV9
+================
+ERROR: B0000634E9
+Similar Product : B00067OLN4 not found in DB.
+================
+ERROR: 340105841X
+Similar Product : 3570128970 not found in DB.
+================
+ERROR: B0000035PZ
+Similar Product : B000024193 not found in DB.
+================
+ERROR: B00007BKIY
+Similar Product : B0002VE1RA not found in DB.
+================
+ERROR: B000AA4J7U
+Duplicate Similar Product found with ID: B000AA4J7U,B0001D0G5K
+================
+ERROR: 3789133051
+Similar Product : 3423620153 not found in DB.
+================
+ERROR: B000B64VU8
+Similar Product : B000B7VYMK not found in DB.
+================
+ERROR: 3453131711
+Similar Product : 3782207343 not found in DB.
+================
+ERROR: B00008CLJK
+Duplicate Similar Product found with ID: B00008CLJK,B00005UT5H
+================
+ERROR: B0007CEXAO
+Duplicate Similar Product found with ID: B0007CEXAO,B000056EVN
+================
+ERROR: B00006GEJS
+Similar Product : B0002ONAZQ not found in DB.
+================
+ERROR: B000A32WEO
+Duplicate Similar Product found with ID: B000A32WEO,B0009JOPDU
+================
+ERROR: B00009AHLT
+Duplicate Similar Product found with ID: B00009AHLT,B000095IUM
+================
+ERROR: B0001BFIMI
+Duplicate Similar Product found with ID: B0001BFIMI,B0006IQM4O
+================
+ERROR: B00005NY9A
+Duplicate Similar Product found with ID: B00005NY9A,B00006L3S5
+================
+ERROR: B0000AGE13
+Duplicate Similar Product found with ID: B0000AGE13,B000067731
+================
+ERROR: 3789105856
+Duplicate Similar Product found with ID: 3789105856,3789105643
+================

@@ -16,20 +16,25 @@ import de.unileipzig.dbpraktikum.loader.model.raw.MusicRaw;
 import de.unileipzig.dbpraktikum.loader.model.raw.MusicSpecRaw;
 import de.unileipzig.dbpraktikum.loader.model.raw.PriceRaw;
 import de.unileipzig.dbpraktikum.loader.model.raw.ProductRaw;
+import de.unileipzig.dbpraktikum.loader.model.raw.ShopRaw;
 import de.unileipzig.dbpraktikum.loader.util.DOMUtil;
 
-public class XMLShopItemParser {
-    public static List<ProductRaw> parseXmlRoot(Element rootElement) {
-        List<ProductRaw> results = new ArrayList<>();
+public class XMLShopParser {
+    public static ShopRaw parseXmlRoot(Element rootElement) {
+        List<ProductRaw> products = new ArrayList<>();
+
+        String name = DOMUtil.attr(rootElement, "name");
+        String street = DOMUtil.attr(rootElement, "street");
+        String zip = DOMUtil.attr(rootElement, "zip");
 
         for (Node item = rootElement.getFirstChild(); item != null; item = item.getNextSibling()) {
             if (item.getNodeType() != Node.ELEMENT_NODE) continue; //Only ELEMENT_NODE's can be valid items
             ProductRaw res = parseItem((Element) item);
-            if (res != null) results.add(res);
+            if (res != null) products.add(res);
         }
 
-        System.out.println(results.size() + " items in XML verarbeitet");
-        return results;
+        System.out.println(products.size() + " items in XML processed");
+        return new ShopRaw(products, name, street, zip);
     }
 
     public static ProductRaw parseItem(Element item) {

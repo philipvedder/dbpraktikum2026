@@ -52,6 +52,4 @@ public class ProductRepository {
             stmt.executeUpdate();
         }
     }
-
-    //TODO: create offer entry
 }

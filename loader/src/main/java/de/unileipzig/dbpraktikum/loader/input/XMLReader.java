@@ -14,7 +14,7 @@ import org.xml.sax.SAXException;
 
 public class XMLReader {
     public static Element readXmlFile(Path xmlFile) throws ParserConfigurationException, IOException, SAXException {
-        System.out.println("Lese XML-Datei: " + xmlFile);
+        System.out.println("Reading XML-File: " + xmlFile);
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -29,7 +29,7 @@ public class XMLReader {
 
         Element root = document.getDocumentElement();
 
-        System.out.println("XML erfolgreich gelesen. Root-Element: " + root.getTagName());
+        System.out.println("Successfully read XML-File. Root element: " + root.getTagName());
         return root;
     }
 }

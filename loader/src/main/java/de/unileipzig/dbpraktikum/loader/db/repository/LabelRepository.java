@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class LabelRepository {
-    public boolean exists(Connection con, String asin) throws SQLException {
+    public boolean exists(Connection con, Long id) throws SQLException {
         String sql = """
             SELECT 1
             FROM media_store.label
@@ -14,7 +14,7 @@ public class LabelRepository {
         """;
 
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, asin);
+            stmt.setLong(1, id);
 
             try (ResultSet r = stmt.executeQuery()) {
                 return r.next();

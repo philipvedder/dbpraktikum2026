@@ -5,12 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PersonRepository {
+import de.unileipzig.dbpraktikum.loader.model.Shop;
+
+public class ShopRepository {
     public boolean exists(Connection con, Long id) throws SQLException {
         String sql = """
             SELECT 1
-            FROM media_store.person
-            WHERE person_id = ?
+            FROM media_store.filiale
+            WHERE filiale_id = ?
         """;
 
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
@@ -22,18 +24,18 @@ public class PersonRepository {
         }
     }
 
-    public Long findOrCreate(Connection con, String name) throws SQLException {
-        Long existingId = findIdByName(con, name);
+    public Long findOrCreate(Connection con, Shop shop) throws SQLException {
+        Long existingId = findIdByName(con, shop.name());
 
         if (existingId != null) return existingId;
 
-        return insert(con, name);
+        return insert(con, shop);
     }
 
     public Long findIdByName(Connection con, String name) throws SQLException {
         String sql = """
-            SELECT person_id
-            FROM media_store.person
+            SELECT filiale_id
+            FROM media_store.filiale
             WHERE name = ?        
         """;
 
@@ -42,7 +44,7 @@ public class PersonRepository {
 
             try (ResultSet r = stmt.executeQuery()) {
                 if (r.next()) {
-                    return r.getLong("person_id");
+                    return r.getLong("filiale_id");
                 }
                 
                 return null;
@@ -50,24 +52,28 @@ public class PersonRepository {
         }
     }
 
-    public long insert(Connection con, String name) throws SQLException {
+    public long insert(Connection con, Shop shop) throws SQLException {
         String sql = """
-            INSERT INTO media_store.person (
-                name
+            INSERT INTO media_store.filiale (
+                name,
+                strasse,
+                plz
             )
-            VALUES (?)
-            RETURNING person_id
+            VALUES (?, ?, ?)
+            RETURNING filiale_id
         """;
 
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, name);
+            stmt.setString(1, shop.name());
+            stmt.setString(2, shop.street());
+            stmt.setString(3, shop.zip());
 
             try (ResultSet r= stmt.executeQuery()) {
                 if (!r.next()) {
-                    throw new SQLException("Could not insert Person " + name);
+                    throw new SQLException("Could not insert Shop " + shop.name());
                 }
 
-                return r.getLong("person_id");
+                return r.getLong("filiale_id");
             }
         }
     }

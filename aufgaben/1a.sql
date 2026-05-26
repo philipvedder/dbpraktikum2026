@@ -132,38 +132,32 @@ CREATE TABLE aehnliches_produkt (
   produkt_nr_2 VARCHAR(10),
   CONSTRAINT pk_aehnliches_produkt PRIMARY KEY (produkt_nr_1, produkt_nr_2),
   CONSTRAINT fk_aehnliches_produkt_1 FOREIGN KEY (produkt_nr_1) REFERENCES produkt (produkt_nr) ON UPDATE CASCADE ON DELETE CASCADE,
-  CONSTRAINT fk_aehnliches_produkt_2 FOREIGN KEY (produkt_nr_2) REFERENCES produkt (produkt_nr) ON UPDATE CASCADE ON DELETE CASCADE,
-  -- Kein Verweis auf self, und verhindert Redundanz
-  CONSTRAINT chk_aehnliches_produkt_geordnet CHECK (produkt_nr_1 < produkt_nr_2)
+  CONSTRAINT fk_aehnliches_produkt_2 FOREIGN KEY (produkt_nr_2) REFERENCES produkt (produkt_nr) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
--- Filialen
+-- Angebot / Kauf
 CREATE TABLE filiale (
   filiale_id BIGINT GENERATED ALWAYS AS IDENTITY,
   name VARCHAR(256) NOT NULL,
-  strasse VARCHAR(256) NOT NULL,
-  hausnummer VARCHAR(6) NOT NULL,
+  strasse VARCHAR(512) NOT NULL,
   plz VARCHAR(16) NOT NULL,
-  ort VARCHAR(256) NOT NULL,
-  land VARCHAR(256) NOT NULL,
   CONSTRAINT pk_filiale PRIMARY KEY (filiale_id)
 );
 
 CREATE TABLE angebot (
   filiale_id BIGINT,
   produkt_nr VARCHAR(10),
-  preis NUMERIC,
+  preis NUMERIC NOT NULL,
+  waehrung VARCHAR(8) NOT NULL,
   zustand TEXT NOT NULL,
   CONSTRAINT pk_angebot PRIMARY KEY (filiale_id, produkt_nr),
   CONSTRAINT fk_angebot_filiale FOREIGN KEY (filiale_id) REFERENCES filiale (filiale_id) ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT fk_angebot_produkt FOREIGN KEY (produkt_nr) REFERENCES produkt (produkt_nr) ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT chk_angebot_preis_pos CHECK (
-    preis IS NULL
-    OR preis > 0
+    preis > 0
   )
 );
 
--- Kunden
 CREATE TABLE kunde (
   kunde_id BIGINT GENERATED ALWAYS AS IDENTITY,
   name VARCHAR(256) NOT NULL,
