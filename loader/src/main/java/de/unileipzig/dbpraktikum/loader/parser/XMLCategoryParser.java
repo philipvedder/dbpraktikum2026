@@ -44,6 +44,7 @@ public class XMLCategoryParser {
     /**
      * Parses a single <category> XML Element into a Catetory object. 
      * No validation or type conversion is done. Each attribute is a String. 
+     * Recursive on child Categories. 
      * @param item <category> XML Element
      * @return Category object. 
      */

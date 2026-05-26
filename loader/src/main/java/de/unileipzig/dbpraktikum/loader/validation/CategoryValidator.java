@@ -44,11 +44,12 @@ public class CategoryValidator extends Validator {
      * Validates the input Category object by validating all its variables.
      * We allow Categories without items.
      * Throws if any ValidationErrors occur on the Category or its content.  
+     * Recursive on child Categories. 
      * @param c Category input. 
      * @return validated Category. 
      * @throws MultipleValidationException, if any Validation threw an error. MultipleValidationException contains a list of all ValidationExceptions that occured on this Category.
      */
-    public static Category validate(Category c) throws MultipleValidationException {
+    private static Category validate(Category c) throws MultipleValidationException {
         List<ValidationException> categoryExceptions = new ArrayList<>(); //List of all Exceptions which occur during the validation.
 
         //Validate fields

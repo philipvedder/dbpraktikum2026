@@ -69,7 +69,7 @@ public class ShopValidator extends Validator {
      * @return Object of Subtype of Product with correct Types and validated. 
      * @throws MultipleValidationException, if any Validation threw an error. MultipleValidationException contains a list of all ValidationExceptions that occured on this Product. s
      */
-    public static Product validateProduct(ProductRaw p) throws MultipleValidationException {
+    private static Product validateProduct(ProductRaw p) throws MultipleValidationException {
         List<ValidationException> exceptions = new ArrayList<>(); //List of all Exceptions which occur during the validation.
 
         //Validation of all general Product fields

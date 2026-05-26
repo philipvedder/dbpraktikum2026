@@ -7,11 +7,19 @@ import java.sql.SQLException;
 
 import de.unileipzig.dbpraktikum.loader.model.Book;
 
+/**
+ * Repository to interact with the DB Tables:
+ * Buch
+ * Buch_Autor 
+ */
 public class BookRepository {
     private final PersonRepository personRepository;
     private final PublisherRepository publisherRepository;
     private final ProductRepository productRepository;
 
+    /**
+     * Initialize required Repositories. 
+     */
     public BookRepository() {
         this.personRepository = new PersonRepository();
         this.publisherRepository = new PublisherRepository();
