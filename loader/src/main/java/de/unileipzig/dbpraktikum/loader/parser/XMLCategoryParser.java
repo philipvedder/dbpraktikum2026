@@ -15,7 +15,7 @@ public class XMLCategoryParser {
 
         for (Node item = rootElement.getFirstChild(); item != null; item = item.getNextSibling()) {
             if (item.getNodeType() != Node.ELEMENT_NODE) continue; //Only ELEMENT_NODE's can be valid items
-            Category res = parseItem((Element) item);
+            Category res = parseCategory((Element) item);
             if (res != null) results.add(res);
         }
 
@@ -23,42 +23,28 @@ public class XMLCategoryParser {
         return results;
     }
 
-    // public static void print(CategoryRaw e, int stops) {
-    //     String pre = "";
-    //     for (int i = 0; i <= stops; i++) {
-    //         pre += " ";
-    //     }
-
-    //     System.out.println(pre + e.name());
-        
-    //     for (String item : e.itemIds()) {
-    //         System.out.println(pre + item);
-    //     }
-
-    //     for (CategoryRaw c : e.childCategories()) {
-    //         print(c, stops+1);
-    //     }
-    // }
-
-    public static Category parseItem(Element item) {
+    public static Category parseCategory(Element item) {
         String name = null;
         List<Category> childCategoryRaws = new ArrayList<>();
         List<String> itemIds = new ArrayList<>();
         
         Node child = item.getFirstChild();
-        if (child.getNodeType() == Node.TEXT_NODE) {
+        if (child != null && child.getNodeType() == Node.TEXT_NODE) {
             name = child.getNodeValue();
+            child = child.getNextSibling();
         }
 
         while (child != null) {
             if (child.getNodeType() == Node.ELEMENT_NODE) {
                 Element e = (Element) child;
 
-                if (e.getTagName() == "category")
-                    childCategoryRaws.add(parseItem(e));
+                if (e.getTagName() == "category") {
+                    childCategoryRaws.add(parseCategory(e));
+                }
 
-                if (e.getTagName() == "item");
+                if (e.getTagName() == "item") {
                     itemIds.add(DOMUtil.childText(e));
+                }
             }
 
             child = child.getNextSibling();

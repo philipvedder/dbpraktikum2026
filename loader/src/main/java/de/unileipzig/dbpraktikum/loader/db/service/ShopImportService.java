@@ -122,15 +122,16 @@ public class ShopImportService {
             }
         }
 
+        //Handle all similar Relationships
         for (Entry<String, String> similar : similarIds.entrySet()) {
             try {
                 importSimilar(con, similar.getKey(), similar.getValue());
             } catch (DuplicateException ex) {
-                ErrorLogger.reportErrors(similar.getKey(), List.of(ex)); //TODO: Type
+                ErrorLogger.reportErrors(similar.getKey() + " - Product", List.of(ex)); //TODO: Type
             } catch (NotExistException ex) {
-                ErrorLogger.reportErrors(similar.getKey(), List.of(ex));
+                ErrorLogger.reportErrors(similar.getKey() + " - Product", List.of(ex));
             } catch (SQLException ex) {
-                ErrorLogger.reportErrors(similar.getKey(), List.of(new UnknownSQLException(similar.getKey(), ex.getMessage())));
+                ErrorLogger.reportErrors(similar.getKey() + " - Product", List.of(new UnknownSQLException(similar.getKey(), ex.getMessage())));
             }
         }
 

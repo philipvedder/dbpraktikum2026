@@ -9,14 +9,13 @@ import java.util.Locale;
 import org.w3c.dom.Element;
 
 import de.unileipzig.dbpraktikum.loader.db.DB;
+import de.unileipzig.dbpraktikum.loader.db.service.CategoriesImportService;
 import de.unileipzig.dbpraktikum.loader.db.service.ShopImportService;
 import de.unileipzig.dbpraktikum.loader.input.CSVReader;
 import de.unileipzig.dbpraktikum.loader.input.XMLReader;
 import de.unileipzig.dbpraktikum.loader.logger.ErrorLogger;
-import de.unileipzig.dbpraktikum.loader.model.Product;
 import de.unileipzig.dbpraktikum.loader.model.Shop;
 import de.unileipzig.dbpraktikum.loader.model.Category;
-import de.unileipzig.dbpraktikum.loader.model.raw.ProductRaw;
 import de.unileipzig.dbpraktikum.loader.model.raw.ShopRaw;
 import de.unileipzig.dbpraktikum.loader.parser.XMLCategoryParser;
 import de.unileipzig.dbpraktikum.loader.parser.XMLShopParser;
@@ -28,6 +27,16 @@ public class MediaStoreLoader {
     private static void loadCategoryData(Element rootElement) {
         List<Category> rawCategories = XMLCategoryParser.parseXmlRoot(rootElement);
         List<Category> valCategories = CategoryValidator.validateAll(rawCategories);
+
+        DB db = new DB();
+        CategoriesImportService categoriesImportService = new CategoriesImportService();
+
+        try (Connection connection = db.openConnection()) {
+            categoriesImportService.importCategories(connection, valCategories);
+        } catch (Exception ex) {
+            System.out.println("ERROR: Error while establishing SQL Connection.");
+            System.out.println(ex.getMessage());
+        }
     }
 
     private static void loadShopData(Element rootElement) {
