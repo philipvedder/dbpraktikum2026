@@ -132,7 +132,10 @@ CREATE TABLE aehnliches_produkt (
   produkt_nr_2 VARCHAR(10),
   CONSTRAINT pk_aehnliches_produkt PRIMARY KEY (produkt_nr_1, produkt_nr_2),
   CONSTRAINT fk_aehnliches_produkt_1 FOREIGN KEY (produkt_nr_1) REFERENCES produkt (produkt_nr) ON UPDATE CASCADE ON DELETE CASCADE,
-  CONSTRAINT fk_aehnliches_produkt_2 FOREIGN KEY (produkt_nr_2) REFERENCES produkt (produkt_nr) ON UPDATE CASCADE ON DELETE CASCADE
+  CONSTRAINT fk_aehnliches_produkt_2 FOREIGN KEY (produkt_nr_2) REFERENCES produkt (produkt_nr) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT chk_aehnliches_produkt_nicht_selbst CHECK (
+    produkt_nr_1 <> produkt_nr_2
+  )
 );
 
 -- Angebot / Kauf
