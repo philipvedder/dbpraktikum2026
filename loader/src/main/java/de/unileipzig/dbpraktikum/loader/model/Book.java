@@ -5,6 +5,10 @@ import java.util.List;
 
 import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
 
+/**
+ * Typed Book model class. 
+ * Extends Product with specific attributes. 
+ */
 public class Book extends Product {
     private String publisherName;
     private List<String> authorNames;
@@ -35,6 +39,7 @@ public class Book extends Product {
         this.publisherName = publisherName;
     }
 
+    // Constructor for only Book specific variables
     public Book(
         String publisherName,
         List<String> authorNames,
@@ -51,6 +56,7 @@ public class Book extends Product {
         this.publisherName = publisherName;
     }
 
+    //Getters
     public String getPublisherName() {
         return publisherName;
     }

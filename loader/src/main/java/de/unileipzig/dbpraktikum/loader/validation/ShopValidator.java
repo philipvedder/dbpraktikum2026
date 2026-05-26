@@ -10,9 +10,15 @@ import de.unileipzig.dbpraktikum.loader.model.*;
 import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
 import de.unileipzig.dbpraktikum.loader.model.raw.*;
 
+/**
+ * Validator class for Shop XML content. 
+ * Checks and converts RAW objects into correctly-typed objects. 
+ */
 public class ShopValidator extends Validator {
     /**
      * Validates the input shop object by validating and converting all its variables.
+     * Exits the Program early if the shop information is already invalid. 
+     * Otherwise, validates all included products, and logs Errors which occur on any product. 
      * @param shop ShopRaw input, where all variabels are of Type String. 
      * @return Shop object with correct types.
      */
@@ -25,6 +31,7 @@ public class ShopValidator extends Validator {
         String street = requireNonBlank(shop.street(), "street", shopExceptions);
         String zip = requireNonBlank(shop.zip(), "zip", shopExceptions);
 
+        //Exit early if shop object is not valid
         if (!shopExceptions.isEmpty()) {
             ErrorLogger.reportErrors("Shop " + shop.name(), shopExceptions);
             System.out.println("Shop encoding invalid. Stopping early.");
@@ -42,6 +49,7 @@ public class ShopValidator extends Validator {
                     productResults.add(p);
                 
             } catch (MultipleValidationException e) {
+                //Log all Errors that occur for each product
                 ErrorLogger.reportErrors(productRaw.getAsin() + " - " + productRaw.getType().name(), e.getExceptions());
                 invalidCounter++;
             }
@@ -55,6 +63,8 @@ public class ShopValidator extends Validator {
 
     /**
      * Validates the input ProductRaw object by validating and converting all its variables.
+     * We allow null values for the image URL, the salesrank, and the price.
+     * Throws if any ValidationErrors occur on the Product or its content.  
      * @param p ProductRaw input, where all variabels are of Type String. 
      * @return Object of Subtype of Product with correct Types and validated. 
      * @throws MultipleValidationException, if any Validation threw an error. MultipleValidationException contains a list of all ValidationExceptions that occured on this Product. s
@@ -75,7 +85,9 @@ public class ShopValidator extends Validator {
 
         Offer offer = validateOffer(p.getOffer(), exceptions);
 
-        //Specific fields for the different types
+        //Specific fields for the different SubTypes. 
+        //The validated Product data is set via a lateSet method. 
+        //Returns null if exceptions occured. 
         Product finalProduct = null;
         switch (type) {
             case BOOK:
@@ -128,10 +140,10 @@ public class ShopValidator extends Validator {
     }
 
     /**
-     * 
-     * @param p
-     * @param exceptions
-     * @return
+     * Validates the <price> content of the XML file. Returns a typed Offer object, or null if errors occur. 
+     * @param p PriceRaw object with raw String objects. 
+     * @param exceptions List<ValidationException> to add ValidationExceptions to. 
+     * @return Typed and validated Offer object or NULL
      */
     private static Offer validateOffer(PriceRaw p, List<ValidationException> exceptions) {
         if (p == null) return null; // Items without prices are allowed
@@ -147,6 +159,12 @@ public class ShopValidator extends Validator {
         return new Offer(mult * price, currency, state);
     }
 
+    /**
+     * Validates the DVD specific content of the XML file. Returns a typed DVD object, or null if errors occur. 
+     * @param p DVDRaw object with raw String objects. 
+     * @param exceptions List<ValidationException> to add ValidationExceptions to. 
+     * @return Typed and validated DVD object or NULL
+     */
     private static DVD validateDVD(DVDRaw p, List<ValidationException> exceptions) {
         List<String> directors = cleanList(p.getDirectors());
         List<String> actors = cleanList(p.getActors());
@@ -162,14 +180,21 @@ public class ShopValidator extends Validator {
         return new DVD(directors, actors, creators, format, runningtime, regioncode);
     }
 
+    /**
+     * Validates the Music specific content of the XML file. Returns a typed Music object, or null if errors occur. 
+     * @param p MusicRaw object with raw String objects. 
+     * @param exceptions List<ValidationException> to add ValidationExceptions to. 
+     * @return Typed and validated Music object or NULL
+     */
     private static Music validateMusic(MusicRaw p, List<ValidationException> exceptions) {
         List<String> labels = cleanList(p.getLabels());
         String label = getFirstFromList(labels, "labels", exceptions);
 
-        List<String> artists = cleanList(p.getLabels());
+        List<String> artists = cleanList(p.getArtists());
         getFirstFromList(artists, "artists", exceptions); // Implicitly checks if there is at least one item in the list. 
 
-        List<String> tracks = cleanList(p.getLabels());
+        List<String> tracks = cleanList(p.getTracks());
+        getFirstFromList(tracks, "tracks", exceptions); // Implicitly checks if there is at least one item in the list. 
 
         MusicSpecRaw spec = requireNotNull(p.getMusicSpec(), "musicspec", exceptions);
         Date releaseDate = requireDate(spec.releasedate(), "musicspec:releasedate", exceptions);
@@ -179,16 +204,23 @@ public class ShopValidator extends Validator {
         return new Music(label, artists, tracks, releaseDate);
     }
 
+    /**
+     * Validates the Book specific content of the XML file. Returns a typed Book object, or null if errors occur. 
+     * @param p BookRaw object with raw String objects. 
+     * @param exceptions List<ValidationException> to add ValidationExceptions to. 
+     * @return Typed and validated Book object or NULL
+     */
     private static Book validateBook(BookRaw p, List<ValidationException> exceptions) {
         List<String> publisherNames = cleanList(p.getPublishers());
-        String publisherName = getFirstFromList(publisherNames, "publisher", exceptions);
+        String publisherName = getFirstFromList(publisherNames, "publisher", exceptions); //We take only the first object in the list. 
 
         List<String> authorNames = cleanList(p.getAuthors());
+        getFirstFromList(authorNames, "authors", exceptions); // Implicitly checks if there is at least one item in the list. 
 
         BookSpecRaw spec = requireNotNull(p.getBookSpec(), "bookspec", exceptions);
         
         String isbn = requireNonBlank(spec.isbn(), "bookspec:isbn", exceptions);
-        isbn = requireStringMaxLength(isbn, 10, "bookspec:isbn", exceptions);
+        isbn = requireStringMaxLength(isbn, 10, "bookspec:isbn", exceptions); //ISBN are max length 10
 
         Integer pages = requireNonNegativeInt(spec.pages(), "bookspec:pages", exceptions);
         Date publication = requireDate(spec.publication(), "bookspec:publication", exceptions);
