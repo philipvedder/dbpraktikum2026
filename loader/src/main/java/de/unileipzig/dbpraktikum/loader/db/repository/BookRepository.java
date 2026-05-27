@@ -26,7 +26,14 @@ public class BookRepository {
         this.productRepository = new ProductRepository();
     }
 
-    public boolean exists(Connection con, String asin) throws SQLException {
+    /**
+     * Checks if a Book with the specified ID already exists.
+     * @param con DB Connection Obj. 
+     * @param id String. The Product Id.
+     * @return boolean. True if entry exists, False otherwise. 
+     * @throws SQLException thrown on SQL execution problems.
+     */
+    public boolean exists(Connection con, String id) throws SQLException {
         String sql = """
             SELECT 1
             FROM media_store.buch
@@ -34,7 +41,7 @@ public class BookRepository {
         """;
 
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, asin);
+            stmt.setString(1, id);
 
             try (ResultSet r = stmt.executeQuery()) {
                 return r.next();
@@ -42,13 +49,31 @@ public class BookRepository {
         }
     }
 
+    /**
+     * Inserts a new Book object into the Database. 
+     * Procedure:
+     * 1. Add base data to Product Table
+     * 2. Find or create entry in Publisher Table 
+     * 3. Add specific data to Book Table
+     * 4. Find or create entry in Person Table for each Author
+     * 5. Add Relationships to Book_Author Table
+     * @param con DB Connection Obj. 
+     * @param p The Book to insert.
+     * @throws SQLException thrown on SQL execution problems.
+     */
     public void insert(Connection con, Book p) throws SQLException {
         productRepository.insert(con, p);
         insertBase(con, p);
         insertAuthors(con, p);
     }
 
-
+    /**
+     * Inserts the specific Book data into the Book Table.
+     * Also finds or creates the corresponding Publisher Entry and references it on Book Table. 
+     * @param con DB Connection Obj. 
+     * @param p The Book to insert.
+     * @throws SQLException thrown on SQL execution problems.
+     */
     public void insertBase(Connection con, Book p) throws SQLException {
         String sql = """
             INSERT INTO media_store.buch (
@@ -74,6 +99,12 @@ public class BookRepository {
         }
     }
 
+    /**
+     * Find or create all Authors of a Book object in the Person Table, and reference them to a Book using the Book_Author Table. 
+     * @param con DB Connection Obj. 
+     * @param p The Book to insert.
+     * @throws SQLException thrown on SQL execution problems.
+     */
     public void insertAuthors(Connection con, Book p) throws SQLException {
         String sql = """
             INSERT INTO media_store.buch_autor (

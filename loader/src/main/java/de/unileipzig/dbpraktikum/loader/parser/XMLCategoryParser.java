@@ -27,8 +27,12 @@ public class XMLCategoryParser {
         //cycle through each 
         Node child = rootElement.getFirstChild();
         while (child != null) {
-            if (child.getNodeType() != Node.ELEMENT_NODE) continue; //Only ELEMENT_NODE's can be valid categories
-
+            //Only ELEMENT_NODE's can be valid categories
+            if (child.getNodeType() != Node.ELEMENT_NODE) {
+                child = child.getNextSibling();
+                continue;
+            } 
+            
             //Parse each Category
             Category res = parseCategory((Element) child);
             if (res != null) results.add(res);

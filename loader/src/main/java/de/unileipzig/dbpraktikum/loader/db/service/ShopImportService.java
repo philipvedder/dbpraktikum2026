@@ -7,9 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import de.unileipzig.dbpraktikum.exception.DuplicateException;
-import de.unileipzig.dbpraktikum.exception.NotExistException;
-import de.unileipzig.dbpraktikum.exception.UnknownSQLException;
+import de.unileipzig.dbpraktikum.loader.exception.*;
 import de.unileipzig.dbpraktikum.loader.db.repository.BookRepository;
 import de.unileipzig.dbpraktikum.loader.db.repository.DVDRepository;
 import de.unileipzig.dbpraktikum.loader.db.repository.MusicRepository;

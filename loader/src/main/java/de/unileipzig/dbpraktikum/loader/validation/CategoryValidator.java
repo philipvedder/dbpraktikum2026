@@ -3,8 +3,7 @@ package de.unileipzig.dbpraktikum.loader.validation;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.unileipzig.dbpraktikum.exception.MultipleValidationException;
-import de.unileipzig.dbpraktikum.exception.ValidationException;
+import de.unileipzig.dbpraktikum.loader.exception.*;
 import de.unileipzig.dbpraktikum.loader.logger.ErrorLogger;
 import de.unileipzig.dbpraktikum.loader.model.Category;
 

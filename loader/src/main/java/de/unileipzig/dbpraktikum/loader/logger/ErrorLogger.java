@@ -8,7 +8,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.unileipzig.dbpraktikum.exception.ValidationException;
+import de.unileipzig.dbpraktikum.loader.exception.ValidationException;
 
 /**
  * Error logging class. 
