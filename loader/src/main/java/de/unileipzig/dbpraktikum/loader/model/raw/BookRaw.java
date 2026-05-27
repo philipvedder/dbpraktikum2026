@@ -4,6 +4,10 @@ import java.util.List;
 
 import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
 
+/**
+ * Raw model class for parsed <item> XML element of type Book. 
+ * All information stored in Strings, and will be converted during validation. 
+ */
 public class BookRaw extends ProductRaw {
     private BookSpecRaw bookSpec;
     private List<String> publishers;
@@ -28,6 +32,7 @@ public class BookRaw extends ProductRaw {
         this.authors = authors;
     }
 
+    //Getters
     public BookSpecRaw getBookSpec() {
         return bookSpec;
     }

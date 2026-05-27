@@ -1,0 +1,2 @@
+- Dürfen wir das PostgreSQL JBDC Driver maven package benutzen?
+- Woher kommen die Filialen?
