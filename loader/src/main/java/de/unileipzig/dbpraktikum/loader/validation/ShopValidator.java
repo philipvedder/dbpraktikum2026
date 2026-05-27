@@ -4,7 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.unileipzig.dbpraktikum.exception.*;
+import de.unileipzig.dbpraktikum.loader.exception.*;
 import de.unileipzig.dbpraktikum.loader.logger.ErrorLogger;
 import de.unileipzig.dbpraktikum.loader.model.*;
 import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;

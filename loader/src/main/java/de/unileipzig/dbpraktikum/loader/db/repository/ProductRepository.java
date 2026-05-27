@@ -7,8 +7,19 @@ import java.sql.SQLException;
 
 import de.unileipzig.dbpraktikum.loader.model.Product;
 
+/**
+ * Repository to interact with the DB Tables:
+ * produkt
+ */
 public class ProductRepository {
-    public boolean exists(Connection con, String asin) throws SQLException {
+    /**
+     * Checks if a Product with the specified ID already exists.
+     * @param con DB Connection Obj. 
+     * @param id String. The Product Id to search for.
+     * @return boolean. True if entry exists, False otherwise. 
+     * @throws SQLException thrown on SQL execution problems.
+     */
+    public boolean exists(Connection con, String id) throws SQLException {
         String sql = """
             SELECT 1
             FROM media_store.produkt
@@ -16,7 +27,7 @@ public class ProductRepository {
         """;
 
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
-            stmt.setString(1, asin);
+            stmt.setString(1, id);
 
             try (ResultSet r = stmt.executeQuery()) {
                 return r.next();
@@ -24,6 +35,12 @@ public class ProductRepository {
         }
     }
 
+    /**
+     * Insert a Product into DB. 
+     * @param con DB Connection Obj. 
+     * @param p Product to insert. 
+     * @throws SQLException thrown on SQL execution problems.
+     */
     public void insert(Connection con, Product p) throws SQLException {
         String sql = """
             INSERT INTO media_store.produkt (

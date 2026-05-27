@@ -1,7 +1,10 @@
-package de.unileipzig.dbpraktikum.exception;
+package de.unileipzig.dbpraktikum.loader.exception;
 
 import java.util.List;
 
+/**
+ * Validator Exception Wrapper, which allows one to throw a List of ValidatorExceptions. 
+ */
 public class MultipleValidationException extends ValidationException {
     private List<ValidationException> exceptions;
 
