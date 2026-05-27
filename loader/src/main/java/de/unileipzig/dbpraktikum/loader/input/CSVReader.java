@@ -27,8 +27,8 @@ public class CSVReader {
                 records.add(Arrays.asList(values));
             }
 
-            System.out.println("CSV Header:");
-            records.get(0).forEach(header -> System.out.println("  - " + header));
+            //System.out.println("CSV Header:");
+            //records.get(0).forEach(header -> System.out.println("  - " + header));
 
             //Debugging stuff...
             // System.out.println();
