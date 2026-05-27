@@ -11,6 +11,11 @@ import org.w3c.dom.Element;
 import de.unileipzig.dbpraktikum.loader.db.DB;
 import de.unileipzig.dbpraktikum.loader.db.service.CategoriesImportService;
 import de.unileipzig.dbpraktikum.loader.db.service.ShopImportService;
+import de.unileipzig.dbpraktikum.loader.db.service.ReviewsImportService;
+import de.unileipzig.dbpraktikum.loader.model.Review;
+import de.unileipzig.dbpraktikum.loader.model.raw.ReviewRaw;
+import de.unileipzig.dbpraktikum.loader.parser.CSVReviewParser;
+import de.unileipzig.dbpraktikum.loader.validation.ReviewValidator;
 import de.unileipzig.dbpraktikum.loader.input.CSVReader;
 import de.unileipzig.dbpraktikum.loader.input.XMLReader;
 import de.unileipzig.dbpraktikum.loader.logger.ErrorLogger;
@@ -21,6 +26,7 @@ import de.unileipzig.dbpraktikum.loader.parser.XMLCategoryParser;
 import de.unileipzig.dbpraktikum.loader.parser.XMLShopParser;
 import de.unileipzig.dbpraktikum.loader.validation.CategoryValidator;
 import de.unileipzig.dbpraktikum.loader.validation.ShopValidator;
+
 
 /**
  * Main Class of Media Store XML and CSV Loader. 
@@ -75,6 +81,34 @@ public class MediaStoreLoader {
             System.out.println(ex.getMessage());
         }
     }
+        /**
+     * Loading procedure for review CSV files
+     * @param inputFile path to CSV file
+     */
+    private static void loadReviewData(Path inputFile) throws Exception {
+        //Read CSV file
+        List<List<String>> csvRecords = CSVReader.readCsv(inputFile);
+
+        //Read file content to objects. Here, every filetype is still a String, and nothing is validated.
+        List<ReviewRaw> rawReviews = CSVReviewParser.parseCsvRecords(csvRecords);
+
+        //Validate to typed Objects.
+        List<Review> valReviews = ReviewValidator.validateAll(rawReviews);
+
+        //Initialize DB Connection and Import Service
+        DB db = new DB();
+        ReviewsImportService reviewsImportService = new ReviewsImportService();
+
+        //Establish DB connection and insert all new Elements
+        try (Connection connection = db.openConnection()) {
+            reviewsImportService.importReviews(connection, valReviews);
+        } catch (Exception ex) {
+            System.out.println("ERROR: Error while establishing SQL Connection.");
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    
 
     /**
      * Entry method for Loader. Checks if input file exists and then calls specific CSV or XML methods on it.  
@@ -102,7 +136,7 @@ public class MediaStoreLoader {
         //Load specific methods on File, depending on Filename and input type
         try {
             if (fileName.endsWith(".csv")) {
-                CSVReader.readCsv(inputFile); //TODO
+                loadReviewData(inputFile);
 
             } else if (fileName.endsWith(".xml")) {
                 //Read XML File
