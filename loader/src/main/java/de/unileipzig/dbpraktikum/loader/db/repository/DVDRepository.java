@@ -15,6 +15,7 @@ import de.unileipzig.dbpraktikum.loader.model.DVD;
 public class DVDRepository {
     private final PersonRepository personRepository;
     private final ProductRepository productRepository;
+    private final FormatRepository formatRepository;
 
     /**
      * Initialize required Repositories. 
@@ -22,6 +23,7 @@ public class DVDRepository {
     public DVDRepository() {
         this.personRepository = new PersonRepository();
         this.productRepository = new ProductRepository();
+        this.formatRepository = new FormatRepository();
     }
 
     /**
@@ -52,8 +54,10 @@ public class DVDRepository {
      * Procedure:
      * 1. Add base data to Product Table
      * 2. Add specific data to DVD Table
-     * 3. Find or create entry in Person Table for each Participation
-     * 4. Add Relationships to DVD_Participation Table
+     * 3. Find or create entry in Format Table for each Format
+     * 4. Add Relationships to DVD_Format Table
+     * 5. Find or create entry in Person Table for each Participation
+     * 6. Add Relationships to DVD_Participation Table
      * @param con DB Connection Obj. 
      * @param p The DVD to insert.
      * @throws SQLException thrown on SQL execution problems.
@@ -61,6 +65,7 @@ public class DVDRepository {
     public void insert(Connection con, DVD p) throws SQLException {
         productRepository.insert(con, p);
         insertBase(con, p);
+        insertFormats(con, p);
         insertParticipations(con, p);
     }
 
@@ -74,20 +79,46 @@ public class DVDRepository {
         String sql = """
             INSERT INTO media_store.dvd (
                 produkt_nr, 
-                format,
                 laufzeit_minuten,
                 region_code
             )
-            VALUES (?, ?, ?, ?)
+            VALUES (?, ?, ?)
         """;
 
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setString(1, p.getAsin());
-            stmt.setString(2, p.getFormat());
-            stmt.setInt(3, p.getRunningtime());
-            stmt.setInt(4, p.getRegioncode());
+            stmt.setInt(2, p.getRunningtime());
+            stmt.setInt(3, p.getRegioncode());
 
             stmt.executeUpdate();
+        }
+    }
+
+    /**
+     * Find or create all Formats of a DVD object in the Format Table, and reference them to a DVD using the DVD_Formats Table. 
+     * @param con DB Connection Obj. 
+     * @param p The DVD to insert.
+     * @throws SQLException thrown on SQL execution problems.
+     */
+    public void insertFormats(Connection con, DVD p) throws SQLException {
+        String sql = """
+            INSERT INTO media_store.dvd_format (
+                produkt_nr, 
+                format_id
+            )
+            VALUES (?, ?)
+        """;
+
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            for (String format : p.getFormats()) {
+                Long formatId = formatRepository.findOrCreate(con, format);
+
+                stmt.setString(1, p.getAsin());
+                stmt.setLong(2, formatId);
+                stmt.addBatch();
+            }
+            
+            stmt.executeBatch();
         }
     }
 

@@ -29,6 +29,12 @@ CREATE TABLE verlag (
   CONSTRAINT pk_verlag PRIMARY KEY (verlag_id)
 );
 
+CREATE TABLE format (
+  format_id BIGINT GENERATED ALWAYS AS IDENTITY,
+  name TEXT NOT NULL UNIQUE,
+  CONSTRAINT pk_format PRIMARY KEY (format_id)
+);
+
 CREATE TABLE label (
   label_id BIGINT GENERATED ALWAYS AS IDENTITY,
   name TEXT NOT NULL UNIQUE,
@@ -60,7 +66,6 @@ CREATE TABLE musik_cd (
 
 CREATE TABLE dvd (
   produkt_nr VARCHAR(10),
-  format TEXT NOT NULL,
   laufzeit_minuten INTEGER NOT NULL,
   region_code INTEGER NOT NULL,
   CONSTRAINT pk_dvd PRIMARY KEY (produkt_nr),
@@ -83,6 +88,14 @@ CREATE TABLE musik_cd_kuenstler (
   CONSTRAINT pk_musik_cd_kuenstler PRIMARY KEY (produkt_nr, person_id),
   CONSTRAINT fk_musik_cd_kuenstler_musik_cd FOREIGN KEY (produkt_nr) REFERENCES musik_cd (produkt_nr) ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT fk_musik_cd_kuenstler_person FOREIGN KEY (person_id) REFERENCES person (person_id) ON UPDATE CASCADE ON DELETE RESTRICT
+);
+
+CREATE TABLE dvd_format (
+  produkt_nr VARCHAR(10),
+  format_id BIGINT,
+  CONSTRAINT pk_dvd_format PRIMARY KEY (produkt_nr, format_id),
+  CONSTRAINT fk_dvd_format_dvd FOREIGN KEY (produkt_nr) REFERENCES dvd (produkt_nr) ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT fk_dvd_format_format FOREIGN KEY (format_id) REFERENCES format (format_id) ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 CREATE TABLE dvd_beteiligung (

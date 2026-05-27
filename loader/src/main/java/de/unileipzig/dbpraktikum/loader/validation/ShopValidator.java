@@ -171,13 +171,19 @@ public class ShopValidator extends Validator {
         List<String> creators = cleanList(p.getCreators());
 
         DVDSpecRaw spec = requireNotNull(p.getDvdSpec(), "dvdspec", exceptions);
+        
+        //Format is converted to a List by splitting the String at ',' chars. 
         String format = requireNonBlank(spec.format(), "dvdspec:format", exceptions);
+        String[] formatArray = format.split(",");
+        List<String> formats = cleanList(List.of(formatArray));
+        getFirstFromList(formats, "dvdspec:format", exceptions); //Implicit check if List is not empty. 
+        
         Integer regioncode = requireNonNegativeInt(spec.regioncode(), "dvdspec:regioncode", exceptions);
         Integer runningtime = requireNonNegativeInt(spec.runningtime(), "dvdspec:runningtime", exceptions);
 
         if (!exceptions.isEmpty()) return null;
 
-        return new DVD(directors, actors, creators, format, runningtime, regioncode);
+        return new DVD(directors, actors, creators, formats, runningtime, regioncode);
     }
 
     /**

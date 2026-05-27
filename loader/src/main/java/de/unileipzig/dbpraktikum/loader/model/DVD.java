@@ -12,7 +12,7 @@ public class DVD extends Product {
     private List<String> directorNames;
     private List<String> actorNames;
     private List<String> creatorNames;
-    private String format;
+    private List<String> formats;
     private int runningtime;
     private int regioncode;
 
@@ -27,7 +27,7 @@ public class DVD extends Product {
         List<String> directorNames,
         List<String> actorNames,
         List<String> creatorNames,
-        String format, 
+        List<String> formats, 
         int runningtime,
         int regioncode
     ) {
@@ -36,7 +36,7 @@ public class DVD extends Product {
         this.directorNames = directorNames;
         this.actorNames = actorNames;
         this.creatorNames = creatorNames;
-        this.format = format;
+        this.formats = formats;
         this.runningtime = runningtime;
         this.regioncode = regioncode;
     }
@@ -46,7 +46,7 @@ public class DVD extends Product {
         List<String> directorNames,
         List<String> actorNames,
         List<String> creatorNames,
-        String format, 
+        List<String> formats, 
         int runningtime,
         int regioncode
     ) {
@@ -55,7 +55,7 @@ public class DVD extends Product {
         this.directorNames = directorNames;
         this.actorNames = actorNames;
         this.creatorNames = creatorNames;
-        this.format = format;
+        this.formats = formats;
         this.runningtime = runningtime;
         this.regioncode = regioncode;
     }
@@ -73,8 +73,8 @@ public class DVD extends Product {
         return creatorNames;
     }
 
-    public String getFormat() {
-        return format;
+    public List<String> getFormats() {
+        return formats;
     }
 
     public int getRunningtime() {
