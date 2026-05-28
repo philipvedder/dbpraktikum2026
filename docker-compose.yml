@@ -1,0 +1,16 @@
+volumes:
+   pg-data:
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    container_name: dbp-postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: compose-postgres
+      POSTGRES_USER: compose-postgres
+      POSTGRES_PASSWORD: compose-postgres
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    restart: always

@@ -7,7 +7,7 @@ CREATE TYPE produkttyp_enum AS ENUM('BOOK', 'MUSIC_CD', 'DVD');
 
 CREATE TYPE dvd_rolle_enum AS ENUM('ACTOR', 'CREATOR', 'DIRECTOR');
 
--- MAIN
+-- Base Product
 CREATE TABLE produkt (
   produkt_nr VARCHAR(10),
   produkttyp produkttyp_enum NOT NULL,
@@ -17,6 +17,7 @@ CREATE TABLE produkt (
   CONSTRAINT pk_produkt PRIMARY KEY (produkt_nr)
 );
 
+-- Sub entities
 CREATE TABLE person (
   person_id BIGINT GENERATED ALWAYS AS IDENTITY,
   name TEXT NOT NULL,
@@ -41,7 +42,7 @@ CREATE TABLE label (
   CONSTRAINT pk_label PRIMARY KEY (label_id)
 );
 
--- SUB
+-- Subtypes of Product
 CREATE TABLE buch (
   produkt_nr VARCHAR(10),
   seitenzahl INTEGER NOT NULL,
@@ -73,7 +74,7 @@ CREATE TABLE dvd (
   CONSTRAINT chk_dvd_laufzeit_pos CHECK (laufzeit_minuten > 0)
 );
 
--- Personen
+-- n:m relation tables
 CREATE TABLE buch_autor (
   produkt_nr VARCHAR(10),
   person_id BIGINT,
