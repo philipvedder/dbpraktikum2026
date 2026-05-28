@@ -70,12 +70,12 @@ public class XMLCategoryParser {
                 Element e = (Element) child;
 
                 //Sub Categories are recursively parsed. 
-                if (e.getTagName() == "category") {
+                if (e.getTagName().equals("category")) {
                     childCategoryRaws.add(parseCategory(e));
                 }
 
                 //Extract ids of included products. 
-                if (e.getTagName() == "item") {
+                if (e.getTagName().equals("item")) {
                     itemIds.add(DOMUtil.childText(e));
                 }
             }

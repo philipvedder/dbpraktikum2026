@@ -38,7 +38,7 @@ public class XMLShopParser {
         String street = DOMUtil.attr(rootElement, "street");
         String zip = DOMUtil.attr(rootElement, "zip");
 
-        //Trigger parsing of all <item> childs. 
+        //Parse all <item> child Elements
         for (Node item = rootElement.getFirstChild(); item != null; item = item.getNextSibling()) {
             if (item.getNodeType() != Node.ELEMENT_NODE) continue; //Only ELEMENT_NODE's can be valid items
             ProductRaw res = parseItem((Element) item);
@@ -206,7 +206,7 @@ public class XMLShopParser {
             if (child.getNodeType() == Node.ELEMENT_NODE) {
                 Element e = (Element) child;
 
-                if (e.getTagName().toLowerCase().trim() == "title") { //Get text content of each <title> element. 
+                if (e.getTagName().toLowerCase().trim().equals("title")) { //Get text content of each <title> element. 
                     result.add(DOMUtil.childText(e));
                 }
             }
@@ -234,7 +234,7 @@ public class XMLShopParser {
             if (child.getNodeType() == Node.ELEMENT_NODE) { //Only Element nodes can be named entities
                 Element e = (Element) child;
 
-                if (e.getTagName().toLowerCase().trim() == elementTag.toLowerCase().trim()) { //Only parse elements with correct Tag. 
+                if (e.getTagName().toLowerCase().trim().equals(elementTag.toLowerCase().trim())) { //Only parse elements with correct Tag. 
                     result.add(DOMUtil.attr(e, "name")); //Store content of name attribute. 
                 }
             }
