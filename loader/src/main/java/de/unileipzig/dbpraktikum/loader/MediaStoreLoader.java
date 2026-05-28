@@ -81,13 +81,15 @@ public class MediaStoreLoader {
             System.out.println(ex.getMessage());
         }
     }
-        /**
+    
+    /**
      * Loading procedure for review CSV files
      * @param inputFile path to CSV file
      */
     private static void loadReviewData(Path inputFile) throws Exception {
         //Read CSV file
         List<List<String>> csvRecords = CSVReader.readCsv(inputFile);
+        if (csvRecords.size() == 0) return;
 
         //Read file content to objects. Here, every filetype is still a String, and nothing is validated.
         List<ReviewRaw> rawReviews = CSVReviewParser.parseCsvRecords(csvRecords);
@@ -107,8 +109,6 @@ public class MediaStoreLoader {
             System.out.println(ex.getMessage());
         }
     }
-
-    
 
     /**
      * Entry method for Loader. Checks if input file exists and then calls specific CSV or XML methods on it.  

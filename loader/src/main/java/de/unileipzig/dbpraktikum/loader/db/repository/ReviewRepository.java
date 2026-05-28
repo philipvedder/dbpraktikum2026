@@ -37,9 +37,10 @@ public class ReviewRepository {
 
             stmt.setLong(1, customerId);
             stmt.setString(2, review.productId());
-            stmt.setTimestamp(3, review.reviewTimestamp());
+            stmt.setDate(3, review.reviewDate());
             stmt.setInt(4, review.rating());
             stmt.setString(5, review.reviewText());
+            //stmt.setString(6, review.summary()); UNUSED
 
             stmt.executeUpdate();
         }

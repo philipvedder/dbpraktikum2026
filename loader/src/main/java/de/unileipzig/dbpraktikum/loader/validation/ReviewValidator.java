@@ -1,113 +1,73 @@
 package de.unileipzig.dbpraktikum.loader.validation;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.format.DateTimeParseException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.unileipzig.dbpraktikum.loader.exception.MultipleValidationException;
+import de.unileipzig.dbpraktikum.loader.exception.ValidationException;
+import de.unileipzig.dbpraktikum.loader.logger.ErrorLogger;
 import de.unileipzig.dbpraktikum.loader.model.Review;
 import de.unileipzig.dbpraktikum.loader.model.raw.ReviewRaw;
 
-public class ReviewValidator {
+public class ReviewValidator extends Validator {
 
     public static List<Review> validateAll(List<ReviewRaw> rawReviews) {
         List<Review> results = new ArrayList<>();
+        int invalidCounter = 0;
 
         if (rawReviews == null || rawReviews.isEmpty()) {
             return results;
         }
 
-        int invalidCounter = 0;
-
+        //Review obj validation
         for (ReviewRaw rawReview : rawReviews) {
-            Review review = validate(rawReview);
-
-            if (review != null) {
-                results.add(review);
-            } else {
+            try {
+                Review review = validate(rawReview);
+                if (review != null)
+                    results.add(review);
+                
+            } catch (MultipleValidationException e) {
+                //Log all Errors that occur for each Review
+                ErrorLogger.reportErrors(rawReview.product() + " - Rating", e.getExceptions());
                 invalidCounter++;
             }
         }
 
-        System.out.println(results.size() + " valid reviews");
+        //Result
+        System.out.println(results.size() - invalidCounter + " valid reviews");
         System.out.println(invalidCounter + " invalid reviews");
-
         return results;
     }
 
-    public static Review validate(ReviewRaw rawReview) {
-        if (rawReview == null) {
-            return null;
+    public static Review validate(ReviewRaw rawReview) throws MultipleValidationException {
+        if (rawReview == null) return null;
+        
+        List<ValidationException> exceptions = new ArrayList<>(); //List of all Exceptions which occur during the validation.
+
+        String productId = requireNonBlank(rawReview.product(), "productId", exceptions);
+        productId = requireStringMaxLength(productId, 10, "productId", exceptions);
+
+        String userName = requireNonBlank(rawReview.user(), "user", exceptions);
+        String summary = requireNonBlank(rawReview.summary(), "user", exceptions);
+
+        String content = requireNonBlank(rawReview.content(), "user", exceptions);
+        Integer rating = requireIntBetween(rawReview.rating(), 1, 5, "rating", exceptions);
+        Date date = requireDate(rawReview.reviewDate(), "reviewDate", exceptions);
+
+        //Throw combined Exception for Validation Errors if existent
+        if (!exceptions.isEmpty()) {
+            throw new MultipleValidationException(exceptions);
         }
 
-        String productId = clean(rawReview.product());
-        String userName = clean(rawReview.user());
-        String summary = clean(rawReview.summary());
-        String content = clean(rawReview.content());
-
-        if (productId.isEmpty()) {
-            System.out.println("Invalid review: missing product id");
-            return null;
-        }
-
-        if (userName.isEmpty()) {
-            System.out.println("Invalid review for product " + productId + ": missing user");
-            return null;
-        }
-
-        int rating;
-
-        try {
-            rating = Integer.parseInt(clean(rawReview.rating()));
-        } catch (NumberFormatException ex) {
-            System.out.println("Invalid review for product " + productId + ": invalid rating");
-            return null;
-        }
-
-        if (rating < 1 || rating > 5) {
-            System.out.println("Invalid review for product " + productId + ": rating out of range");
-            return null;
-        }
-
-        Timestamp reviewTimestamp;
-
-        try {
-            LocalDate reviewDate = LocalDate.parse(clean(rawReview.reviewDate()));
-            reviewTimestamp = Timestamp.valueOf(reviewDate.atStartOfDay());
-        } catch (DateTimeParseException ex) {
-            System.out.println("Invalid review for product " + productId + ": invalid review date");
-            return null;
-        }
-
-        String reviewText = buildReviewText(summary, content);
-
+        //Return final Review
         return new Review(
             productId,
             userName,
             rating,
-            reviewTimestamp,
-            reviewText
+            date,
+            content,
+            summary
         );
-    }
-
-    private static String buildReviewText(String summary, String content) {
-        if (summary.isEmpty()) {
-            return content;
-        }
-
-        if (content.isEmpty()) {
-            return summary;
-        }
-
-        return summary + "\n\n" + content;
-    }
-
-    private static String clean(String value) {
-        if (value == null) {
-            return "";
-        }
-
-        return value.trim();
     }
 }

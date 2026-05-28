@@ -1,7 +1,9 @@
 package de.unileipzig.dbpraktikum.loader.parser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.unileipzig.dbpraktikum.loader.model.raw.ReviewRaw;
 
@@ -14,9 +16,16 @@ public class CSVReviewParser {
             return results;
         }
 
-        // skip header line
+        // Build Header->Index Map, to respect positions of the Headers
+        List<String> header = records.get(0);
+        Map<String, Integer> indexMap = new HashMap<>();
+        for (int i = 0; i < header.size(); i++) {
+            indexMap.put(header.get(i), i);
+        }
+
+        // Skip header line, and parse each row into a raw object
         for (int i = 1; i < records.size(); i++) {
-            ReviewRaw res = parseItem(records.get(i));
+            ReviewRaw res = parseItem(records.get(i), indexMap);
             if (res != null) results.add(res);
         }
 
@@ -24,49 +33,28 @@ public class CSVReviewParser {
         return results;
     }
 
-    public static ReviewRaw parseItem(List<String> row) {
-        if (row == null || row.isEmpty()) {
+    public static ReviewRaw parseItem(List<String> row, Map<String, Integer> indexMap) {
+        if (row == null || row.isEmpty() || row.size() != indexMap.size()) {
+            System.out.println(row);
             return null;
         }
 
         return new ReviewRaw(
-            getValue(row, 0),        // product
-            getValue(row, 1),        // rating
-            getValue(row, 2),        // helpful
-            getValue(row, 3),        // reviewdate
-            getValue(row, 4),        // user
-            getValue(row, 5),        // summary
-            getContentValue(row, 6)  // content
+            clean(row.get(indexMap.get("product"))),
+            clean(row.get(indexMap.get("rating"))),
+            clean(row.get(indexMap.get("helpful"))),
+            clean(row.get(indexMap.get("reviewdate"))),
+            clean(row.get(indexMap.get("user"))),
+            clean(row.get(indexMap.get("summary"))),
+            clean(row.get(indexMap.get("content")))
         );
     }
 
-    private static String getValue(List<String> row, int index) {
-        if (index >= row.size()) {
-            return "";
-        }
-
-        return clean(row.get(index));
-    }
-
-    private static String getContentValue(List<String> row, int startIndex) {
-        if (startIndex >= row.size()) {
-            return "";
-        }
-
-        return clean(String.join(",", row.subList(startIndex, row.size())));
-    }
-
     private static String clean(String value) {
-        if (value == null) {
-            return "";
+        if (value == null || value.isBlank()) {
+            return null;
         }
 
-        String cleaned = value.trim();
-
-        if (cleaned.startsWith("\"") && cleaned.endsWith("\"") && cleaned.length() >= 2) {
-            cleaned = cleaned.substring(1, cleaned.length() - 1);
-        }
-
-        return cleaned;
+        return value.trim();
     }
 }

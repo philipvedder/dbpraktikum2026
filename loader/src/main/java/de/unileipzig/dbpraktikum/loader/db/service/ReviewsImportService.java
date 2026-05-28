@@ -61,13 +61,12 @@ public class ReviewsImportService {
                 importReview(con, review);
                 validCounter++;
             } catch (NotExistException ex) {
-                //Product is not in DB
+                //Review is not in DB
                 ErrorLogger.reportErrors(review.productId() + " - Review", List.of(ex));
             } catch (SQLException ex) {
                 //Error while executing SQL
                 ErrorLogger.reportErrors(
-                    review.productId() + " - Review",
-                    List.of(new UnknownSQLException(review.productId(), ex.getMessage()))
+                    review.productId() + " - Review", List.of(new UnknownSQLException(review.productId(), ex.getMessage()))
                 );
             }
         }
