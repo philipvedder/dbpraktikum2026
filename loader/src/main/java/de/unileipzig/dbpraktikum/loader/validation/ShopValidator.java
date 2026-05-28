@@ -28,8 +28,11 @@ public class ShopValidator extends Validator {
         //Shop object Validation
         List<ValidationException> shopExceptions = new ArrayList<>(); //List of all Exceptions which occur during the validation.
         String name = requireNonBlank(shop.name(), "name", shopExceptions);
+        name = requireStringMaxLength(name, 256, "name", shopExceptions);
         String street = requireNonBlank(shop.street(), "street", shopExceptions);
+        street = requireStringMaxLength(street, 512, "street", shopExceptions);
         String zip = requireNonBlank(shop.zip(), "zip", shopExceptions);
+        zip = requireStringMaxLength(zip, 16, "zip", shopExceptions);
 
         //Exit early if shop object is not valid
         if (!shopExceptions.isEmpty()) {
@@ -151,6 +154,7 @@ public class ShopValidator extends Validator {
 
         Integer price = requirePositiveInt(p.price(), "price:value", exceptions);
         String currency = requireNonBlank(p.currency(), "price:currency", exceptions);
+        currency = requireStringMaxLength(currency, 8, "price:currency", exceptions);
         String state = requireNonBlank(p.state(), "price:state", exceptions);
         Double mult = requireNonNegativeDouble(p.mult(), "price:mult", exceptions);
 

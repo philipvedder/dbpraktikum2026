@@ -48,10 +48,11 @@ public class ReviewValidator extends Validator {
         String productId = requireNonBlank(rawReview.product(), "productId", exceptions);
         productId = requireStringMaxLength(productId, 10, "productId", exceptions);
 
-        String userName = requireNonBlank(rawReview.user(), "user", exceptions);
-        String summary = requireNonBlank(rawReview.summary(), "user", exceptions);
+        String userName = requireNonBlank(rawReview.user(), "username", exceptions);
+        userName = requireStringMaxLength(productId, 256, "username", exceptions);
+        String summary = requireNonBlank(rawReview.summary(), "summary", exceptions);
 
-        String content = requireNonBlank(rawReview.content(), "user", exceptions);
+        String content = requireNonBlank(rawReview.content(), "content", exceptions);
         Integer rating = requireIntBetween(rawReview.rating(), 1, 5, "rating", exceptions);
         Date date = requireDate(rawReview.reviewDate(), "reviewDate", exceptions);
 
