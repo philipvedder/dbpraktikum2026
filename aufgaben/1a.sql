@@ -47,7 +47,7 @@ CREATE TABLE buch (
   produkt_nr VARCHAR(10),
   seitenzahl INTEGER NOT NULL,
   erscheinungsdatum DATE NOT NULL,
-  isbn VARCHAR(10) NOT NULL UNIQUE,
+  isbn VARCHAR(10) NOT NULL,
   verlag_id BIGINT NOT NULL,
   CONSTRAINT pk_buch PRIMARY KEY (produkt_nr),
   CONSTRAINT fk_buch_produkt FOREIGN KEY (produkt_nr) REFERENCES produkt (produkt_nr) ON UPDATE CASCADE ON DELETE CASCADE,
@@ -212,3 +212,75 @@ CREATE TABLE rezension (
   CONSTRAINT chk_rezension_punkte CHECK (punkte BETWEEN 1 AND 5),
   CONSTRAINT chk_rezension_zeitpunkt_nicht_zukunft CHECK (rezensionszeitpunkt <= CURRENT_TIMESTAMP)
 );
+
+-- INDIZES
+
+-- Produktsuche / Sortierung
+CREATE INDEX idx_produkt_titel
+ON produkt (titel);
+
+CREATE INDEX idx_produkt_produkttyp
+ON produkt (produkttyp);
+
+CREATE INDEX idx_produkt_verkaufsrang
+ON produkt (verkaufsrang);
+
+-- Verlag / Label
+CREATE INDEX idx_buch_verlag
+ON buch (verlag_id);
+
+CREATE INDEX idx_musik_cd_label
+ON musik_cd (label_id);
+
+-- Beziehungstabellen: Suche über die zweite Spalte
+CREATE INDEX idx_buch_autor_person
+ON buch_autor (person_id);
+
+CREATE INDEX idx_musik_cd_kuenstler_person
+ON musik_cd_kuenstler (person_id);
+
+CREATE INDEX idx_dvd_format_format
+ON dvd_format (format_id);
+
+CREATE INDEX idx_dvd_beteiligung_person
+ON dvd_beteiligung (person_id);
+
+-- Tracks einer Musik-CD
+CREATE INDEX idx_musik_cd_titel_produkt
+ON musik_cd_titel (produkt_nr);
+
+-- Kategoriebaum und Produkte in Kategorien
+CREATE INDEX idx_produkt_kategorie_kategorie_id
+ON produkt_kategorie (kategorie_id);
+
+-- Ähnliche Produkte auch in umgekehrter Richtung auffindbar machen
+CREATE INDEX idx_aehnliches_produkt_2
+ON aehnliches_produkt (produkt_nr_2);
+
+-- Angebote zu einem Produkt
+CREATE INDEX idx_angebot_produkt
+ON angebot (produkt_nr);
+
+-- Bestellungen nach Kunde, Produkt oder Zeitpunkt
+CREATE INDEX idx_bestellung_kunde
+ON bestellung (kunde_id);
+
+CREATE INDEX idx_bestellung_produkt
+ON bestellung (produkt_nr);
+
+CREATE INDEX idx_bestellung_kaufzeitpunkt
+ON bestellung (kaufzeitpunkt);
+
+-- Rezensionen nach Kunde, Produkt oder Zeitpunkt
+CREATE INDEX idx_rezension_kunde
+ON rezension (kunde_id);
+
+CREATE INDEX idx_rezension_produkt
+ON rezension (produkt_nr);
+
+CREATE INDEX idx_rezension_zeitpunkt
+ON rezension (rezensionszeitpunkt);
+
+-- Suche nach Personen, z.B. Autoren, Künstlern, Schauspielern oder Regisseuren
+CREATE INDEX idx_person_name
+ON person (name);
