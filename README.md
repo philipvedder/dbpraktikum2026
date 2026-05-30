@@ -1,5 +1,7 @@
 # DBPraktikum Uni Leipzig 2026
 
+Please find the SQL script for Task 1a in /aufgaben/1a.sql.
+
 ## Running the Loader
 
 To run this project, you should have maven and at least JDK 17 installed. 
