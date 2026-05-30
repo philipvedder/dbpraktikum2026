@@ -24,15 +24,9 @@ public class CategoryValidator extends Validator {
         //Validate each root category
         List<Category> results = new ArrayList<>();
         for (Category categoryRaw : categories) {
-            try {
-                Category c = validate(categoryRaw);
-                if (c != null) 
-                    results.add(c);
-                
-            } catch (MultipleValidationException e) {
-                //Log exceptions that occured for each category
-                ErrorLogger.reportErrors(categoryRaw.name() + " - Category", e.getExceptions());
-            }
+            Category c = validate(categoryRaw);
+            if (c != null) 
+                results.add(c);
         }
 
         //Result
@@ -42,33 +36,29 @@ public class CategoryValidator extends Validator {
     /**
      * Validates the input Category object by validating all its variables.
      * We allow Categories without items.
-     * Throws if any ValidationErrors occur on the Category or its content.  
+     * Writes itself to ErrorLog if a Category shows validation errors (only possible on the title name) and skips that Category and its childs then. 
      * Recursive on child Categories. 
      * @param c Category input. 
      * @return validated Category. 
-     * @throws MultipleValidationException, if any Validation threw an error. MultipleValidationException contains a list of all ValidationExceptions that occured on this Category.
      */
-    private static Category validate(Category c) throws MultipleValidationException {
+    private static Category validate(Category c) {
         List<ValidationException> categoryExceptions = new ArrayList<>(); //List of all Exceptions which occur during the validation.
 
         //Validate fields
         String name = requireNonBlank(c.name(), "title", categoryExceptions);
         List<String> items = cleanList(c.itemIds());
 
+        //Throw Exception if some occured
+        if (!categoryExceptions.isEmpty()) {
+            ErrorLogger.reportErrors("Category with name " + c.name(), categoryExceptions);
+            return null;
+        }
+
         //Recursive Validation of Childs
         List<Category> childs = new ArrayList<>();
         for (Category child : c.childCategories()) {
-            try {
-                Category valChild = validate(child);
-                childs.add(valChild);
-            } catch (MultipleValidationException ex) {
-                categoryExceptions.addAll(ex.getExceptions());
-            }
-        }
-
-        //Throw Exception if some occured
-        if (!categoryExceptions.isEmpty()) {
-            throw new MultipleValidationException(categoryExceptions);
+            Category valChild = validate(child);
+            if (valChild != null) childs.add(valChild);
         }
 
         //Return validated obj
