@@ -8,7 +8,7 @@ import de.unileipzig.dbpraktikum.loader.logger.ErrorLogger;
 import de.unileipzig.dbpraktikum.loader.model.Category;
 
 /**
- * Validator class for XML <category> objects
+ * Validator class for XML Category objects
  * Checks each variable of each category object and returns validated Objects 
  */
 public class CategoryValidator extends Validator {

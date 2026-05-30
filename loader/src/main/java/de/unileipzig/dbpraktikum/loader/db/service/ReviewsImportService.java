@@ -33,7 +33,7 @@ public class ReviewsImportService {
      * @param con DB Connection Obj.
      * @param review The Review to import.
      * @throws SQLException thrown on SQL execution problems.
-     * @throws NotExistException thrown if the product does not exist in the DB.
+     * @throws NotExistException thrown if the referenced product does not exist in the DB.
      */
     private void importReview(Connection con, Review review) throws SQLException, NotExistException {
         //Check if Product exists.

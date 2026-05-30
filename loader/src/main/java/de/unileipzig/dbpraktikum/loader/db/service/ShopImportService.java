@@ -171,13 +171,13 @@ public class ShopImportService {
                 importSimilar(con, similar.getKey(), similar.getValue());
             } catch (DuplicateException ex) {
                 //Relationship already included
-                ErrorLogger.reportErrors(similar.getKey() + " - Product", List.of(ex)); //TODO: Type
+                ErrorLogger.reportErrors(similar.getKey() + " - Product Similarity", List.of(ex));
             } catch (NotExistException ex) {
                 //At least one of the Product Ids is not in DB
-                ErrorLogger.reportErrors(similar.getKey() + " - Product", List.of(ex));
+                ErrorLogger.reportErrors(similar.getKey() + " - Product Similarity", List.of(ex));
             } catch (SQLException ex) {
                 //Error while executing SQL
-                ErrorLogger.reportErrors(similar.getKey() + " - Product", List.of(new UnknownSQLException(similar.getKey(), ex.getMessage())));
+                ErrorLogger.reportErrors(similar.getKey() + " - Product Similarity", List.of(new UnknownSQLException(similar.getKey(), ex.getMessage())));
             }
         }
 

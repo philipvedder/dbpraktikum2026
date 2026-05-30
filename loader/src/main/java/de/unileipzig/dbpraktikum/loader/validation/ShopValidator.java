@@ -70,9 +70,10 @@ public class ShopValidator extends Validator {
      * Throws if any ValidationErrors occur on the Product or its content.  
      * @param p ProductRaw input, where all variabels are of Type String. 
      * @return Object of Subtype of Product with correct Types and validated. 
-     * @throws MultipleValidationException, if any Validation threw an error. MultipleValidationException contains a list of all ValidationExceptions that occured on this Product. s
+     * @throws MultipleValidationException, if any Validation threw an error. MultipleValidationException contains a list of all ValidationExceptions that occured on this Product.
      */
     private static Product validateProduct(ProductRaw p) throws MultipleValidationException {
+        if (p == null) return null;
         List<ValidationException> exceptions = new ArrayList<>(); //List of all Exceptions which occur during the validation.
 
         //Validation of all general Product fields
@@ -183,7 +184,7 @@ public class ShopValidator extends Validator {
         getFirstFromList(formats, "dvdspec:format", exceptions); //Implicit check if List is not empty. 
         
         Integer regioncode = requireNonNegativeInt(spec.regioncode(), "dvdspec:regioncode", exceptions);
-        Integer runningtime = requireNonNegativeInt(spec.runningtime(), "dvdspec:runningtime", exceptions);
+        Integer runningtime = requirePositiveInt(spec.runningtime(), "dvdspec:runningtime", exceptions);
 
         if (!exceptions.isEmpty()) return null;
 
@@ -232,7 +233,7 @@ public class ShopValidator extends Validator {
         String isbn = requireNonBlank(spec.isbn(), "bookspec:isbn", exceptions);
         isbn = requireStringMaxLength(isbn, 10, "bookspec:isbn", exceptions); //ISBN are max length 10
 
-        Integer pages = requireNonNegativeInt(spec.pages(), "bookspec:pages", exceptions);
+        Integer pages = requirePositiveInt(spec.pages(), "bookspec:pages", exceptions);
         Date publication = requireDate(spec.publication(), "bookspec:publication", exceptions);
 
         if (!exceptions.isEmpty()) return null;

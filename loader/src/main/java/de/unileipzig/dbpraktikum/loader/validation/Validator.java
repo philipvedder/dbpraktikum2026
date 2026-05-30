@@ -37,6 +37,31 @@ public abstract class Validator {
     }
 
     /**
+     * Converts a String to a Date if possible, and requires the Date to not be in the future. 
+     * Otherwise, adds DateInFutureException to exceptions. 
+     * Adds NotAValidDateFormatException If input is not in Valid Date format.
+     * Adds BlankException if input String is Blank.
+     * Adds NullException if input String is NULL. 
+     * @param s String to validate
+     * @param name String with name of Parameter, which is getting checked. This is only for Error reporting.
+     * @param exceptions List<ValidationException>, where exceptions will be added. 
+     * @return Valid Date or NULL
+     */
+    protected static Date requireDateNotInFuture(String s, String name, List<ValidationException> exceptions) {
+        Date date = requireDate(s, name, exceptions);
+        if (date == null) return null;
+
+        Date now = new Date(System.currentTimeMillis());
+
+        if (date.after(now)) {
+            if (exceptions != null) exceptions.add(new DateInFutureException(name, s));
+            return null;
+        }
+
+        return date;
+    }
+
+    /**
      * Returns the first Element of a List<T>. Otherwise, adds ListEmptyException to exceptions.
      * @param list list to get first item from
      * @param name String with name of Parameter, which is getting checked. This is only for Error reporting.

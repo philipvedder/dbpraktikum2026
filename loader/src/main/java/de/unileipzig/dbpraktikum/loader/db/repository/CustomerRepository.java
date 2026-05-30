@@ -11,6 +11,13 @@ import java.sql.SQLException;
  */
 public class CustomerRepository {
 
+    /**
+     * Checks if a Customer with the specified ID already exists.
+     * @param con DB Connection Obj. 
+     * @param id String. The Customer Id to search for.
+     * @return boolean. True if entry exists, False otherwise. 
+     * @throws SQLException thrown on SQL execution problems.
+     */
     public boolean exists(Connection con, Long customerId) throws SQLException {
         String sql = """
             SELECT 1
@@ -27,6 +34,14 @@ public class CustomerRepository {
         }
     }
 
+    /**
+     * Finds a existent Customer with the specified name, or creates one if none was found. 
+     * Then returns the Id of that Customer. 
+     * @param con DB Connection Obj. 
+     * @param name String. Name of Customer to find or insert. 
+     * @return Id of the found/created Customer
+     * @throws SQLException thrown on SQL execution problems.
+     */
     public Long findOrCreate(Connection con, String name) throws SQLException {
         Long existingId = findIdByName(con, name);
 
@@ -35,6 +50,13 @@ public class CustomerRepository {
         return insert(con, name);
     }
 
+    /**
+     * Finds the Id of a Customer from a given name. Returns NULL otherwise. 
+     * @param con DB Connection Obj. 
+     * @param name String. Name of the Customer to find. 
+     * @return Long. Id of the corresponding Entry. 
+     * @throws SQLException thrown on SQL execution problems.
+     */
     public Long findIdByName(Connection con, String name) throws SQLException {
         String sql = """
             SELECT kunde_id
@@ -56,6 +78,14 @@ public class CustomerRepository {
         }
     }
 
+    /**
+     * Insert a new Customer with the given Name into DB. 
+     * Returns the PK of the created Entry. 
+     * @param con DB Connection Obj. 
+     * @param name String. Name of Customer to create. 
+     * @return Long. The Id of the created Entry. 
+     * @throws SQLException thrown on SQL execution problems.
+     */
     public Long insert(Connection con, String name) throws SQLException {
         String sql = """
             INSERT INTO media_store.kunde (

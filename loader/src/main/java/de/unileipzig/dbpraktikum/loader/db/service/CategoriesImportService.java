@@ -2,6 +2,7 @@ package de.unileipzig.dbpraktikum.loader.db.service;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.unileipzig.dbpraktikum.loader.exception.*;
@@ -19,6 +20,10 @@ public class CategoriesImportService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
 
+    //Stat counting variables
+    private int numberOfCategories = 0;
+    private int numberOfItems = 0;
+
     /**
      * Initialize all required Repos
      */
@@ -26,8 +31,6 @@ public class CategoriesImportService {
         this.productRepository = new ProductRepository();
         this.categoryRepository = new CategoryRepository();
     }
-
-    //TODO: ADD some stats for printing here. 
 
     /**
      * Import of a single validated Category obj into the DB. 
@@ -40,24 +43,33 @@ public class CategoriesImportService {
     private void importCategory(Connection con, Category c, Long parentId) throws SQLException {
         //Check if Category already exists. Unique if same name and parent. 
         Long catId = this.categoryRepository.findOrCreate(con, c, parentId);
+        numberOfCategories++;
+
+        //Collect all item exceptions to report combined
+        List<ValidationException> itemExceptions = new ArrayList<>();
 
         //Insert all items for Category
         for (String pId : c.itemIds()) {
+            numberOfItems++;
+
             //Exceptions for Duplicate and Missing Items. 
             //We do not throw these, as we do not want this to be terminating.
             if (!productRepository.exists(con, pId)) { //Product is not in DB
-                ErrorLogger.reportErrors("Category with ID " + catId.toString(), List.of(new NotExistException("Product", pId)));
+                itemExceptions.add(new NotExistException("Product", pId));
                 continue;
             }
 
             if (categoryRepository.itemExists(con, pId, catId)) { //Product already in Category
-                ErrorLogger.reportErrors("Category with ID " + catId.toString(), List.of(new DuplicateException("Category Entry", pId)));
+                itemExceptions.add(new DuplicateException("Category Entry", pId));
                 continue;
             }
 
             //Insert new item
             categoryRepository.insertItem(con, pId, catId);
         }
+
+        //Report all errors corresponding to this category's items
+        ErrorLogger.reportErrors("Category with ID " + catId.toString() + " and name " + c.name(), itemExceptions);
 
         //Handle all child categories the same way, recursively
         for (Category child : c.childCategories()) {
@@ -79,8 +91,11 @@ public class CategoriesImportService {
                 importCategory(con, category, null);
             } catch (SQLException ex) {
                 //Error while executing SQL
-                ErrorLogger.reportErrors(category.name() + " - Category", List.of(new UnknownSQLException(category.name(), ex.getMessage())));
+                ErrorLogger.reportErrors("Category with name " + category.name(), List.of(new UnknownSQLException(category.name(), ex.getMessage())));
             }
         }
+
+        //Stat report
+        System.out.println("Processed " + numberOfItems + " items in " + numberOfCategories + " Categories");
     }
 }
