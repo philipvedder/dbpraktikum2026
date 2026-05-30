@@ -52,7 +52,6 @@ CREATE TABLE buch (
   CONSTRAINT pk_buch PRIMARY KEY (produkt_nr),
   CONSTRAINT fk_buch_produkt FOREIGN KEY (produkt_nr) REFERENCES produkt (produkt_nr) ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT fk_buch_verlag FOREIGN KEY (verlag_id) REFERENCES verlag (verlag_id) ON UPDATE CASCADE ON DELETE RESTRICT,
-  CONSTRAINT uq_buch_isbn UNIQUE (isbn),
   CONSTRAINT chk_buch_seitenzahl_pos CHECK (seitenzahl > 0)
 );
 
@@ -177,7 +176,7 @@ CREATE TABLE angebot (
 
 CREATE TABLE kunde (
   kunde_id BIGINT GENERATED ALWAYS AS IDENTITY,
-  name VARCHAR(256) NOT NULL,
+  name VARCHAR(256) NOT NULL UNIQUE,
   CONSTRAINT pk_kunde PRIMARY KEY (kunde_id)
 );
 
@@ -253,10 +252,6 @@ ON musik_cd_titel (produkt_nr);
 CREATE INDEX idx_produkt_kategorie_kategorie_id
 ON produkt_kategorie (kategorie_id);
 
--- Ähnliche Produkte auch in umgekehrter Richtung auffindbar machen
-CREATE INDEX idx_aehnliches_produkt_2
-ON aehnliches_produkt (produkt_nr_2);
-
 -- Angebote zu einem Produkt
 CREATE INDEX idx_angebot_produkt
 ON angebot (produkt_nr);
@@ -284,3 +279,16 @@ ON rezension (rezensionszeitpunkt);
 -- Suche nach Personen, z.B. Autoren, Künstlern, Schauspielern oder Regisseuren
 CREATE INDEX idx_person_name
 ON person (name);
+
+-- Suche nach Namen von Entities
+CREATE INDEX idx_kunde_name
+ON kunde (name);
+
+CREATE INDEX idx_verlag_name
+ON verlag (name);
+
+CREATE INDEX idx_format_name
+ON format (name);
+
+CREATE INDEX idx_label_name
+ON label (name);
