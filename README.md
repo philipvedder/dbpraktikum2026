@@ -2,6 +2,9 @@
 
 Please find the SQL script for Task 1a in /aufgaben/1a.sql.
 
+## TODO
+Handle Audiobooks
+
 ## Running the Loader
 
 To run this project, you should have maven and at least JDK 17 installed. 
