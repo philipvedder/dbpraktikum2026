@@ -14,6 +14,8 @@ CREATE TABLE produkt (
   titel TEXT NOT NULL,
   verkaufsrang INTEGER,
   bild_url TEXT,
+  avg_rating DECIMAL,
+  rating_quantity INTEGER DEFAULT 0,
   CONSTRAINT pk_produkt PRIMARY KEY (produkt_nr)
 );
 

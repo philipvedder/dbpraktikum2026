@@ -17,63 +17,50 @@ FROM produkt;
 ## 2. Die 5 besten Produkte jedes Typs sortiert nach Rating
 
 ```sql
-WITH produkt_ratings AS (
-    SELECT 
-        produkttyp AS typ,
-        produkt.produkt_nr AS produktnr,
-        AVG(rezension.punkte) as avg_rating,
-        COUNT(rezension.rezension_id) as quantity
-    FROM produkt
-    LEFT JOIN rezension
-    	ON rezension.produkt_nr = produkt.produkt_nr 
-    group by 
-    	produkt.produkttyp,
-    	produkt.produkt_nr 
-),
-ranked_produkte AS (
+WITH ranked_produkte AS (
 	SELECT 
-		typ,
-		produktnr,
+		produkttyp,
+		produkt_nr,
 		avg_rating,
-		quantity,
+		rating_quantity,
 		ROW_NUMBER() OVER (
-			PARTITION BY typ
-			ORDER BY avg_rating DESC NULLS LAST, quantity DESC, produktnr
+			PARTITION BY produkttyp
+			ORDER BY avg_rating DESC NULLS LAST, rating_quantity DESC, produkt_nr
 		) AS rank
-	FROM produkt_ratings
+	FROM produkt
 )
 SELECT 
-    typ,
-    produktnr,
+    produkttyp,
+    produkt_nr,
     avg_rating,
-    rank,
-    quantity
+    rating_quantity,
+    rank
 FROM ranked_produkte
 WHERE rank <= 5
 ORDER BY 
-    typ,
+    produkttyp,
     avg_rating DESC NULLS LAST,
-    produktnr;
+    produkt_nr;
 ```
-Wir geben nur die ersten 5 Produkte aus. Wir sortieren nach Durchschnittsbewertung, Anzhal Bewertungen, ProduktNr.
+Wir geben nur die ersten 5 Produkte aus. Wir sortieren nach Durchschnittsbewertung, Anzahl Bewertungen, ProduktNr.
 
 **Ergebnis:**
-"typ","produktnr","avg_rating","rank","quantity"
-BOOK,"3401053698",5.0000000000000000,1,5
-BOOK,"3405168643",5.0000000000000000,2,5
-BOOK,"3407784570",5.0000000000000000,3,5
-BOOK,"343103196X",5.0000000000000000,4,5
-BOOK,"3431036341",5.0000000000000000,5,5
-MUSIC_CD,B0000007QD,5.0000000000000000,1,5
-MUSIC_CD,B000006YMN,5.0000000000000000,2,5
-MUSIC_CD,B00000DG17,5.0000000000000000,3,5
-MUSIC_CD,B00000IGPN,5.0000000000000000,4,5
-MUSIC_CD,B00000JAD4,5.0000000000000000,5,5
-DVD,"6304498977",5.0000000000000000,1,5
-DVD,"630463949X",5.0000000000000000,2,5
-DVD,B00002ZMNV,5.0000000000000000,3,5
-DVD,B00004RJEG,5.0000000000000000,4,5
-DVD,B00004RYTK,5.0000000000000000,5,5
+"produkttyp","produkt_nr","avg_rating","rating_quantity","rank"
+BOOK,"3401053698",5.00,5,1
+BOOK,"3405168643",5.00,5,2
+BOOK,"3407784570",5.00,5,3
+BOOK,"343103196X",5.00,5,4
+BOOK,"3431036341",5.00,5,5
+MUSIC_CD,B0000007QD,5.00,5,1
+MUSIC_CD,B000006YMN,5.00,5,2
+MUSIC_CD,B00000DG17,5.00,5,3
+MUSIC_CD,B00000IGPN,5.00,5,4
+MUSIC_CD,B00000JAD4,5.00,5,5
+DVD,"6304498977",5.00,5,1
+DVD,"630463949X",5.00,5,2
+DVD,B00002ZMNV,5.00,5,3
+DVD,B00004RJEG,5.00,5,4
+DVD,B00004RYTK,5.00,5,5
 
 ---
 
