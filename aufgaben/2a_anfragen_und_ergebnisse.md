@@ -9,9 +9,11 @@ FROM produkt;
 ```
 
 **Ergebnis:**
+```
 "anzahl_buecher","anzahl_musik_cds","anzahl_dvds"
 222,792,475
-    
+```
+
 ---
 
 ## 2. Die 5 besten Produkte jedes Typs sortiert nach Rating
@@ -45,6 +47,7 @@ ORDER BY
 Wir geben nur die ersten 5 Produkte aus. Wir sortieren nach Durchschnittsbewertung, Anzahl Bewertungen, ProduktNr.
 
 **Ergebnis:**
+```
 "produkttyp","produkt_nr","avg_rating","rating_quantity","rank"
 BOOK,"3401053698",5.00,5,1
 BOOK,"3405168643",5.00,5,2
@@ -61,6 +64,7 @@ DVD,"630463949X",5.00,5,2
 DVD,B00002ZMNV,5.00,5,3
 DVD,B00004RJEG,5.00,5,4
 DVD,B00004RYTK,5.00,5,5
+```
 
 ---
 
@@ -78,10 +82,12 @@ ORDER BY p.produkt_nr
 ```
 
 **Ergebnis:**
+```
 "produkt_nr"
 "3110181460"
 "3134843080"
 (...)
+```
 
 ---
 
@@ -97,8 +103,10 @@ ORDER BY produkt_nr;
 ```
 
 **Ergebnis:**
+```
 "produkt_nr"
 B00004CWTY
+```
 
 ---
 
@@ -113,10 +121,12 @@ ORDER BY produkt_nr;
 ```
 
 **Ergebnis:**
+```
 "produkt_nr"
 "3401058371"
 "3570016943"
 (...)
+```
 
 ---
 
@@ -131,8 +141,10 @@ WHERE r.rezension_id IS NULL;
 ```
 
 **Ergebnis:**
+```
 "produkte_ohne_rezensionen"
 506
+```
 
 ---
 
@@ -152,9 +164,11 @@ ORDER BY k.name, k.kunde_id;
 ```
 
 **Ergebnis:**
+```
 "kunde_id","name","rezensionen_anzahl"
 9,guest,385
 85,petethemusicfan,10
+```
 
 ---
 
@@ -178,6 +192,7 @@ ORDER BY p.name;
 ```
 
 **Ergebnis:**
+```
 "name"
 Ac
 Al
@@ -185,6 +200,7 @@ Dav
 Nicole
 Peter
 Sandra
+```
 
 ---
 
@@ -205,8 +221,10 @@ FROM (
 ```
 
 **Ergebnis:**
+```
 "durchschnittliche_anzahl_lieder"
 20.60
+```
 
 ---
 
@@ -260,10 +278,13 @@ FROM produkte_mit_aehnlichem_in_anderer_hauptkategorie
 ```
 
 **Ergebnis:**
+```
 "ph1_nr","ph2_nr"
 B00004CY11,B0009JPQ56
 B000654U46,B000066I6X
 (...)
+```
+---
 
 ## 11. Produkte, die in allen Filialen angeboten werden
 
@@ -276,10 +297,12 @@ HAVING COUNT(DISTINCT filiale_id) = (SELECT COUNT(*) FROM filiale)
 ORDER BY produkt_nr;
 ```
 **Ergebnis:**
+```
 "produkt_nr"
 B00004CWTY
 B00004T8WB
 (...)
+```
 
 ---
 
@@ -317,8 +340,10 @@ SELECT
 FROM cheapest_offers;
 ```
 **Ergebnis:**
+```
 "leipzig_cheapest_percentage"
 44.44
+```
 
 ---
 
