@@ -13,3 +13,24 @@ Bei DELETE wird die Durchschnittsbewertung und Anzahl des Produkts aktualisiert,
 
 Falls ein Produkt keine Rezensionen mehr besitzt, wird die durchschnittliche Bewertung auf NULL gesetzt.
 Die Gesamtanzahl ist dann entsprechend 0.
+
+Der Trigger kann z.b. mit dem folgenden SQL skript gestestet werden. Zwischen den zwei Ergebnistabellen ändert sich das avg_rating des Produktes.
+```sql
+update rezension
+set punkte = 5
+where rezension.rezension_id = 10154;
+
+select * from produkt p
+left join rezension r
+	on r.produkt_nr = p.produkt_nr 
+where p.produkt_nr = '345806785X';
+
+update rezension
+set punkte = 1
+where rezension.rezension_id = 10154;
+
+select * from produkt p
+left join rezension r
+	on r.produkt_nr = p.produkt_nr 
+where p.produkt_nr = '345806785X';
+```
