@@ -1,9 +1,7 @@
 # DBPraktikum Uni Leipzig 2026
 
 Please find the SQL script for Task 1a in /aufgaben/1a.sql.
-
-## TODO
-Handle Audiobooks
+Please find tasks 2a and 2b in /aufgaben/2a_anfragen_und_ergebnisse.md, /aufgaben/2b_integritaetssicherung.md and /aufgaben/2b_trigger.sql.
 
 ## Running the Loader
 
