@@ -5,6 +5,8 @@ import java.util.List;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
@@ -16,6 +18,7 @@ import jakarta.persistence.Table;
 @Table(name = "label")
 public class Label {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "label_id")
     private Long id;
 

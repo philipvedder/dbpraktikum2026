@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.hibernate.annotations.SQLJoinTableRestriction;
+
 import de.unileipzig.dbpraktikum.cli_interface.model.enums.ProductType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,10 +52,13 @@ public class Product {
     @Column(name = "avg_rating")
     private BigDecimal avgRating;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
     private List<Offer> offers;
 
-    @ManyToMany()
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    private List<Review> reviews;
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "aehnliches_produkt", 
         joinColumns = { @JoinColumn(name = "produkt_nr_1") }, 
@@ -61,13 +66,21 @@ public class Product {
     )
     private Set<Product> similarProductsLeft;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "aehnliches_produkt", 
         joinColumns = { @JoinColumn(name = "produkt_nr_2") }, 
         inverseJoinColumns = { @JoinColumn(name = "produkt_nr_1") }
     )
     private Set<Product> similarProductsRight;
+
+    @ManyToMany()
+    @JoinTable(
+        name = "produkt_kategorie", 
+        joinColumns = { @JoinColumn(name = "produkt_nr") }, 
+        inverseJoinColumns = { @JoinColumn(name = "kategorie_id") }
+    )
+    private Set<Category> categories;
 
     // Getter
     public String getId() {
@@ -97,5 +110,25 @@ public class Product {
         result.addAll(similarProductsRight);
 
         return result;
+    }
+
+    public Integer getRatingQuantity() {
+        return ratingQuantity;
+    }
+
+    public BigDecimal getAvgRating() {
+        return avgRating;
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
     }
 }

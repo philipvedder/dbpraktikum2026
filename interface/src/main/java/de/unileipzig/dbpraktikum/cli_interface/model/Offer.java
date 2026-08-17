@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -16,6 +18,7 @@ import jakarta.persistence.Table;
 @Table(name = "angebot")
 public class Offer {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "angebot_id")
     private Long id;
 
@@ -35,4 +38,32 @@ public class Offer {
 
     @Column(name = "waehrung")
     private String currency;
+
+    //Getters
+    
+    public Long getId() {
+        return id;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    
 }
