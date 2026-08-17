@@ -1,13 +1,23 @@
 package de.unileipzig.dbpraktikum.cli_interface.db_interface;
 
-import java.awt.print.Book;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+import de.unileipzig.dbpraktikum.cli_interface.model.Book;
+import de.unileipzig.dbpraktikum.cli_interface.model.CD;
+import de.unileipzig.dbpraktikum.cli_interface.model.Customer;
+import de.unileipzig.dbpraktikum.cli_interface.model.DVD;
+import de.unileipzig.dbpraktikum.cli_interface.model.Format;
+import de.unileipzig.dbpraktikum.cli_interface.model.Label;
+import de.unileipzig.dbpraktikum.cli_interface.model.Offer;
+import de.unileipzig.dbpraktikum.cli_interface.model.Person;
 import de.unileipzig.dbpraktikum.cli_interface.model.Product;
+import de.unileipzig.dbpraktikum.cli_interface.model.Publisher;
+import de.unileipzig.dbpraktikum.cli_interface.model.Review;
+import de.unileipzig.dbpraktikum.cli_interface.model.Shop;
+import de.unileipzig.dbpraktikum.cli_interface.model.Track;
 
 public class DBInterfaceImpl implements DBInterface {
     private SessionFactory sessionFactory;
@@ -22,6 +32,17 @@ public class DBInterfaceImpl implements DBInterface {
 
         config.addAnnotatedClass(Product.class);
         config.addAnnotatedClass(Book.class);
+        config.addAnnotatedClass(CD.class);
+        config.addAnnotatedClass(Customer.class);
+        config.addAnnotatedClass(DVD.class);
+        config.addAnnotatedClass(Format.class);
+        config.addAnnotatedClass(Label.class);
+        config.addAnnotatedClass(Offer.class);
+        config.addAnnotatedClass(Person.class);
+        config.addAnnotatedClass(Publisher.class);
+        config.addAnnotatedClass(Review.class);
+        config.addAnnotatedClass(Shop.class);
+        config.addAnnotatedClass(Track.class);
 
         sessionFactory = config.buildSessionFactory();
     }

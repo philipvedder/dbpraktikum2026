@@ -163,12 +163,12 @@ CREATE TABLE filiale (
 );
 
 CREATE TABLE angebot (
+  angebot_id BIGINT GENERATED ALWAYS AS IDENTITY,
   filiale_id BIGINT,
   produkt_nr VARCHAR(10),
   preis NUMERIC NOT NULL,
   waehrung VARCHAR(8) NOT NULL,
   zustand TEXT NOT NULL,
-  CONSTRAINT pk_angebot PRIMARY KEY (filiale_id, produkt_nr),
   CONSTRAINT fk_angebot_filiale FOREIGN KEY (filiale_id) REFERENCES filiale (filiale_id) ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT fk_angebot_produkt FOREIGN KEY (produkt_nr) REFERENCES produkt (produkt_nr) ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT chk_angebot_preis_pos CHECK (

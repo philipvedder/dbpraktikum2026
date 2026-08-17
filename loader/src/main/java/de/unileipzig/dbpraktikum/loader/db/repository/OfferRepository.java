@@ -20,16 +20,17 @@ public class OfferRepository {
      * @return boolean. True if entry exists, False otherwise. 
      * @throws SQLException thrown on SQL execution problems.
      */
-    public boolean exists(Connection con, Long shopId, String productNr) throws SQLException {
+    public boolean exists(Connection con, Long shopId, String productNr, String condition) throws SQLException {
         String sql = """
             SELECT 1
             FROM media_store.angebot
-            WHERE filiale_id = ? AND produkt_nr = ?
+            WHERE filiale_id = ? AND produkt_nr = ? AND zustand=?
         """;
 
         try (PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setLong(1, shopId);
             stmt.setString(2, productNr);
+            stmt.setString(3, condition);
 
             try (ResultSet r = stmt.executeQuery()) {
                 return r.next();

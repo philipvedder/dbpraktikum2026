@@ -1,13 +1,23 @@
 package de.unileipzig.dbpraktikum.cli_interface.model;
 
+import java.math.BigDecimal;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import de.unileipzig.dbpraktikum.cli_interface.model.enums.ProductType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
@@ -34,8 +44,30 @@ public class Product {
     @Column(name = "bild_url")
     private String imgUrl;
 
-    // private List<String> similarProductIds;
-    // private Offer offer; //Price information
+    @Column(name = "rating_quantity")
+    private Integer ratingQuantity;
+
+    @Column(name = "avg_rating")
+    private BigDecimal avgRating;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.EAGER)
+    private List<Offer> offers;
+
+    @ManyToMany()
+    @JoinTable(
+        name = "aehnliches_produkt", 
+        joinColumns = { @JoinColumn(name = "produkt_nr_1") }, 
+        inverseJoinColumns = { @JoinColumn(name = "produkt_nr_2") }
+    )
+    private Set<Product> similarProductsLeft;
+
+    @ManyToMany()
+    @JoinTable(
+        name = "aehnliches_produkt", 
+        joinColumns = { @JoinColumn(name = "produkt_nr_2") }, 
+        inverseJoinColumns = { @JoinColumn(name = "produkt_nr_1") }
+    )
+    private Set<Product> similarProductsRight;
 
     // Getter
     public String getId() {
@@ -56,5 +88,14 @@ public class Product {
 
     public String getImgUrl() {
         return imgUrl;
+    }
+
+    public Set<Product> getSimilarProducts() {
+        Set<Product> result = new HashSet<>();
+
+        result.addAll(similarProductsLeft);
+        result.addAll(similarProductsRight);
+
+        return result;
     }
 }

@@ -102,9 +102,9 @@ public class ShopImportService {
                 default:
                     break;
             }
-        } else { //Product already in DB
+        } else { //Product already in DB //TODO: Multiple OFFERS!
             if (p.getOffer() != null &&
-                !offerRepository.exists(con, shopId, p.getAsin())) {
+                !offerRepository.exists(con, shopId, p.getAsin(), p.getOffer().state())) {
                 //Even though the Product ID already is ion DB, the included Offer object is not. We will treat this as new information and do not throw a Exception. 
                 System.out.println(
                     "WARNING: Product with ASIN " + p.getAsin() + " already in DB. " + 
