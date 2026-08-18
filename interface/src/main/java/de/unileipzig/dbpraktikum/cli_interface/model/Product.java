@@ -5,8 +5,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.hibernate.annotations.SQLJoinTableRestriction;
-
 import de.unileipzig.dbpraktikum.cli_interface.model.enums.ProductType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -74,7 +72,7 @@ public class Product {
     )
     private Set<Product> similarProductsRight;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "produkt_kategorie", 
         joinColumns = { @JoinColumn(name = "produkt_nr") }, 

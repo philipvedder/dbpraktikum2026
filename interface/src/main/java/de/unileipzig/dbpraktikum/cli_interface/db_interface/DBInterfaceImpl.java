@@ -28,6 +28,7 @@ import de.unileipzig.dbpraktikum.cli_interface.model.Publisher;
 import de.unileipzig.dbpraktikum.cli_interface.model.Review;
 import de.unileipzig.dbpraktikum.cli_interface.model.Shop;
 import de.unileipzig.dbpraktikum.cli_interface.model.Track;
+import de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry;
 import jakarta.persistence.NoResultException;
 
 public class DBInterfaceImpl implements DBInterface {
@@ -35,10 +36,12 @@ public class DBInterfaceImpl implements DBInterface {
 
     @Override
     public void init() {
+        // Ensure sessionfactory is not already initialized
         if (sessionFactory != null && !sessionFactory.isClosed()) {
             return;
         }
 
+        // Construct configuration from hibernate.properties file, with all models included
         Configuration config = new Configuration();
 
         config.addAnnotatedClass(Product.class);
@@ -61,6 +64,7 @@ public class DBInterfaceImpl implements DBInterface {
 
     @Override
     public void finish() {
+        // Close sessionfactory if available
         if (sessionFactory != null && !sessionFactory.isClosed()) {
             sessionFactory.close();
         }   
@@ -90,17 +94,17 @@ public class DBInterfaceImpl implements DBInterface {
     }
 
     @Override
-    public List<Product> getProducts(String pattern) {
+    public List<ProductListEntry> getProducts(String pattern) {
         checkInitialized();
 
-        List<Product> products = new ArrayList<>();
+        List<ProductListEntry> products = new ArrayList<>();
 
         try (Session session = sessionFactory.openSession()) {
             Transaction t = session.beginTransaction();
 
             products = session.createSelectionQuery(
-                "from Product p where lower(p.title) like lower(:pattern)",
-                Product.class
+                "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry(p.id, p.title, p.type, p.avgRating) from Product p where lower(p.title) like lower(:pattern) order by p.title",
+                ProductListEntry.class
             )
             .setParameter("pattern", "%" + pattern + "%")
             .getResultList();
