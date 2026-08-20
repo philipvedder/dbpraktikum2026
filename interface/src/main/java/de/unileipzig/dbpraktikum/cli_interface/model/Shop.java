@@ -31,6 +31,29 @@ public class Shop {
     @Column(name = "plz")
     private String zip;
 
-    @OneToMany(mappedBy = "shop", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "shop", fetch = FetchType.LAZY)
     private List<Offer> offers;
+
+    // Getters
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public List<Offer> getOffers() {
+        return offers;
+    }
+
+    
 }

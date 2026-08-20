@@ -6,6 +6,7 @@ import org.hibernate.annotations.SQLJoinTableRestriction;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -20,7 +21,7 @@ import jakarta.persistence.Table;
 @Table(name = "dvd")
 @PrimaryKeyJoinColumn(name = "produkt_nr")
 public class DVD extends Product {
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "dvd_format", 
         joinColumns = { @JoinColumn(name = "produkt_nr") }, 
@@ -28,7 +29,7 @@ public class DVD extends Product {
     )
     private Set<Format> formats;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "dvd_beteiligung", 
         joinColumns = { @JoinColumn(name = "produkt_nr") }, 
@@ -37,7 +38,7 @@ public class DVD extends Product {
     @SQLJoinTableRestriction("rolle = 'ACTOR'")
     private Set<Person> actors;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "dvd_beteiligung", 
         joinColumns = { @JoinColumn(name = "produkt_nr") }, 
@@ -46,7 +47,7 @@ public class DVD extends Product {
     @SQLJoinTableRestriction("rolle = 'CREATOR'")
     private Set<Person> creators;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "dvd_beteiligung", 
         joinColumns = { @JoinColumn(name = "produkt_nr") }, 
@@ -60,4 +61,31 @@ public class DVD extends Product {
 
     @Column(name = "region_code")
     private Integer regionCode;
+
+    //Getters
+    public Set<Format> getFormats() {
+        return formats;
+    }
+
+    public Set<Person> getActors() {
+        return actors;
+    }
+
+    public Set<Person> getCreators() {
+        return creators;
+    }
+
+    public Set<Person> getDirectors() {
+        return directors;
+    }
+
+    public Integer getRuntime() {
+        return runtime;
+    }
+
+    public Integer getRegionCode() {
+        return regionCode;
+    }
+
+    
 }

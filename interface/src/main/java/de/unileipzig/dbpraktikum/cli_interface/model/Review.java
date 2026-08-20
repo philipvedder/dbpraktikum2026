@@ -1,6 +1,5 @@
 package de.unileipzig.dbpraktikum.cli_interface.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 import jakarta.persistence.Column;

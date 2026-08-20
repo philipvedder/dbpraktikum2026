@@ -26,4 +26,19 @@ public class Track {
 
     @Column(name = "name")
     private String name;
+
+    //Getters
+    public Long getId() {
+        return id;
+    }
+
+    public CD getCd() {
+        return cd;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    
 }

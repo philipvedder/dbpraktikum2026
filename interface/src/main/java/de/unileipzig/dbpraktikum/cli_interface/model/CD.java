@@ -23,11 +23,11 @@ import jakarta.persistence.Table;
 @Table(name = "musik_cd")
 @PrimaryKeyJoinColumn(name = "produkt_nr")
 public class CD extends Product {
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="label_id", nullable=false)
     private Label label;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "musik_cd_kuenstler", 
         joinColumns = { @JoinColumn(name = "produkt_nr") }, 
@@ -40,4 +40,23 @@ public class CD extends Product {
 
     @Column(name = "erscheinungsdatum")
     private Date publication;
+
+    // Getters
+    public Label getLabel() {
+        return label;
+    }
+
+    public Set<Person> getArtists() {
+        return artists;
+    }
+
+    public List<Track> getTracks() {
+        return tracks;
+    }
+
+    public Date getPublication() {
+        return publication;
+    }
+
+    
 }

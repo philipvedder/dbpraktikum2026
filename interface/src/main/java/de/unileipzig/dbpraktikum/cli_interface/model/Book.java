@@ -5,6 +5,7 @@ import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -20,11 +21,11 @@ import jakarta.persistence.Table;
 @Table(name = "buch")
 @PrimaryKeyJoinColumn(name = "produkt_nr")
 public class Book extends Product {
-    @ManyToOne()
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="verlag_id", nullable=false)
     private Publisher publisher;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "buch_autor", 
         joinColumns = { @JoinColumn(name = "produkt_nr") }, 
@@ -40,4 +41,27 @@ public class Book extends Product {
 
     @Column(name = "erscheinungsdatum")
     private Date publication;
+
+    //Getter
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public Set<Person> getAuthors() {
+        return authors;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public Integer getPages() {
+        return pages;
+    }
+
+    public Date getPublication() {
+        return publication;
+    }
+
+    
 }

@@ -83,9 +83,10 @@ public class DBInterfaceImpl implements DBInterface {
             p = (Product) session.get(Product.class, pid);
 
             // Trigger Lazy loads
-            p.getSimilarProducts();
-            p.getOffers();
-            p.getReviews();
+            Hibernate.initialize(p.getSimilarProducts());
+            Hibernate.initialize(p.getOffers());
+            Hibernate.initialize(p.getReviews());
+            Hibernate.initialize(p.getCategories());
 
             t.commit();
         }

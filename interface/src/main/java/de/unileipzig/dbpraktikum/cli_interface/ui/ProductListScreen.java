@@ -1,6 +1,7 @@
 package de.unileipzig.dbpraktikum.cli_interface.ui;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,11 +53,11 @@ public class ProductListScreen {
 
         // --- Add Product Table
         productTable = new Table<>("Product ID", "Title", "Type", "Rating");
-        productTable.setPreferredSize(new TerminalSize(80, 15));
+        productTable.setPreferredSize(new TerminalSize(120, 30));
         productTable.setCellSelection(false); //No independent cell selection
 
         // Select action to open products
-        productTable.setSelectAction(() -> {});
+        productTable.setSelectAction(() -> openSelectedProduct());
 
         // --- Add bottom buttons
         Panel buttons = new Panel(new LinearLayout(Direction.HORIZONTAL));
@@ -76,6 +77,20 @@ public class ProductListScreen {
         gui.addWindowAndWait(window);
     }
 
+    private void openSelectedProduct() {
+        // Ensure list is not empty
+        if (currentProducts.isEmpty()) {
+            return;
+        }
+
+        // Get PID
+        int row = productTable.getSelectedRow();
+        String selectedPID = currentProducts.get(row).getId();
+
+        // Open Screen
+        new ProductDetailScreen(gui, db, selectedPID).show();
+    }
+
     private void onTextChange(String text) {
         // Fetch
         List<ProductListEntry> result = db.getProducts(text);
@@ -91,7 +106,7 @@ public class ProductListScreen {
         for (ProductListEntry p : products) {
             productTable.getTableModel().addRow(
                 p.getId(),
-                p.getTitle().substring(0, Math.min(p.getTitle().length(), 50)),
+                trunc(p.getTitle(), 70),
                 p.getType().name(),
                 formatDecimal(p.getAvgRating())
             );
@@ -105,5 +120,9 @@ public class ProductListScreen {
         }
 
         return String.format("%.2f", d);
+    }
+
+    private String trunc(String s, int length) {
+        return s.substring(0, Math.min(length, s.length()));
     }
 }

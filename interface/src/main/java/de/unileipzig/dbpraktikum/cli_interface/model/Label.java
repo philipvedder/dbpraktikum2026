@@ -27,4 +27,19 @@ public class Label {
 
     @OneToMany(mappedBy = "label", fetch = FetchType.EAGER)
     private List<CD> cds;
+
+    //Getters
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<CD> getCds() {
+        return cds;
+    }
+
+    
 }

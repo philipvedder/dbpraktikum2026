@@ -27,4 +27,17 @@ public class Publisher {
 
     @OneToMany(mappedBy = "publisher", fetch = FetchType.EAGER)
     private List<Book> books;
+
+    // Getter
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
 }

@@ -20,4 +20,13 @@ public class Person {
 
     @Column(name = "name")
     private String name;
+
+    //Getters
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
 }
