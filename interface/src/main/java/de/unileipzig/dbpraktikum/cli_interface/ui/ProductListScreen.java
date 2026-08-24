@@ -19,17 +19,18 @@ import com.googlecode.lanterna.gui2.table.Table;
 
 import de.unileipzig.dbpraktikum.cli_interface.db_interface.DBInterface;
 import de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry;
+import de.unileipzig.dbpraktikum.cli_interface.ui.components.ProductTableComponent;
 
 public class ProductListScreen {
     private final WindowBasedTextGUI gui;
     private final DBInterface db;
     
-    private List<ProductListEntry> currentProducts = new ArrayList<>();
-    private Table<String> productTable;
+    private ProductTableComponent productTable;
 
     public ProductListScreen(WindowBasedTextGUI gui, DBInterface db) {
         this.gui = gui;
         this.db = db;
+        this.productTable = new ProductTableComponent(gui, db);
     }
 
     public void show() {
@@ -52,12 +53,7 @@ public class ProductListScreen {
         searchPanel.addComponent(searchBox);
 
         // --- Add Product Table
-        productTable = new Table<>("Product ID", "Title", "Type", "Rating");
-        productTable.setPreferredSize(new TerminalSize(120, 30));
-        productTable.setCellSelection(false); //No independent cell selection
-
-        // Select action to open products
-        productTable.setSelectAction(() -> openSelectedProduct());
+        Table<String> pTable = productTable.getTable(120, 30);
 
         // --- Add bottom buttons
         Panel buttons = new Panel(new LinearLayout(Direction.HORIZONTAL));
@@ -66,10 +62,10 @@ public class ProductListScreen {
         //Add root components
         root.addComponent(searchPanel);
         root.addComponent(new EmptySpace(new TerminalSize(1, 1)));
-        root.addComponent(productTable);
+        root.addComponent(pTable);
         root.addComponent(buttons);
 
-        // Load initial product list
+        // Load initial (full) product list
         onTextChange("");
 
         // Show window
@@ -77,52 +73,9 @@ public class ProductListScreen {
         gui.addWindowAndWait(window);
     }
 
-    private void openSelectedProduct() {
-        // Ensure list is not empty
-        if (currentProducts.isEmpty()) {
-            return;
-        }
-
-        // Get PID
-        int row = productTable.getSelectedRow();
-        String selectedPID = currentProducts.get(row).getId();
-
-        // Open Screen
-        new ProductDetailScreen(gui, db, selectedPID).show();
-    }
-
     private void onTextChange(String text) {
-        // Fetch
+        // Fetch and update table
         List<ProductListEntry> result = db.getProducts(text);
-        this.updateTable(result);
-    }
-
-    private void updateTable(List<ProductListEntry> products) {
-        currentProducts.clear();
-        currentProducts.addAll(products);
-
-        productTable.getTableModel().clear();
-
-        for (ProductListEntry p : products) {
-            productTable.getTableModel().addRow(
-                p.getId(),
-                trunc(p.getTitle(), 70),
-                p.getType().name(),
-                formatDecimal(p.getAvgRating())
-            );
-        }
-    }
-
-    // Helper
-    private String formatDecimal(BigDecimal d) {
-        if (d == null) {
-            return "-";
-        }
-
-        return String.format("%.2f", d);
-    }
-
-    private String trunc(String s, int length) {
-        return s.substring(0, Math.min(length, s.length()));
+        productTable.update(result);
     }
 }
