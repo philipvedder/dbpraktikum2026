@@ -82,6 +82,11 @@ public class DBInterfaceImpl implements DBInterface {
             Transaction t = session.beginTransaction();
             p = (Product) session.get(Product.class, pid);
 
+            if (p == null) {
+                t.commit();
+                return null;
+            }
+
             // Trigger Lazy loads
             Hibernate.initialize(p.getSimilarProducts());
             Hibernate.initialize(p.getOffers());
@@ -175,10 +180,10 @@ public class DBInterfaceImpl implements DBInterface {
 
             // Select all products, ordered by rating average and quntity
             products = session.createSelectionQuery(
-                "from Product p ORDER BY avgRating DESC NULLS LAST, ratingQuantity DESC, id limit :amount",
+                "from Product p ORDER BY p.avgRating DESC NULLS LAST, p.ratingQuantity DESC, p.id",
                 Product.class
             )
-            .setParameter("amount", k)
+            .setMaxResults(k)
             .getResultList();
 
             t.commit();
