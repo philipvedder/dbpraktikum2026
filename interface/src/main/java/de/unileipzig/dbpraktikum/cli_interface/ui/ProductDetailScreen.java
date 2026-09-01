@@ -15,6 +15,8 @@ import com.googlecode.lanterna.gui2.Label;
 import com.googlecode.lanterna.gui2.LinearLayout;
 import com.googlecode.lanterna.gui2.Panel;
 import com.googlecode.lanterna.gui2.WindowBasedTextGUI;
+import com.googlecode.lanterna.gui2.dialogs.MessageDialog;
+import com.googlecode.lanterna.gui2.dialogs.MessageDialogButton;
 import com.googlecode.lanterna.gui2.table.Table;
 
 import de.unileipzig.dbpraktikum.cli_interface.db_interface.DBInterface;
@@ -35,6 +37,9 @@ public class ProductDetailScreen {
     private final String productId;
     
     private Product product;
+    private Label ratingQuantityLabel;
+    private Label averageRatingLabel;
+    private Table<String> reviewTable;
 
     public ProductDetailScreen(WindowBasedTextGUI gui, DBInterface db, String productId) {
         this.gui = gui;
@@ -95,8 +100,13 @@ public class ProductDetailScreen {
         // --- Add bottom buttons
         Panel buttons = new Panel(new LinearLayout(Direction.HORIZONTAL));
         buttons.addComponent(new Button("Back", window::close));
-        buttons.addComponent(new Button("Cheaper Similars", window::close));
-        buttons.addComponent(new Button("Add Review", window::close));
+        buttons.addComponent(new Button("Cheaper Similars",
+            () -> new CheaperSimilarProductsScreen(gui, db, product).show()));
+        buttons.addComponent(new Button("Add Review", () -> {
+            if (new AddReviewScreen(gui, db, product).show()) {
+                refreshReviewData();
+            }
+        }));
 
         root.addComponent(buttons);
 
@@ -122,19 +132,10 @@ public class ProductDetailScreen {
     }
 
     private Table<String> getReviewTable() {
-        Table<String> t = new Table<>("Customer", "Date", "Points", "Text");
-        t.setCellSelection(false); //No independent cell selection
-
-        for (Review r: product.getReviews()) {
-            t.getTableModel().addRow(
-                r.getCustomer().getName(),
-                formatDate(r.getDate()),
-                formatInt(r.getPoints()),
-                trunc(r.getText(), 40)
-            );
-        }
-
-        return t;
+        reviewTable = new Table<>("Customer", "Date", "Points", "Text");
+        reviewTable.setCellSelection(false); //No independent cell selection
+        updateReviewTable();
+        return reviewTable;
     }
 
     private Panel getGeneralProductData() {
@@ -153,10 +154,12 @@ public class ProductDetailScreen {
         generalDetails.addComponent(new Label(formatInt(product.getSalesrank())));
 
         generalDetails.addComponent(new Label("Rating Quantity"));
-        generalDetails.addComponent(new Label(formatInt(product.getRatingQuantity())));
+        ratingQuantityLabel = new Label(formatInt(product.getRatingQuantity()));
+        generalDetails.addComponent(ratingQuantityLabel);
 
         generalDetails.addComponent(new Label("Average Rating"));
-        generalDetails.addComponent(new Label(formatDecimal(product.getAvgRating())));
+        averageRatingLabel = new Label(formatDecimal(product.getAvgRating()));
+        generalDetails.addComponent(averageRatingLabel);
 
         Table<String> categories = new Table<>("Categories");
         categories.setPreferredSize(new TerminalSize(50, 12));
@@ -303,6 +306,38 @@ public class ProductDetailScreen {
         }
     }
 
+    private void refreshReviewData() {
+        try {
+            Product refreshed = db.getProduct(productId);
+            if (refreshed == null) {
+                return;
+            }
+
+            product = refreshed;
+            ratingQuantityLabel.setText(formatInt(product.getRatingQuantity()));
+            averageRatingLabel.setText(formatDecimal(product.getAvgRating()));
+            updateReviewTable();
+        } catch (RuntimeException ex) {
+            ex.printStackTrace();
+            MessageDialog.showMessageDialog(gui, "Database error",
+                "The review was saved, but the product details could not be refreshed.\n"
+                    + "Reopen the product to see the new review.",
+                MessageDialogButton.OK);
+        }
+    }
+
+    private void updateReviewTable() {
+        reviewTable.getTableModel().clear();
+        for (Review review : product.getReviews()) {
+            reviewTable.getTableModel().addRow(
+                review.getCustomer().getName(),
+                formatDate(review.getDate()),
+                formatInt(review.getPoints()),
+                trunc(review.getText(), 40)
+            );
+        }
+    }
+
     // Helper
     private String formatDecimal(BigDecimal d) {
         if (d == null) {
@@ -325,6 +360,9 @@ public class ProductDetailScreen {
     }
 
     private String trunc(String s, int length) {
+        if (s == null) {
+            return "";
+        }
         return s.substring(0, Math.min(length, s.length()));
     }
 }
