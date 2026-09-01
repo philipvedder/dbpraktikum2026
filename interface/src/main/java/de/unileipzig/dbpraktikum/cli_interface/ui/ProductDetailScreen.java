@@ -42,9 +42,18 @@ public class ProductDetailScreen {
         this.productId = productId;
     }
 
+    public ProductDetailScreen(WindowBasedTextGUI gui, DBInterface db, Product product) {
+        this.gui = gui;
+        this.db = db;
+        this.product = product;
+        this.productId = product.getId();
+    }
+
     public void show() {
         // Get Product
-        product = db.getProduct(productId);
+        if (product == null) {
+            product = db.getProduct(productId);
+        }
 
         // Setup terminal and screen layers
         BasicWindow window = new BasicWindow("Product " + productId);
