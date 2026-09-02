@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.SelectionQuery;
 
 import de.unileipzig.dbpraktikum.cli_interface.model.Book;
 import de.unileipzig.dbpraktikum.cli_interface.model.CD;
@@ -108,12 +109,26 @@ public class DBInterfaceImpl implements DBInterface {
         try (Session session = sessionFactory.openSession()) {
             Transaction t = session.beginTransaction();
 
-            products = session.createSelectionQuery(
-                "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry(p.id, p.title, p.type, p.avgRating) from Product p where lower(p.title) like lower(:pattern) order by p.title",
+            String hql = "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry"
+                + "(p.id, p.title, p.type, p.avgRating) from Product p";
+
+            if (pattern != null) {
+                hql += " where lower(p.title) like lower(:pattern)";
+            }
+
+            hql += " order by p.title, p.id";
+
+            SelectionQuery<ProductListEntry> query = session.createSelectionQuery(
+                hql,
                 ProductListEntry.class
-            )
-            .setParameter("pattern", "%" + pattern + "%")
-            .getResultList();
+            );
+
+            // Keep a caller-provided SQL pattern unchanged so that % and _ work as wildcards.
+            if (pattern != null) {
+                query.setParameter("pattern", pattern);
+            }
+
+            products = query.getResultList();
 
             t.commit();
         }
