@@ -3,6 +3,7 @@ package de.unileipzig.dbpraktikum.cli_interface.ui;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.gui2.BasicWindow;
@@ -34,7 +35,8 @@ public class ProductDetailScreen {
     private final DBInterface db;
     private final String productId;
     
-    private Product product;
+    private Product product = null;
+    private BasicWindow window = null;
 
     public ProductDetailScreen(WindowBasedTextGUI gui, DBInterface db, String productId) {
         this.gui = gui;
@@ -42,12 +44,25 @@ public class ProductDetailScreen {
         this.productId = productId;
     }
 
+    public ProductDetailScreen(WindowBasedTextGUI gui, DBInterface db, Product p) {
+        this.gui = gui;
+        this.db = db;
+        this.productId = p.getId();
+        this.product = p;
+    }
+
     public void show() {
+        this.show(false);
+    }
+
+    public void show(boolean update) {
         // Get Product
-        product = db.getProduct(productId);
+        if (product == null) 
+            product = db.getProduct(productId);
 
         // Setup terminal and screen layers
-        BasicWindow window = new BasicWindow("Product " + productId);
+        if (window == null)
+            window = new BasicWindow("Product " + productId);
 
         // Create panel to hold components
         Panel root = new Panel();
@@ -86,19 +101,69 @@ public class ProductDetailScreen {
         // --- Add bottom buttons
         Panel buttons = new Panel(new LinearLayout(Direction.HORIZONTAL));
         buttons.addComponent(new Button("Back", window::close));
-        buttons.addComponent(new Button("Cheaper Similars", window::close));
-        buttons.addComponent(new Button("Add Review", window::close));
+        buttons.addComponent(new Button("Cheaper Similars", () -> showCheaperSimilars()));
+        buttons.addComponent(new Button("Add Review", () -> showAddReviewScreen()));
 
         root.addComponent(buttons);
 
-        // Show window
-        window.setComponent(root);
-        gui.addWindowAndWait(window);
+        if (update) {
+            try {
+                // update window
+                window.setComponent(null);
+                window.setComponent(root);
+                gui.updateScreen();
+            } catch (Exception e) {System.out.println(e);}
+        } else {
+            // Show window
+            window.setComponent(root);
+            gui.addWindowAndWait(window);
+        }
+    }
+
+    private void showCheaperSimilars() {
+        // Open Screen
+        new CheaperSimilarProductsScreen(gui, db, product).show();
+    }
+
+    private void openSelectedOffer(int selectedRow) {
+        // Ensure list is not empty
+        if (product.getOffers().isEmpty()) {
+            return;
+        }
+
+        // Get PID
+        Offer selected = product.getOffers().get(selectedRow);
+
+        // Open Screen
+        
+    }
+
+    private void showAddReviewScreen() {
+        // Open Screen
+        new AddReviewScreen(gui, db, product).show();
+        product = null;
+        show(true);
+
+    }
+
+    private void openSelectedReview(int selectedRow) {
+        // Ensure list is not empty
+        if (product.getReviews().isEmpty()) {
+            return;
+        }
+
+        // Get PID
+        Review selected = product.getReviews().get(selectedRow);
+
+        // Open Screen
+        new ShowReviewScreen(gui, db, selected).show();
+        
     }
 
     private Table<String> getOfferTable() {
         Table<String> t = new Table<>("Shop", "Condition", "Price", "Currency");
         t.setCellSelection(false); //No independent cell selection
+        t.setSelectAction(() -> openSelectedOffer(t.getSelectedRow()));
 
         for (Offer o: product.getOffers()) {
             t.getTableModel().addRow(
@@ -115,6 +180,7 @@ public class ProductDetailScreen {
     private Table<String> getReviewTable() {
         Table<String> t = new Table<>("Customer", "Date", "Points", "Text");
         t.setCellSelection(false); //No independent cell selection
+        t.setSelectAction(() -> openSelectedReview(t.getSelectedRow()));
 
         for (Review r: product.getReviews()) {
             t.getTableModel().addRow(

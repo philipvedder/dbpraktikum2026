@@ -82,6 +82,8 @@ public class DBInterfaceImpl implements DBInterface {
             Transaction t = session.beginTransaction();
             p = (Product) session.get(Product.class, pid);
 
+            if (p == null) return null;
+
             // Trigger Lazy loads
             Hibernate.initialize(p.getSimilarProducts());
             Hibernate.initialize(p.getOffers());
@@ -104,7 +106,7 @@ public class DBInterfaceImpl implements DBInterface {
             Transaction t = session.beginTransaction();
 
             products = session.createSelectionQuery(
-                "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry(p.id, p.title, p.type, p.avgRating) from Product p where lower(p.title) like lower(:pattern) order by p.title",
+                "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry(p.id, p.title, p.type, p.avgRating, p.ratingQuantity) from Product p where lower(p.title) like lower(:pattern) order by p.title",
                 ProductListEntry.class
             )
             .setParameter("pattern", "%" + pattern + "%")
@@ -165,18 +167,18 @@ public class DBInterfaceImpl implements DBInterface {
     }
 
     @Override
-    public List<Product> getTopProducts(int k) {
+    public List<ProductListEntry> getTopProducts(int k) {
         checkInitialized();
 
-        List<Product> products = new ArrayList<>();
+        List<ProductListEntry> products = new ArrayList<>();
 
         try (Session session = sessionFactory.openSession()) {
             Transaction t = session.beginTransaction();
 
             // Select all products, ordered by rating average and quntity
             products = session.createSelectionQuery(
-                "from Product p ORDER BY avgRating DESC NULLS LAST, ratingQuantity DESC, id limit :amount",
-                Product.class
+                "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry(p.id, p.title, p.type, p.avgRating, p.ratingQuantity) from Product p ORDER BY avgRating DESC NULLS LAST, ratingQuantity DESC, id limit :amount",
+                ProductListEntry.class
             )
             .setParameter("amount", k)
             .getResultList();
@@ -262,7 +264,7 @@ public class DBInterfaceImpl implements DBInterface {
             // Create Review for user
             newReview = new Review();
             newReview.setCustomer(user);
-            newReview.setDate(new Timestamp(System.currentTimeMillis() - 100));
+            newReview.setDate(new Timestamp(System.currentTimeMillis() - 1000));
             newReview.setPoints(points);
             newReview.setText(text);
             newReview.setProduct(p);

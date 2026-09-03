@@ -16,7 +16,7 @@ public interface DBInterface {
     public List<ProductListEntry> getProducts(String pattern); // Get all products which title matches pattern
     public List<Category> getCategoryTree(); //Get full Cat tree
     public List<Product> getProductsByCategory(Category c); //Gets all products for a given Category
-    public List<Product> getTopProducts(int k); //Get list of top k products, based on rating
+    public List<ProductListEntry> getTopProducts(int k); //Get list of top k products, based on rating
     public List<Product> getSimilarCheaperProducts(Product p); //Get list of similar but cheaper products
     public Review addNewReview(Product p, String username, int points, String text); //Add a new Review for a given Product
     public List<Customer> getTrolls(float f); //Get all users which have an avgRating below f

@@ -9,12 +9,14 @@ public class ProductListEntry {
     String title; 
     ProductType type;
     BigDecimal avgRating;
+    Integer ratingQuantity;
 
-    public ProductListEntry(String id, String title, ProductType type, BigDecimal avgRating) {
+    public ProductListEntry(String id, String title, ProductType type, BigDecimal avgRating, Integer ratingQuantity) {
         this.id = id;
         this.title = title;
         this.type = type;
         this.avgRating = avgRating;
+        this.ratingQuantity = ratingQuantity;
     }
 
     //Getters
@@ -32,5 +34,9 @@ public class ProductListEntry {
 
     public BigDecimal getAvgRating() {
         return avgRating;
+    }
+
+    public Integer getRatingQuantity() {
+        return ratingQuantity;
     }
 }

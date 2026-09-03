@@ -23,10 +23,10 @@ public class MainMenuScreen {
         // Setup basic menu
         ActionListBox menu = new ActionListBox(new TerminalSize(30,10));
 
-        menu.addItem("Product List", () -> new ProductListScreen(gui, db).show());
-        menu.addItem("Product by ID", () -> {});
+        menu.addItem("Product List", () -> new ProductSearchScreen(gui, db).show());
+        menu.addItem("Product by ID", () -> new ProductIdScreen(gui, db).show());
         menu.addItem("Category Tree", () -> {});
-        menu.addItem("Top Products", () -> {});
+        menu.addItem("Top Products", () -> new TopProductsScreen(gui, db).show());
         menu.addItem("Trolls", () -> {});
         menu.addItem("Exit", window::close);
 
