@@ -106,7 +106,7 @@ public class DBInterfaceImpl implements DBInterface {
             Transaction t = session.beginTransaction();
 
             products = session.createSelectionQuery(
-                "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry(p.id, p.title, p.type, p.avgRating) from Product p where lower(p.title) like lower(:pattern) order by p.title",
+                "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry(p.id, p.title, p.type, p.avgRating, p.ratingQuantity) from Product p where lower(p.title) like lower(:pattern) order by p.title",
                 ProductListEntry.class
             )
             .setParameter("pattern", "%" + pattern + "%")
@@ -180,7 +180,7 @@ public class DBInterfaceImpl implements DBInterface {
                 "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry(p.id, p.title, p.type, p.avgRating, p.ratingQuantity) from Product p ORDER BY avgRating DESC NULLS LAST, ratingQuantity DESC, id limit :amount",
                 ProductListEntry.class
             )
-            .setMaxResults(k)
+            .setParameter("amount", k)
             .getResultList();
 
             t.commit();

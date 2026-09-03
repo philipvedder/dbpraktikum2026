@@ -41,12 +41,7 @@ public class CategoryTreeScreen {
     }
 
     public void show() {
-        try {
-            roots = sortedCategories(db.getCategoryTree());
-        } catch (RuntimeException ex) {
-            showLoadError("Could not load the category tree.", ex);
-            return;
-        }
+        roots = sortedCategories(db.getCategoryTree());
 
         BasicWindow window = new BasicWindow("Category Tree");
         Panel root = new Panel(new LinearLayout(Direction.VERTICAL));
@@ -65,7 +60,6 @@ public class CategoryTreeScreen {
         }
 
         Panel buttons = new Panel(new LinearLayout(Direction.HORIZONTAL));
-        buttons.addComponent(new Button("Products", this::showSelectedProducts));
         buttons.addComponent(new Button("Collapse all", () -> {
             expandedIds.clear();
             refreshTree(null);
@@ -156,8 +150,7 @@ public class CategoryTreeScreen {
                     product.getId(), product.getTitle(), product.getType(), product.getAvgRating(), product.getRatingQuantity()
                 ));
             }
-            entries.sort(Comparator.comparing(ProductListEntry::getTitle, String.CASE_INSENSITIVE_ORDER)
-                .thenComparing(ProductListEntry::getId));
+            entries.sort(Comparator.comparing(ProductListEntry::getTitle, String.CASE_INSENSITIVE_ORDER).thenComparing(ProductListEntry::getId));
 
             BasicWindow window = new BasicWindow("Products in category " + selected.getId());
             Panel root = new Panel(new LinearLayout(Direction.VERTICAL));
@@ -182,8 +175,7 @@ public class CategoryTreeScreen {
 
     private List<Category> sortedCategories(List<Category> categories) {
         List<Category> sorted = new ArrayList<>(categories);
-        sorted.sort(Comparator.comparing(Category::getName, String.CASE_INSENSITIVE_ORDER)
-            .thenComparing(Category::getId));
+        sorted.sort(Comparator.comparing(Category::getName, String.CASE_INSENSITIVE_ORDER).thenComparing(Category::getId));
         return sorted;
     }
 

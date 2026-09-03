@@ -55,7 +55,7 @@ public class TopProductsScreen {
 
     private void load() {
         // Fetch and update table
-        List<ProductListEntry> result = db.getTopProducts(15);
+        List<ProductListEntry> result = db.getTopProducts(25);
         productTable.update(result);
     }
 }

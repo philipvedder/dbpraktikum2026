@@ -70,10 +70,7 @@ public class ProductSearchScreen {
         gui.addWindowAndWait(window);
     }
 
-    private void onTextChange(String text) {
-        // The DB interface accepts SQL patterns. The UI turns plain search text into
-        // a substring search and uses null to request the complete product list.
-        String pattern = text == null || text.isEmpty() ? null : "%" + text + "%";
+    private void onTextChange(String pattern) {
         List<ProductListEntry> result = db.getProducts(pattern);
         productTable.update(result);
     }
