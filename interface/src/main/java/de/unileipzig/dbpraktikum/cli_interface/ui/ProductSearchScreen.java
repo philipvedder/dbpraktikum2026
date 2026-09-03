@@ -15,7 +15,6 @@ import com.googlecode.lanterna.gui2.WindowBasedTextGUI;
 import com.googlecode.lanterna.gui2.table.Table;
 
 import de.unileipzig.dbpraktikum.cli_interface.db_interface.DBInterface;
-import de.unileipzig.dbpraktikum.cli_interface.model.Product;
 import de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry;
 import de.unileipzig.dbpraktikum.cli_interface.ui.components.ProductListEntryTableComponent;
 
@@ -72,8 +71,10 @@ public class ProductSearchScreen {
     }
 
     private void onTextChange(String text) {
-        // Fetch and update table
-        List<ProductListEntry> result = db.getProducts(text);
+        // The DB interface accepts SQL patterns. The UI turns plain search text into
+        // a substring search and uses null to request the complete product list.
+        String pattern = text == null || text.isEmpty() ? null : "%" + text + "%";
+        List<ProductListEntry> result = db.getProducts(pattern);
         productTable.update(result);
     }
 }

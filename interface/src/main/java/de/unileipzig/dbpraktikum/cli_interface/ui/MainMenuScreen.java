@@ -25,9 +25,9 @@ public class MainMenuScreen {
 
         menu.addItem("Product List", () -> new ProductSearchScreen(gui, db).show());
         menu.addItem("Product by ID", () -> new ProductIdScreen(gui, db).show());
-        menu.addItem("Category Tree", () -> {});
+        menu.addItem("Category Tree", () -> new CategoryTreeScreen(gui, db).show());
         menu.addItem("Top Products", () -> new TopProductsScreen(gui, db).show());
-        menu.addItem("Trolls", () -> {});
+        menu.addItem("Trolls", () -> new TrollsScreen(gui, db).show());
         menu.addItem("Exit", window::close);
 
         // Start gui

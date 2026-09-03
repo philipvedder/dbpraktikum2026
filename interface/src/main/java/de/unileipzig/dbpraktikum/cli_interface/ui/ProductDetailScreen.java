@@ -3,7 +3,6 @@ package de.unileipzig.dbpraktikum.cli_interface.ui;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.gui2.BasicWindow;
@@ -125,19 +124,6 @@ public class ProductDetailScreen {
         new CheaperSimilarProductsScreen(gui, db, product).show();
     }
 
-    private void openSelectedOffer(int selectedRow) {
-        // Ensure list is not empty
-        if (product.getOffers().isEmpty()) {
-            return;
-        }
-
-        // Get PID
-        Offer selected = product.getOffers().get(selectedRow);
-
-        // Open Screen
-        
-    }
-
     private void showAddReviewScreen() {
         // Open Screen
         new AddReviewScreen(gui, db, product).show();
@@ -163,7 +149,6 @@ public class ProductDetailScreen {
     private Table<String> getOfferTable() {
         Table<String> t = new Table<>("Shop", "Condition", "Price", "Currency");
         t.setCellSelection(false); //No independent cell selection
-        t.setSelectAction(() -> openSelectedOffer(t.getSelectedRow()));
 
         for (Offer o: product.getOffers()) {
             t.getTableModel().addRow(
@@ -210,7 +195,7 @@ public class ProductDetailScreen {
         generalDetails.addComponent(new Label(formatInt(product.getSalesrank())));
 
         generalDetails.addComponent(new Label("Rating Quantity"));
-        generalDetails.addComponent(new Label(formatInt(product.getRatingQuantity())));
+        generalDetails.addComponent( new Label(formatInt(product.getRatingQuantity())));
 
         generalDetails.addComponent(new Label("Average Rating"));
         generalDetails.addComponent(new Label(formatDecimal(product.getAvgRating())));
@@ -382,6 +367,9 @@ public class ProductDetailScreen {
     }
 
     private String trunc(String s, int length) {
+        if (s == null) {
+            return "";
+        }
         return s.substring(0, Math.min(length, s.length()));
     }
 }

@@ -106,7 +106,7 @@ public class DBInterfaceImpl implements DBInterface {
             Transaction t = session.beginTransaction();
 
             products = session.createSelectionQuery(
-                "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry(p.id, p.title, p.type, p.avgRating, p.ratingQuantity) from Product p where lower(p.title) like lower(:pattern) order by p.title",
+                "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry(p.id, p.title, p.type, p.avgRating) from Product p where lower(p.title) like lower(:pattern) order by p.title",
                 ProductListEntry.class
             )
             .setParameter("pattern", "%" + pattern + "%")
@@ -180,7 +180,7 @@ public class DBInterfaceImpl implements DBInterface {
                 "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry(p.id, p.title, p.type, p.avgRating, p.ratingQuantity) from Product p ORDER BY avgRating DESC NULLS LAST, ratingQuantity DESC, id limit :amount",
                 ProductListEntry.class
             )
-            .setParameter("amount", k)
+            .setMaxResults(k)
             .getResultList();
 
             t.commit();
@@ -193,12 +193,21 @@ public class DBInterfaceImpl implements DBInterface {
     public List<Product> getSimilarCheaperProducts(Product p) {
         checkInitialized();
 
+        if (p == null || p.getId() == null) {
+            throw new IllegalArgumentException("A product is required.");
+        }
+
         List<Product> result = new ArrayList<>();
 
         try (Session session = sessionFactory.openSession()) {
             Transaction t = session.beginTransaction();
 
             Product managed = (Product) session.get(Product.class, p.getId());
+
+            if (managed == null) {
+                t.commit();
+                return result;
+            }
 
             // Get min price for product
             Optional<BigDecimal> originalMinPrice = managed.getOffers().stream()
@@ -208,7 +217,8 @@ public class DBInterfaceImpl implements DBInterface {
 
             // No offers for product, so no cheaper products available
             if (originalMinPrice.isEmpty()) {
-                return List.of();
+                t.commit();
+                return result;
             }
 
             // Get Price
@@ -239,39 +249,69 @@ public class DBInterfaceImpl implements DBInterface {
     public Review addNewReview(Product p, String username, int points, String text) {
         checkInitialized();
 
+        if (p == null || p.getId() == null) {
+            throw new IllegalArgumentException("A product is required.");
+        }
+        if (username == null || username.trim().isEmpty()) {
+            throw new IllegalArgumentException("Enter a username.");
+        }
+        if (username.trim().length() > 256) {
+            throw new IllegalArgumentException("The username must not exceed 256 characters.");
+        }
+        if (points < 1 || points > 5) {
+            throw new IllegalArgumentException("Points must be between 1 and 5.");
+        }
+
         Review newReview = null;
 
         try (Session session = sessionFactory.openSession()) {
             Transaction t = session.beginTransaction();
-            Customer user = null;
-
             try {
-                // Get user if exists
-                user = session.createSelectionQuery(
-                    "from Customer c where name = :username",
-                    Customer.class
+                Product managedProduct = session.get(Product.class, p.getId());
+                if (managedProduct == null) {
+                    throw new IllegalArgumentException("The product does not exist.");
+                }
+
+                Customer user;
+                try {
+                    // Get user if exists
+                    user = session.createSelectionQuery(
+                        "from Customer c where name = :username",
+                        Customer.class
+                    )
+                    .setParameter("username", username.trim())
+                    .getSingleResult();
+                } catch (NoResultException e) {
+                    // Create user
+                    user = new Customer();
+                    user.setName(username.trim());
+                    session.persist(user);
+                    session.flush();
+                }
+
+                // Create Review for user
+                Timestamp databaseTimestamp = session.createSelectionQuery(
+                    "select current_timestamp from Product p where p.id = :productId",
+                    Timestamp.class
                 )
-                .setParameter("username", username)
+                .setParameter("productId", managedProduct.getId())
                 .getSingleResult();
-            } catch (NoResultException e) {
-                //Create user
-                user = new Customer();
-                user.setName(username);
-                session.persist(user);
-                session.flush();
+
+                newReview = new Review();
+                newReview.setCustomer(user);
+                newReview.setDate(databaseTimestamp);
+                newReview.setPoints(points);
+                newReview.setText(text);
+                newReview.setProduct(managedProduct);
+
+                session.persist(newReview);
+                t.commit();
+            } catch (RuntimeException ex) {
+                if (t.isActive()) {
+                    t.rollback();
+                }
+                throw ex;
             }
-
-            // Create Review for user
-            newReview = new Review();
-            newReview.setCustomer(user);
-            newReview.setDate(new Timestamp(System.currentTimeMillis() - 1000));
-            newReview.setPoints(points);
-            newReview.setText(text);
-            newReview.setProduct(p);
-
-            session.persist(newReview);
-
-            t.commit();
         }
 
         return newReview;
