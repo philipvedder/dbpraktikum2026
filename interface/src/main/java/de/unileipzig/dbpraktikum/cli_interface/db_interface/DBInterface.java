@@ -1,6 +1,7 @@
 package de.unileipzig.dbpraktikum.cli_interface.db_interface;
 
 import java.util.List;
+import java.util.Properties;
 
 import de.unileipzig.dbpraktikum.cli_interface.model.Category;
 import de.unileipzig.dbpraktikum.cli_interface.model.Customer;
@@ -10,7 +11,7 @@ import de.unileipzig.dbpraktikum.cli_interface.model.Review;
 import de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry;
 
 public interface DBInterface {
-    public void init(); // Setup of DB Connection
+    public void init(Properties properties); // Setup of DB Connection
     public void finish(); // Closed DB Connection, releases objs.
     public Product getProduct(String pid); // Get data for product 
     public List<ProductListEntry> getProducts(String pattern); // Get all products which title matches pattern
