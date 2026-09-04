@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.Set;
 
 import org.hibernate.Hibernate;
@@ -35,14 +36,19 @@ public class DBInterfaceImpl implements DBInterface {
     private SessionFactory sessionFactory;
 
     @Override
-    public void init() {
+    public void init(Properties properties) {
         // Ensure sessionfactory is not already initialized
         if (sessionFactory != null && !sessionFactory.isClosed()) {
             return;
         }
 
-        // Construct configuration from hibernate.properties file, with all models included
+        if (properties == null) {
+            throw new IllegalArgumentException("Database properties are required.");
+        }
+
+        // Construct configuration from the properties supplied by the application.
         Configuration config = new Configuration();
+        config.addProperties(properties);
 
         config.addAnnotatedClass(Product.class);
         config.addAnnotatedClass(Book.class);
