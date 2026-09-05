@@ -28,7 +28,7 @@ public class Category {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="parent_kategorie_id", nullable=false)
+    @JoinColumn(name="parent_kategorie_id")
     private Category parent;
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER)
@@ -44,6 +44,14 @@ public class Category {
         inverseJoinColumns = { @JoinColumn(name = "produkt_nr") }
     )
     private Set<Product> products;
+
+    /** Creates the non-persistent root which contains all database root categories. */
+    public static Category createTreeRoot(List<Category> rootCategories) {
+        Category root = new Category();
+        root.name = "Categories";
+        root.childs = rootCategories;
+        return root;
+    }
 
     //Getter
     

@@ -31,6 +31,7 @@ public class CategoryTreeScreen {
     private final DBInterface db;
     private final Set<Long> expandedIds = new HashSet<>();
     private final List<Category> visibleCategories = new ArrayList<>();
+    private final List<List<String>> visibleCategoryPaths = new ArrayList<>();
 
     private List<Category> roots;
     private Table<String> categoryTable;
@@ -41,7 +42,10 @@ public class CategoryTreeScreen {
     }
 
     public void show() {
-        roots = sortedCategories(db.getCategoryTree());
+        Category treeRoot = db.getCategoryTree();
+        roots = treeRoot == null
+            ? Collections.emptyList()
+            : sortedCategories(childrenOf(treeRoot));
 
         BasicWindow window = new BasicWindow("Category Tree");
         Panel root = new Panel(new LinearLayout(Direction.VERTICAL));
@@ -92,8 +96,9 @@ public class CategoryTreeScreen {
     private void refreshTree(Long selectedId) {
         categoryTable.getTableModel().clear();
         visibleCategories.clear();
+        visibleCategoryPaths.clear();
         for (Category category : roots) {
-            appendCategory(category, 0);
+            appendCategory(category, 0, Collections.emptyList());
         }
 
         if (!visibleCategories.isEmpty()) {
@@ -108,9 +113,11 @@ public class CategoryTreeScreen {
         }
     }
 
-    private void appendCategory(Category category, int depth) {
+    private void appendCategory(Category category, int depth, List<String> parentPath) {
         List<Category> children = childrenOf(category);
         boolean expanded = expandedIds.contains(category.getId());
+        List<String> categoryPath = new ArrayList<>(parentPath);
+        categoryPath.add(category.getName());
         StringBuilder label = new StringBuilder();
         for (int i = 0; i < depth; i++) {
             label.append("  ");
@@ -119,6 +126,7 @@ public class CategoryTreeScreen {
         label.append(category.getName());
 
         visibleCategories.add(category);
+        visibleCategoryPaths.add(categoryPath);
         categoryTable.getTableModel().addRow(
             label.toString(),
             category.getId().toString(),
@@ -127,7 +135,7 @@ public class CategoryTreeScreen {
 
         if (expanded) {
             for (Category child : sortedCategories(children)) {
-                appendCategory(child, depth + 1);
+                appendCategory(child, depth + 1, categoryPath);
             }
         }
     }
@@ -144,8 +152,9 @@ public class CategoryTreeScreen {
         }
 
         try {
+            List<String> categoryPath = selectedCategoryPath();
             List<ProductListEntry> entries = new ArrayList<>();
-            for (Product product : db.getProductsByCategory(selected)) {
+            for (Product product : db.getProductsByCategoryPath(categoryPath)) {
                 entries.add(new ProductListEntry(
                     product.getId(), product.getTitle(), product.getType(), product.getAvgRating(), product.getRatingQuantity()
                 ));
@@ -154,7 +163,7 @@ public class CategoryTreeScreen {
 
             BasicWindow window = new BasicWindow("Products in category " + selected.getId());
             Panel root = new Panel(new LinearLayout(Direction.VERTICAL));
-            root.addComponent(new Label(selected.getName()));
+            root.addComponent(new Label(String.join(" > ", categoryPath)));
             root.addComponent(new Label("Products assigned directly to this category: " + entries.size()));
 
             ProductListEntryTableComponent products = new ProductListEntryTableComponent(gui, db);
@@ -167,6 +176,13 @@ public class CategoryTreeScreen {
         } catch (RuntimeException ex) {
             showLoadError("Could not load products for the selected category.", ex);
         }
+    }
+
+    private List<String> selectedCategoryPath() {
+        int row = categoryTable.getSelectedRow();
+        return row >= 0 && row < visibleCategoryPaths.size()
+            ? visibleCategoryPaths.get(row)
+            : Collections.emptyList();
     }
 
     private List<Category> childrenOf(Category category) {
