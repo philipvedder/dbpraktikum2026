@@ -93,7 +93,6 @@ public class DBInterfaceImpl implements DBInterface {
 
             // Trigger Lazy loads
             Hibernate.initialize(p.getSimilarProducts());
-            Hibernate.initialize(p.getOffers());
             Hibernate.initialize(p.getReviews());
             Hibernate.initialize(p.getCategories());
 
@@ -395,16 +394,23 @@ public class DBInterfaceImpl implements DBInterface {
     public List<Offer> getOffers(Product p) {
         checkInitialized();
 
+        if (p == null || p.getId() == null || p.getId().trim().isEmpty()) {
+            throw new IllegalArgumentException("A product is required.");
+        }
+
         List<Offer> result = new ArrayList<>();
 
         try (Session session = sessionFactory.openSession()) {
             Transaction t = session.beginTransaction();
 
-            // Get manager product
-            Product managed = (Product) session.get(Product.class, p.getId());
-
-            // Get offers
-            result = managed.getOffers();
+            // Load the offers and the referenced entities before the session is closed.
+            result = session.createSelectionQuery(
+                "select o from Offer o join fetch o.shop join fetch o.product "
+                    + "where o.product.id = :productId order by o.price, o.id",
+                Offer.class
+            )
+            .setParameter("productId", p.getId())
+            .getResultList();
 
             t.commit();
         }

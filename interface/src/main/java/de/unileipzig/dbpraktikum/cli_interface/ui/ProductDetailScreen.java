@@ -150,7 +150,7 @@ public class ProductDetailScreen {
         Table<String> t = new Table<>("Shop", "Condition", "Price", "Currency");
         t.setCellSelection(false); //No independent cell selection
 
-        for (Offer o: product.getOffers()) {
+        for (Offer o: db.getOffers(product)) {
             t.getTableModel().addRow(
                 o.getShop().getName(),
                 o.getCondition(),
