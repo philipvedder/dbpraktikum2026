@@ -217,17 +217,21 @@ public class DBInterfaceImpl implements DBInterface {
     public List<ProductListEntry> getTopProducts(int k) {
         checkInitialized();
 
+        if (k <= 0) {
+            throw new IllegalArgumentException("The number of products must be positive.");
+        }
+
         List<ProductListEntry> products = new ArrayList<>();
 
         try (Session session = sessionFactory.openSession()) {
             Transaction t = session.beginTransaction();
 
-            // Select all products, ordered by rating average and quntity
+            // Select the requested number of products, ordered by rating average and quantity
             products = session.createSelectionQuery(
-                "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry(p.id, p.title, p.type, p.avgRating, p.ratingQuantity) from Product p ORDER BY avgRating DESC NULLS LAST, ratingQuantity DESC, id limit :amount",
+                "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry(p.id, p.title, p.type, p.avgRating, p.ratingQuantity) from Product p ORDER BY p.avgRating DESC NULLS LAST, p.ratingQuantity DESC, p.id",
                 ProductListEntry.class
             )
-            .setParameter("amount", k)
+            .setMaxResults(k)
             .getResultList();
 
             t.commit();
