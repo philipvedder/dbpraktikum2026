@@ -63,7 +63,7 @@ public class ProductSearchScreen {
         root.addComponent(buttons);
 
         // Load initial (full) product list
-        onTextChange("");
+        onTextChange(null);
 
         // Show window
         window.setComponent(root);
@@ -71,7 +71,10 @@ public class ProductSearchScreen {
     }
 
     private void onTextChange(String pattern) {
-        List<ProductListEntry> result = db.getProducts(pattern);
+        String sqlPattern = pattern == null || pattern.isEmpty()
+            ? null
+            : "%" + pattern + "%";
+        List<ProductListEntry> result = db.getProducts(sqlPattern);
         productTable.update(result);
     }
 }
