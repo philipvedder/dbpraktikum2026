@@ -125,7 +125,7 @@ public class DBInterfaceImpl implements DBInterface {
     }
 
     @Override
-    public List<Category> getCategoryTree() {
+    public Category getCategoryTree() {
         checkInitialized();
 
         List<Category> roots = new ArrayList<>();
@@ -148,23 +148,56 @@ public class DBInterfaceImpl implements DBInterface {
             t.commit();
         }
 
-        return roots;
+        // The database can contain several top-level categories. The interface contract
+        // exposes one complete tree, so they are grouped below a non-persistent root.
+        return Category.createTreeRoot(roots);
     }
 
     @Override
-    public List<Product> getProductsByCategory(Category c) {
+    public List<Product> getProductsByCategoryPath(List<String> categoryPath) {
         checkInitialized();
+
+        if (categoryPath == null || categoryPath.isEmpty()) {
+            throw new IllegalArgumentException("A category path is required.");
+        }
+        for (String part : categoryPath) {
+            if (part == null || part.trim().isEmpty()) {
+                throw new IllegalArgumentException("The category path contains an empty name.");
+            }
+        }
 
         List<Product> products = new ArrayList<>();
 
         try (Session session = sessionFactory.openSession()) {
             Transaction t = session.beginTransaction();
 
-            // Get managed Category
-            Category managed = session.get(Category.class, c.getId());
+            List<Category> currentLevel = session.createSelectionQuery(
+                "from Category c where c.parent is null",
+                Category.class
+            )
+            .getResultList();
 
-            // Trigger Lazy loading of products
-            products = new ArrayList<>(managed.getProducts());
+            Category selected = null;
+            for (String pathPart : categoryPath) {
+                selected = null;
+                for (Category candidate : currentLevel) {
+                    if (Objects.equals(candidate.getName(), pathPart)) {
+                        selected = candidate;
+                        break;
+                    }
+                }
+
+                if (selected == null) {
+                    t.commit();
+                    return products;
+                }
+
+                Hibernate.initialize(selected.getChilds());
+                currentLevel = selected.getChilds();
+            }
+
+            Hibernate.initialize(selected.getProducts());
+            products = new ArrayList<>(selected.getProducts());
 
             t.commit();
         }
