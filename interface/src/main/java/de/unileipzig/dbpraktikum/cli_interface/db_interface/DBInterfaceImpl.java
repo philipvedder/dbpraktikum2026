@@ -14,6 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.SelectionQuery;
 
 import de.unileipzig.dbpraktikum.cli_interface.model.Book;
 import de.unileipzig.dbpraktikum.cli_interface.model.CD;
@@ -111,12 +112,19 @@ public class DBInterfaceImpl implements DBInterface {
         try (Session session = sessionFactory.openSession()) {
             Transaction t = session.beginTransaction();
 
-            products = session.createSelectionQuery(
-                "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry(p.id, p.title, p.type, p.avgRating, p.ratingQuantity) from Product p where lower(p.title) like lower(:pattern) order by p.title",
-                ProductListEntry.class
-            )
-            .setParameter("pattern", "%" + pattern + "%")
-            .getResultList();
+            String queryString =
+                "select new de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry(p.id, p.title, p.type, p.avgRating, p.ratingQuantity) from Product p";
+
+            if (pattern != null) {
+                queryString += " where lower(p.title) like lower(:pattern)";
+            }
+            queryString += " order by p.title";
+
+            SelectionQuery<ProductListEntry> query = session.createSelectionQuery(queryString, ProductListEntry.class);
+            if (pattern != null) {
+                query.setParameter("pattern", pattern);
+            }
+            products = query.getResultList();
 
             t.commit();
         }
