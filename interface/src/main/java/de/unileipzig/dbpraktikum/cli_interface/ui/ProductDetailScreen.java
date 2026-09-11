@@ -1,9 +1,5 @@
 package de.unileipzig.dbpraktikum.cli_interface.ui;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-
 import com.googlecode.lanterna.TerminalSize;
 import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Borders;
@@ -28,6 +24,7 @@ import de.unileipzig.dbpraktikum.cli_interface.model.Person;
 import de.unileipzig.dbpraktikum.cli_interface.model.Product;
 import de.unileipzig.dbpraktikum.cli_interface.model.Review;
 import de.unileipzig.dbpraktikum.cli_interface.model.Track;
+import de.unileipzig.dbpraktikum.cli_interface.util.FormatUtil;
 
 public class ProductDetailScreen {
     private final WindowBasedTextGUI gui;
@@ -154,7 +151,7 @@ public class ProductDetailScreen {
             t.getTableModel().addRow(
                 o.getShop().getName(),
                 o.getCondition(),
-                formatDecimal(o.getPrice()),
+                FormatUtil.formatDecimal(o.getPrice()),
                 o.getCurrency()
             );
         }
@@ -170,9 +167,9 @@ public class ProductDetailScreen {
         for (Review r: product.getReviews()) {
             t.getTableModel().addRow(
                 r.getCustomer().getName(),
-                formatDate(r.getDate()),
-                formatInt(r.getPoints()),
-                trunc(r.getText(), 40)
+                FormatUtil.formatDate(r.getDate()),
+                FormatUtil.formatInt(r.getPoints()),
+                FormatUtil.trunc(r.getText(), 40)
             );
         }
 
@@ -192,19 +189,19 @@ public class ProductDetailScreen {
         generalDetails.addComponent(new Label(product.getTitle()));
 
         generalDetails.addComponent(new Label("Salesrank"));
-        generalDetails.addComponent(new Label(formatInt(product.getSalesrank())));
+        generalDetails.addComponent(new Label(FormatUtil.formatInt(product.getSalesrank())));
 
         generalDetails.addComponent(new Label("Rating Quantity"));
-        generalDetails.addComponent( new Label(formatInt(product.getRatingQuantity())));
+        generalDetails.addComponent( new Label(FormatUtil.formatInt(product.getRatingQuantity())));
 
         generalDetails.addComponent(new Label("Average Rating"));
-        generalDetails.addComponent(new Label(formatDecimal(product.getAvgRating())));
+        generalDetails.addComponent(new Label(FormatUtil.formatDecimal(product.getAvgRating())));
 
         Table<String> categories = new Table<>("Categories");
         categories.setPreferredSize(new TerminalSize(50, 12));
         categories.setCellSelection(false); //No independet cell selection
         for (Category c : product.getCategories()) {
-            categories.getTableModel().addRow(trunc(c.getName(), 45));
+            categories.getTableModel().addRow(FormatUtil.trunc(c.getName(), 45));
         }
 
         Panel genData = new Panel(new LinearLayout(Direction.VERTICAL));
@@ -231,14 +228,14 @@ public class ProductDetailScreen {
         artists.setPreferredSize(new TerminalSize(80, 4));
         artists.setCellSelection(false); //No independet cell selection
         for (Person p : c.getArtists()) {
-            artists.getTableModel().addRow(trunc(p.getName(), 45));
+            artists.getTableModel().addRow(FormatUtil.trunc(p.getName(), 45));
         }
 
         Table<String> tracks = new Table<>("Tracks");
         tracks.setPreferredSize(new TerminalSize(80, 12));
         tracks.setCellSelection(false); //No independet cell selection
         for (Track t : c.getTracks()) {
-            tracks.getTableModel().addRow(trunc(t.getName(), 45));
+            tracks.getTableModel().addRow(FormatUtil.trunc(t.getName(), 45));
         }
 
         Panel cdData = new Panel(new LinearLayout(Direction.VERTICAL));
@@ -256,10 +253,10 @@ public class ProductDetailScreen {
         Panel details = new Panel(new GridLayout(2));
 
         details.addComponent(new Label("Runtime"));
-        details.addComponent(new Label(formatInt(d.getRuntime())));
+        details.addComponent(new Label(FormatUtil.formatInt(d.getRuntime())));
 
         details.addComponent(new Label("Region Code"));
-        details.addComponent(new Label(formatInt(d.getRegionCode())));
+        details.addComponent(new Label(FormatUtil.formatInt(d.getRegionCode())));
 
         // Specific list data
         Table<String> formats = new Table<>("Formats");
@@ -313,7 +310,7 @@ public class ProductDetailScreen {
         details.addComponent(new Label(b.getIsbn()));
 
         details.addComponent(new Label("Pages"));
-        details.addComponent(new Label(formatInt(b.getPages())));
+        details.addComponent(new Label(FormatUtil.formatInt(b.getPages())));
 
         details.addComponent(new Label("Publication"));
         details.addComponent(new Label(b.getPublication().toString())); //TODO: format
@@ -343,33 +340,5 @@ public class ProductDetailScreen {
             default:
                 return new Panel();
         }
-    }
-
-    // Helper
-    private String formatDecimal(BigDecimal d) {
-        if (d == null) {
-            return "-";
-        }
-
-        return String.format("%.2f", d);
-    }
-
-    private String formatInt(Integer i) {
-        if (i == null) {
-            return "-";
-        }
-
-        return i.toString();
-    }
-
-    private String formatDate(Timestamp t) {
-        return new SimpleDateFormat("dd.MM.yyyy").format(t);
-    }
-
-    private String trunc(String s, int length) {
-        if (s == null) {
-            return "";
-        }
-        return s.substring(0, Math.min(length, s.length()));
     }
 }

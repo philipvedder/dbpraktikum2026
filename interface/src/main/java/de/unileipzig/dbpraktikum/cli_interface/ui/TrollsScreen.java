@@ -69,9 +69,7 @@ public class TrollsScreen {
             }
         } catch (NumberFormatException ex) {
             status.setText("Enter a valid numeric threshold.");
-            MessageDialog.showMessageDialog(gui, "Invalid rating",
-                "Enter a number, for example 3.5 or 3,5.\nEmpty input, NaN and infinity are not valid.",
-                MessageDialogButton.OK);
+            MessageDialog.showMessageDialog(gui, "Invalid rating", "Enter a number, for example 3.5 or 3,5.\nEmpty input, NaN and infinity are not valid.", MessageDialogButton.OK);
             return;
         }
 
@@ -81,8 +79,6 @@ public class TrollsScreen {
                 .thenComparing(Customer::getId));
 
             for (Customer user : users) {
-                // Customer.reviews is EAGER in the existing mapping.
-                // The database method decides who matches; this only formats the result.
                 List<Review> reviews = user.getReviews();
                 double average = reviews.stream().mapToInt(Review::getPoints).average().orElse(Double.NaN);
                 usersTable.getTableModel().addRow(
@@ -100,8 +96,7 @@ public class TrollsScreen {
             usersTable.getTableModel().clear();
             status.setText("Could not load users.");
             ex.printStackTrace();
-            MessageDialog.showMessageDialog(gui, "Database error",
-                "Could not load users.\nSee the terminal for details.", MessageDialogButton.OK);
+            MessageDialog.showMessageDialog(gui, "Database error", "Could not load users.\nSee the terminal for details.", MessageDialogButton.OK);
         }
     }
 }

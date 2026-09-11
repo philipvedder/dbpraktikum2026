@@ -5,6 +5,9 @@ import java.math.BigDecimal;
 import de.unileipzig.dbpraktikum.cli_interface.model.enums.ProductType;
 
 public class ProductListEntry {
+    /**
+     * DTO for quick Product List queries
+     */
     String id;
     String title; 
     ProductType type;

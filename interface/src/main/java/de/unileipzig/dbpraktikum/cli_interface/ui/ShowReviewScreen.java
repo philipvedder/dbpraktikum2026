@@ -1,8 +1,5 @@
 package de.unileipzig.dbpraktikum.cli_interface.ui;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-
 import com.googlecode.lanterna.gui2.BasicWindow;
 import com.googlecode.lanterna.gui2.Button;
 import com.googlecode.lanterna.gui2.Direction;
@@ -14,6 +11,7 @@ import com.googlecode.lanterna.gui2.WindowBasedTextGUI;
 
 import de.unileipzig.dbpraktikum.cli_interface.db_interface.DBInterface;
 import de.unileipzig.dbpraktikum.cli_interface.model.Review;
+import de.unileipzig.dbpraktikum.cli_interface.util.FormatUtil;
 
 public class ShowReviewScreen {
     private final WindowBasedTextGUI gui;
@@ -48,7 +46,7 @@ public class ShowReviewScreen {
         reviewPanel.addComponent(new Label(review.getPoints().toString()));
 
         reviewPanel.addComponent(new Label("Date"));
-        reviewPanel.addComponent(new Label(formatDateAndTime(review.getDate())));
+        reviewPanel.addComponent(new Label(FormatUtil.formatDateAndTime(review.getDate())));
 
         reviewPanel.addComponent(new Label("Text"));
 
@@ -71,9 +69,5 @@ public class ShowReviewScreen {
         // Show window
         window.setComponent(root);
         gui.addWindowAndWait(window);
-    }
-
-    private String formatDateAndTime(Timestamp t) {
-        return new SimpleDateFormat("dd.MM.yyyy hh:mm:ss").format(t);
     }
 }

@@ -68,6 +68,7 @@ public class CategoryTreeScreen {
             expandedIds.clear();
             refreshTree(null);
         }));
+        buttons.addComponent(new Button("Show Products", () -> showSelectedProducts()));
         buttons.addComponent(new Button("Back", window::close));
         root.addComponent(buttons);
 
@@ -197,7 +198,6 @@ public class CategoryTreeScreen {
 
     private void showLoadError(String message, RuntimeException ex) {
         ex.printStackTrace();
-        MessageDialog.showMessageDialog(gui, "Database error",
-            message + "\nSee the terminal for details.", MessageDialogButton.OK);
+        MessageDialog.showMessageDialog(gui, "Database error", message + "\nSee the terminal for details.", MessageDialogButton.OK);
     }
 }

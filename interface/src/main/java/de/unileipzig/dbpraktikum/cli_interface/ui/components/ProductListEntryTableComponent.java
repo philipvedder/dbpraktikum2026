@@ -1,6 +1,5 @@
 package de.unileipzig.dbpraktikum.cli_interface.ui.components;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +10,7 @@ import com.googlecode.lanterna.gui2.table.Table;
 import de.unileipzig.dbpraktikum.cli_interface.db_interface.DBInterface;
 import de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry;
 import de.unileipzig.dbpraktikum.cli_interface.ui.ProductDetailScreen;
+import de.unileipzig.dbpraktikum.cli_interface.util.FormatUtil;
 
 public class ProductListEntryTableComponent {
     private final WindowBasedTextGUI gui;
@@ -45,9 +45,9 @@ public class ProductListEntryTableComponent {
         for (ProductListEntry p : products) {
             productTable.getTableModel().addRow(
                 p.getId(),
-                trunc(p.getTitle(), 70),
+                FormatUtil.trunc(p.getTitle(), 70),
                 p.getType().name(),
-                formatDecimal(p.getAvgRating())
+                FormatUtil.formatDecimal(p.getAvgRating())
             );
         }
     }
@@ -64,18 +64,5 @@ public class ProductListEntryTableComponent {
 
         // Open Screen
         new ProductDetailScreen(gui, db, selectedPID).show();
-    }
-
-    // Helper
-    private String formatDecimal(BigDecimal d) {
-        if (d == null) {
-            return "-";
-        }
-
-        return String.format("%.2f", d);
-    }
-
-    private String trunc(String s, int length) {
-        return s.substring(0, Math.min(length, s.length()));
     }
 }

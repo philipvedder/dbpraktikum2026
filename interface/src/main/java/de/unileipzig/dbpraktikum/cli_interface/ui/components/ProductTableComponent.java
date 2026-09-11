@@ -14,6 +14,7 @@ import de.unileipzig.dbpraktikum.cli_interface.db_interface.DBInterface;
 import de.unileipzig.dbpraktikum.cli_interface.model.Offer;
 import de.unileipzig.dbpraktikum.cli_interface.model.Product;
 import de.unileipzig.dbpraktikum.cli_interface.ui.ProductDetailScreen;
+import de.unileipzig.dbpraktikum.cli_interface.util.FormatUtil;
 
 public class ProductTableComponent {
     private final WindowBasedTextGUI gui;
@@ -53,10 +54,10 @@ public class ProductTableComponent {
 
             productTable.getTableModel().addRow(
                 p.getId(),
-                trunc(p.getTitle(), 70),
+                FormatUtil.trunc(p.getTitle(), 70),
                 p.getType().name(),
-                formatDecimal(p.getAvgRating()),
-                formatDecimal(cheapestOffer.get())
+                FormatUtil.formatDecimal(p.getAvgRating()),
+                FormatUtil.formatDecimal(cheapestOffer.get())
             );
         }
     }
@@ -73,18 +74,5 @@ public class ProductTableComponent {
 
         // Open Screen
         new ProductDetailScreen(gui, db, selected.getId()).show();
-    }
-
-    // Helper
-    private String formatDecimal(BigDecimal d) {
-        if (d == null) {
-            return "-";
-        }
-
-        return String.format("%.2f", d);
-    }
-
-    private String trunc(String s, int length) {
-        return s.substring(0, Math.min(length, s.length()));
     }
 }
