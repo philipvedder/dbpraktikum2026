@@ -10,6 +10,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -35,8 +36,17 @@ import de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry;
 import jakarta.persistence.NoResultException;
 
 public class DBInterfaceImpl implements DBInterface {
+    /**
+     * Implementation of the DBInterface, using Hibernate to interact with PostgreSQL. 
+     */
     private SessionFactory sessionFactory;
 
+    /**
+     * Initializes a DB instance from given Hibernate properties.
+     * @param properties Properties for DB instance creation
+     * @throws IllegalArgumentException if properties is null
+     * @throws HibernateException on an illegal configuration
+     */
     @Override
     public void init(Properties properties) {
         // Ensure sessionfactory is not already initialized
@@ -71,6 +81,9 @@ public class DBInterfaceImpl implements DBInterface {
         sessionFactory = config.buildSessionFactory();
     }
 
+    /**
+     * Closes the held DB Connections and releases memory
+     */
     @Override
     public void finish() {
         // Close sessionfactory if available
@@ -81,6 +94,13 @@ public class DBInterfaceImpl implements DBInterface {
         sessionFactory = null;
     }
 
+    /**
+     * Get Product data for a given product id. 
+     * Returns null if product does not exist.
+     * @param pid Product id
+     * @return The loaded Product
+     * @throws IllegalStateException if db was not initialized
+     */
     @Override
     public Product getProduct(String pid) {
         checkInitialized();
@@ -104,6 +124,12 @@ public class DBInterfaceImpl implements DBInterface {
         return p;
     }
 
+    /**
+     * Get ProductListEntry's which name matches the given pattern.
+     * @param pattern name pattern to search for
+     * @return List of ProductListEntry's. 
+     * @throws IllegalStateException if db was not initialized
+     */
     @Override
     public List<ProductListEntry> getProducts(String pattern) {
         checkInitialized();
@@ -133,6 +159,11 @@ public class DBInterfaceImpl implements DBInterface {
         return products;
     }
 
+    /**
+     * Get the full Category tree, meaning the root categories and recursively all subcategories. 
+     * @return One artificial root Category object, holding the root Categories. 
+     * @throws IllegalStateException if db was not initialized
+     */
     @Override
     public Category getCategoryTree() {
         checkInitialized();
@@ -157,11 +188,18 @@ public class DBInterfaceImpl implements DBInterface {
             t.commit();
         }
 
-        // The database can contain several top-level categories. The interface contract
-        // exposes one complete tree, so they are grouped below a non-persistent root.
+        // The database can contain several top-level categories. The interface contract exposes one complete tree, so they are grouped below a non-persistent root.
         return Category.createTreeRoot(roots);
     }
 
+    /**
+     * Get all Products that are in the Category, given as a path given by a list of Strings, f.e.
+     * "dvds", "under 1 EUR", "german" -> DVDS>>Under 1 EUR>>GERMAN
+     * @param categoryPath Category Path as list of Strings
+     * @return List of Products in Category
+     * @throws IllegalStateException if db was not initialized
+     * @throws IllegalArgumentException for invalid paths
+     */
     @Override
     public List<Product> getProductsByCategoryPath(List<String> categoryPath) {
         checkInitialized();
@@ -214,6 +252,13 @@ public class DBInterfaceImpl implements DBInterface {
         return products;
     }
 
+    /**
+     * Get the k top products, measured and ordered by avg_rating and rating_quantity.
+     * @param k number of Top products to return
+     * @return List of ProductListEntries for the found products
+     * @throws IllegalStateException if db was not initialized
+     * @throws IllegalArgumentException for non-positive k
+     */
     @Override
     public List<ProductListEntry> getTopProducts(int k) {
         checkInitialized();
@@ -241,6 +286,13 @@ public class DBInterfaceImpl implements DBInterface {
         return products;
     }
 
+    /**
+     * Get all similar products of a given products, which include a cheaper offer. 
+     * @param p Product to search for
+     * @return List of all similar Products with cheaper offers
+     * @throws IllegalStateException if db was not initialized
+     * @throws IllegalArgumentException for empty p
+     */
     @Override
     public List<Product> getSimilarCheaperProducts(Product p) {
         checkInitialized();
@@ -297,6 +349,18 @@ public class DBInterfaceImpl implements DBInterface {
         return result;
     }
 
+    /**
+     * Add a new Review to a Product
+     * @param p Product
+     * @param username Username. Will create user if not found. 
+     * @param points Number of Points between 1 and 5
+     * @param text Optional review text
+     * @return The added review if successful
+     * @throws IllegalStateException if db was not initialized
+     * @throws IllegalArgumentException for empty p
+     * @throws IllegalArgumentException for empty or longer than 256 chars username
+     * @throws IllegalArgumentException for points outside of range 1-5
+     */
     @Override
     public Review addNewReview(Product p, String username, int points, String text) {
         checkInitialized();
@@ -369,6 +433,12 @@ public class DBInterfaceImpl implements DBInterface {
         return newReview;
     }
 
+    /**
+     * Get customers with an average rating below a given threshold
+     * @param f Rating threshold
+     * @return List of all selected Customers
+     * @throws IllegalStateException if db was not initialized
+     */
     @Override
     public List<Customer> getTrolls(float f) {
         checkInitialized();
@@ -392,11 +462,18 @@ public class DBInterfaceImpl implements DBInterface {
         return result;
     }
 
+    /**
+     * Get all Offers for a given Product
+     * @param p Product to get offers for
+     * @return List of Offers
+     * @throws IllegalStateException if db was not initialized
+     * @throws IllegalArgumentException for empty p
+     */
     @Override
     public List<Offer> getOffers(Product p) {
         checkInitialized();
 
-        if (p == null || p.getId() == null || p.getId().trim().isEmpty()) {
+        if (p == null || p.getId() == null) {
             throw new IllegalArgumentException("A product is required.");
         }
 
@@ -421,12 +498,20 @@ public class DBInterfaceImpl implements DBInterface {
     }
 
     // Helpers
-    private void checkInitialized() {
+    /**
+     * Checks if db is currently initialized and ready for sessions
+     * @throws IllegalStateException If not ready
+     */
+    private void checkInitialized() throws IllegalStateException {
         if (sessionFactory == null || sessionFactory.isClosed()) {
             throw new IllegalStateException("No DB Session initialized. Call init() first.");
         }
     }
 
+    /**
+     * Recursively trigger lazy loading of all categories
+     * @param category root category 
+     */
     private void initializeCategoryTree(Category category) {
         Hibernate.initialize(category.getChilds());
 

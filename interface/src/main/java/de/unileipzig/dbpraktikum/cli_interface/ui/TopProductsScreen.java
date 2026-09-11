@@ -80,8 +80,7 @@ public class TopProductsScreen {
             }
         } catch (NumberFormatException ex) {
             status.setText("Enter a positive whole number.");
-            MessageDialog.showMessageDialog(gui, "Invalid amount",
-                "Enter a positive whole number, for example 10.", MessageDialogButton.OK);
+            MessageDialog.showMessageDialog(gui, "Invalid amount", "Enter a positive whole number, for example 10.", MessageDialogButton.OK);
             return;
         }
 
@@ -92,8 +91,7 @@ public class TopProductsScreen {
         } catch (RuntimeException ex) {
             status.setText("Could not load top products.");
             ex.printStackTrace();
-            MessageDialog.showMessageDialog(gui, "Database error",
-                "Could not load top products.\nSee the terminal for details.", MessageDialogButton.OK);
+            MessageDialog.showMessageDialog(gui, "Database error", "Could not load top products.\nSee the terminal for details.", MessageDialogButton.OK);
         }
     }
 }

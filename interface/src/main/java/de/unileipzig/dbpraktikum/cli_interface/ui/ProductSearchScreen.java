@@ -71,9 +71,7 @@ public class ProductSearchScreen {
     }
 
     private void onTextChange(String pattern) {
-        String sqlPattern = pattern == null || pattern.isEmpty()
-            ? null
-            : "%" + pattern + "%";
+        String sqlPattern = pattern == null || pattern.isEmpty() ? null : "%" + pattern + "%";
         List<ProductListEntry> result = db.getProducts(sqlPattern);
         productTable.update(result);
     }
