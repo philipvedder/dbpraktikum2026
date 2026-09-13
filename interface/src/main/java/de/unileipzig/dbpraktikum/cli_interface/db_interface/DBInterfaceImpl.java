@@ -113,7 +113,10 @@ public class DBInterfaceImpl implements DBInterface {
             Transaction t = session.beginTransaction();
             p = (Product) session.get(Product.class, pid);
 
-            if (p == null) return null;
+            if (p == null) {
+                t.commit();
+                return null;
+            }
 
             // Trigger Lazy loads
             Hibernate.initialize(p.getSimilarProducts());
