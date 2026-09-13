@@ -18,6 +18,7 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.query.SelectionQuery;
 
 import de.unileipzig.dbpraktikum.cli_interface.model.Book;
+import de.unileipzig.dbpraktikum.cli_interface.model.BookTrack;
 import de.unileipzig.dbpraktikum.cli_interface.model.CD;
 import de.unileipzig.dbpraktikum.cli_interface.model.Category;
 import de.unileipzig.dbpraktikum.cli_interface.model.Customer;
@@ -31,7 +32,7 @@ import de.unileipzig.dbpraktikum.cli_interface.model.PurchaseOrder;
 import de.unileipzig.dbpraktikum.cli_interface.model.Publisher;
 import de.unileipzig.dbpraktikum.cli_interface.model.Review;
 import de.unileipzig.dbpraktikum.cli_interface.model.Shop;
-import de.unileipzig.dbpraktikum.cli_interface.model.Track;
+import de.unileipzig.dbpraktikum.cli_interface.model.MusicTrack;
 import de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry;
 import jakarta.persistence.NoResultException;
 
@@ -75,7 +76,8 @@ public class DBInterfaceImpl implements DBInterface {
         config.addAnnotatedClass(PurchaseOrder.class);
         config.addAnnotatedClass(Review.class);
         config.addAnnotatedClass(Shop.class);
-        config.addAnnotatedClass(Track.class);
+        config.addAnnotatedClass(MusicTrack.class);
+        config.addAnnotatedClass(BookTrack.class);
         config.addAnnotatedClass(Category.class);
 
         sessionFactory = config.buildSessionFactory();

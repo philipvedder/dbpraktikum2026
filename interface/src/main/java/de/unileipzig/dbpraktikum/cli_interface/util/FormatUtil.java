@@ -1,6 +1,7 @@
 package de.unileipzig.dbpraktikum.cli_interface.util;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
@@ -47,7 +48,16 @@ public class FormatUtil {
      * @return Formatted String
      */
     public static String formatDate(Timestamp t) {
-        return new SimpleDateFormat("dd.MM.yyyy").format(t);
+        return new SimpleDateFormat("dd-MM-yyyy").format(t);
+    }
+
+    /**
+     * Format a Date as a Date String
+     * @param t Date to format
+     * @return Formatted String
+     */
+    public static String formatDate(Date t) {
+        return new SimpleDateFormat("dd-MM-yyyy").format(t);
     }
 
     /**
@@ -56,6 +66,6 @@ public class FormatUtil {
      * @return Formatted String
      */
     public static String formatDateAndTime(Timestamp t) {
-        return new SimpleDateFormat("dd.MM.yyyy hh:mm:ss").format(t);
+        return new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(t);
     }
 }

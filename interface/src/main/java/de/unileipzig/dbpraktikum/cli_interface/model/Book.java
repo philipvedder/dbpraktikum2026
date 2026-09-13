@@ -1,6 +1,7 @@
 package de.unileipzig.dbpraktikum.cli_interface.model;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 import jakarta.persistence.Column;
@@ -10,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
@@ -32,6 +34,9 @@ public class Book extends Product {
         inverseJoinColumns = { @JoinColumn(name = "person_id") }
     )
     private Set<Person> authors;
+
+    @OneToMany(mappedBy = "book", fetch = FetchType.EAGER)
+    private List<BookTrack> tracks;
 
     @Column(name = "isbn")
     private String isbn;
@@ -63,5 +68,7 @@ public class Book extends Product {
         return publication;
     }
 
-    
+    public List<BookTrack> getTracks() {
+        return tracks;
+    }
 }

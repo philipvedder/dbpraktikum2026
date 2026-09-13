@@ -15,6 +15,7 @@ import com.googlecode.lanterna.gui2.table.Table;
 
 import de.unileipzig.dbpraktikum.cli_interface.db_interface.DBInterface;
 import de.unileipzig.dbpraktikum.cli_interface.model.Book;
+import de.unileipzig.dbpraktikum.cli_interface.model.BookTrack;
 import de.unileipzig.dbpraktikum.cli_interface.model.CD;
 import de.unileipzig.dbpraktikum.cli_interface.model.Category;
 import de.unileipzig.dbpraktikum.cli_interface.model.DVD;
@@ -23,7 +24,7 @@ import de.unileipzig.dbpraktikum.cli_interface.model.Offer;
 import de.unileipzig.dbpraktikum.cli_interface.model.Person;
 import de.unileipzig.dbpraktikum.cli_interface.model.Product;
 import de.unileipzig.dbpraktikum.cli_interface.model.Review;
-import de.unileipzig.dbpraktikum.cli_interface.model.Track;
+import de.unileipzig.dbpraktikum.cli_interface.model.MusicTrack;
 import de.unileipzig.dbpraktikum.cli_interface.util.FormatUtil;
 
 public class ProductDetailScreen {
@@ -275,7 +276,7 @@ public class ProductDetailScreen {
         details.addComponent(new Label(c.getLabel().getName()));
 
         details.addComponent(new Label("Publication"));
-        details.addComponent(new Label(c.getPublication().toString()));
+        details.addComponent(new Label(FormatUtil.formatDate(c.getPublication())));
 
         // Specific list data
         Table<String> artists = new Table<>("Artists");
@@ -288,7 +289,7 @@ public class ProductDetailScreen {
         Table<String> tracks = new Table<>("Tracks");
         tracks.setPreferredSize(new TerminalSize(80, 12));
         tracks.setCellSelection(false); //No independet cell selection
-        for (Track t : c.getTracks()) {
+        for (MusicTrack t : c.getTracks()) {
             tracks.getTableModel().addRow(FormatUtil.trunc(t.getName(), 45));
         }
 
@@ -359,7 +360,7 @@ public class ProductDetailScreen {
      * Build a Panel for Book specific Data
      * @return Lanterna Panel
      */
-    private Panel getBookData() {
+    private Panel getBookData(boolean withTracks) {
         Book b = (Book) product;
 
         // Specific single row data
@@ -375,7 +376,7 @@ public class ProductDetailScreen {
         details.addComponent(new Label(FormatUtil.formatInt(b.getPages())));
 
         details.addComponent(new Label("Publication"));
-        details.addComponent(new Label(b.getPublication().toString())); //TODO: format
+        details.addComponent(new Label(FormatUtil.formatDate(b.getPublication())));
 
         // Specific list data
         Table<String> authors = new Table<>("Authors");
@@ -385,9 +386,20 @@ public class ProductDetailScreen {
             authors.getTableModel().addRow(t.getName());
         }
 
+        Table<String> tracks = new Table<>("Tracks");
+        tracks.setPreferredSize(new TerminalSize(80, 12));
+        tracks.setCellSelection(false); //No independet cell selection
+        for (BookTrack t : b.getTracks()) {
+            tracks.getTableModel().addRow(FormatUtil.trunc(t.getName(), 45));
+        }
+
         Panel bookData = new Panel(new LinearLayout(Direction.VERTICAL));
         bookData.addComponent(details);
         bookData.addComponent(authors);
+
+        if (withTracks)
+            bookData.addComponent(tracks);
+
         return bookData;
     }
 
@@ -398,7 +410,9 @@ public class ProductDetailScreen {
     private Panel getSpecificProductData() {
         switch (product.getType()) {
             case BOOK:
-                return getBookData();
+                return getBookData(false);
+            case BOOK_CD:
+                return getBookData(true);
             case MUSIC_CD:
                 return getCdData();
             case DVD: 

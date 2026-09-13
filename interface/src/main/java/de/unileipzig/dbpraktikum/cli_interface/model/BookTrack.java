@@ -10,11 +10,11 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 /**
- * Track model for CDs
+ * Track model for Books
  */
 @Entity
-@Table(name = "musik_cd_titel")
-public class Track {
+@Table(name = "buch_cd_titel")
+public class BookTrack {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "track_id")
@@ -22,7 +22,7 @@ public class Track {
 
     @ManyToOne()
     @JoinColumn(name="produkt_nr", nullable=false)
-    private CD cd;
+    private Book book;
 
     @Column(name = "name")
     private String name;
@@ -32,8 +32,8 @@ public class Track {
         return id;
     }
 
-    public CD getCd() {
-        return cd;
+    public Book getBook() {
+        return book;
     }
 
     public String getName() {

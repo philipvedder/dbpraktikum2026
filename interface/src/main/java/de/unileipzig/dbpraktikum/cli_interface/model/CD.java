@@ -36,7 +36,7 @@ public class CD extends Product {
     private Set<Person> artists;
 
     @OneToMany(mappedBy = "cd", fetch = FetchType.EAGER)
-    private List<Track> tracks;
+    private List<MusicTrack> tracks;
 
     @Column(name = "erscheinungsdatum")
     private Date publication;
@@ -50,7 +50,7 @@ public class CD extends Product {
         return artists;
     }
 
-    public List<Track> getTracks() {
+    public List<MusicTrack> getTracks() {
         return tracks;
     }
 
