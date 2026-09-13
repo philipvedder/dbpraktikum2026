@@ -3,9 +3,10 @@ package de.unileipzig.dbpraktikum.cli_interface.db_interface;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 
@@ -318,34 +319,22 @@ public class DBInterfaceImpl implements DBInterface {
                 return result;
             }
 
-            // Get min price for product
-            Optional<BigDecimal> originalMinPrice = managed.getOffers().stream()
-                .map(Offer::getPrice)
-                .filter(Objects::nonNull)
-                .min(BigDecimal::compareTo);
+            Map<String, BigDecimal> originalMinPrices = getMinimumPricesByCurrency(managed);
 
             // No offers for product, so no cheaper products available
-            if (originalMinPrice.isEmpty()) {
+            if (originalMinPrices.isEmpty()) {
                 t.commit();
                 return result;
             }
 
-            // Get Price
-            BigDecimal price = originalMinPrice.get();
-
             // Get similar products
             Set<Product> similars = managed.getSimilarProducts();
 
-            // Fitler for cheaper similars
+            // Prices can only be compared when their currencies match.
             for (Product sim : similars) {
-                Optional<BigDecimal> simMinPrice = sim.getOffers().stream()
-                    .map(Offer::getPrice)
-                    .filter(Objects::nonNull)
-                    .min(BigDecimal::compareTo);
-
-                    if (simMinPrice.isPresent() && simMinPrice.get().compareTo(price) < 0) {
-                        result.add(sim);
-                    }
+                if (hasCheaperOffer(sim, originalMinPrices)) {
+                    result.add(sim);
+                }
             }
 
             t.commit();
@@ -523,6 +512,25 @@ public class DBInterfaceImpl implements DBInterface {
         for (Category child : category.getChilds()) {
             initializeCategoryTree(child);
         }
+    }
+
+    private static Map<String, BigDecimal> getMinimumPricesByCurrency(Product product) {
+        Map<String, BigDecimal> minimumPrices = new HashMap<>();
+        for (Offer offer : product.getOffers()) {
+            if (offer.getCurrency() == null || offer.getPrice() == null) {
+                continue;
+            }
+            minimumPrices.merge(offer.getCurrency(), offer.getPrice(), BigDecimal::min);
+        }
+        return minimumPrices;
+    }
+
+    private static boolean hasCheaperOffer(Product product, Map<String, BigDecimal> originalMinPrices) {
+        return getMinimumPricesByCurrency(product).entrySet().stream()
+            .anyMatch(entry -> {
+                BigDecimal originalPrice = originalMinPrices.get(entry.getKey());
+                return originalPrice != null && entry.getValue().compareTo(originalPrice) < 0;
+            });
     }
     
 }
