@@ -71,7 +71,7 @@ public class CheaperSimilarProductsScreen {
      */
     private void load() {
         // Fetch and update table
-        List<Product> result = db.getSimilarCheaperProducts(p);
+        List<Product> result = db.getSimilarCheaperProduct(p);
         productTable.update(result);
     }
 }

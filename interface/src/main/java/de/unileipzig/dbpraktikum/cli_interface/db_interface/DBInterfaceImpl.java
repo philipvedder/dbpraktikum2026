@@ -296,7 +296,7 @@ public class DBInterfaceImpl implements DBInterface {
      * @throws IllegalArgumentException for empty p
      */
     @Override
-    public List<Product> getSimilarCheaperProducts(Product p) {
+    public List<Product> getSimilarCheaperProduct(Product p) {
         checkInitialized();
 
         if (p == null || p.getId() == null) {

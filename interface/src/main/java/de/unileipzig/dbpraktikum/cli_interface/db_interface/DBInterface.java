@@ -71,7 +71,7 @@ public interface DBInterface {
      * @return List of all similar Products with cheaper offers
      * @throws IllegalStateException if db was not initialized
      */
-    public List<Product> getSimilarCheaperProducts(Product p);
+    public List<Product> getSimilarCheaperProduct(Product p);
 
     /**
      * Add a new Review to a Product
