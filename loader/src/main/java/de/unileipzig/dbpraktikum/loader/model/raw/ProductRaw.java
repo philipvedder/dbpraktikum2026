@@ -15,17 +15,17 @@ public class ProductRaw {
     private String salesrank;
     private String imgUrl;
     private List<String> similarProductIds;
-    private PriceRaw offer;
+    private List<PriceRaw> offers;
     
     public ProductRaw(String asin, ProductType type, String title, String salesrank, String imgUrl,
-            List<String> similarProductIds, PriceRaw offer) {
+            List<String> similarProductIds, List<PriceRaw> offers) {
         this.asin = asin;
         this.type = type;
         this.title = title;
         this.salesrank = salesrank;
         this.imgUrl = imgUrl;
         this.similarProductIds = similarProductIds;
-        this.offer = offer;
+        this.offers = offers;
     }
 
     //Getters
@@ -53,8 +53,8 @@ public class ProductRaw {
         return similarProductIds;
     }
 
-    public PriceRaw getOffer() {
-        return offer;
+    public List<PriceRaw> getOffers() {
+        return offers;
     }
 
     

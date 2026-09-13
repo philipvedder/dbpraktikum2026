@@ -161,6 +161,7 @@ public class MediaStoreLoader {
                 System.exit(1);
             }
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.err.println("ERROR: Could not read file.");
             System.err.println(ex.getMessage());
             System.exit(1);

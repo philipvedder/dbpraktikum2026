@@ -17,8 +17,10 @@ import de.unileipzig.dbpraktikum.loader.db.repository.ShopRepository;
 import de.unileipzig.dbpraktikum.loader.db.repository.SimilarRepository;
 import de.unileipzig.dbpraktikum.loader.logger.ErrorLogger;
 import de.unileipzig.dbpraktikum.loader.model.Book;
+import de.unileipzig.dbpraktikum.loader.model.BookCD;
 import de.unileipzig.dbpraktikum.loader.model.DVD;
 import de.unileipzig.dbpraktikum.loader.model.Music;
+import de.unileipzig.dbpraktikum.loader.model.Offer;
 import de.unileipzig.dbpraktikum.loader.model.Product;
 import de.unileipzig.dbpraktikum.loader.model.Shop;
 
@@ -96,29 +98,53 @@ public class ShopImportService {
                 case BOOK:
                     bookRepository.insert(con, (Book) p);
                     break;
+                case BOOK_CD:
+                    bookRepository.insert(con, (BookCD) p);
+                    break;
                 case DVD:
                     dvdRepository.insert(con, (DVD) p);
                     break;
                 default:
                     break;
             }
-        } else { //Product already in DB //TODO: Multiple OFFERS!
-            if (p.getOffer() != null &&
-                !offerRepository.exists(con, shopId, p.getAsin(), p.getOffer().state())) {
-                //Even though the Product ID already is ion DB, the included Offer object is not. We will treat this as new information and do not throw a Exception. 
+
+            //Insert coresponding offers
+            if (p.getOffers() != null && p.getOffers().size() != 0) {
+                for (Offer o : p.getOffers()) {
+                    if (o == null) continue;
+
+                    //Insert new Offer for Shop / Product combination 
+                    offerRepository.insert(con, shopId, p.getAsin(), o);
+                }
+            }
+        } else { //Product already in DB
+            if (p.getOffers() == null || p.getOffers().size() == 0) {
+                //Product already in DB and no new Offer included -> DuplicateException for the product
+                throw new DuplicateException("Product", p.getAsin());
+            }
+
+            boolean addedNewOffer = false;
+            for (Offer o : p.getOffers()) {
+                if (o == null || offerRepository.exists(con, shopId, p.getAsin(), o.state()))
+                    continue;
+
+                //Even though the Product ID already is ion DB, the included Offer object is not. 
+                //We will treat this as new information and do not throw a Exception. 
+                offerRepository.insert(con, shopId, p.getAsin(), o);
+                addedNewOffer = true;
+            }
+
+            if (addedNewOffer) { //Warning that Product is not new, but will be processed
                 System.out.println(
                     "WARNING: Product with ASIN " + p.getAsin() + " already in DB. " + 
                     "However, the Offer for this Shop is new and will be created. " +
                     "Therefore, this is not seen as an Error. Product insert is skipped. "
                 );
             } else {
-                //Product already in DB and no new Offer included. 
+                //Product already in DB and no new Offer included -> DuplicateException for the product
                 throw new DuplicateException("Product", p.getAsin());
             }
         }
-
-        //Insert new Offer for Shop / Product combination
-        if (p.getOffer() != null) offerRepository.insert(con, shopId, p.getAsin(), p.getOffer());
     }
 
     /**

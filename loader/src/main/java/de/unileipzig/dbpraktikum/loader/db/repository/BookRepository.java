@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import de.unileipzig.dbpraktikum.loader.model.Book;
+import de.unileipzig.dbpraktikum.loader.model.BookCD;
 
 /**
  * Repository to interact with the DB Tables:
@@ -68,6 +69,26 @@ public class BookRepository {
     }
 
     /**
+     * Inserts a new BookCD object into the Database. 
+     * Procedure:
+     * 1. Add base data to Product Table
+     * 2. Find or create entry in Publisher Table 
+     * 3. Add specific data to Book Table
+     * 4. Find or create entry in Person Table for each Author
+     * 5. Add Relationships to Book_Author Table
+     * 6. Create tracks and link in the Book_Tracks Table
+     * @param con DB Connection Obj. 
+     * @param p The Book to insert.
+     * @throws SQLException thrown on SQL execution problems.
+     */
+    public void insert(Connection con, BookCD p) throws SQLException {
+        productRepository.insert(con, p);
+        insertBase(con, p.asBook());
+        insertAuthors(con, p.asBook());
+        insertTracks(con, p);
+    }
+
+    /**
      * Inserts the specific Book data into the Book Table.
      * Also finds or creates the corresponding Publisher Entry and references it on Book Table. 
      * @param con DB Connection Obj. 
@@ -120,6 +141,32 @@ public class BookRepository {
 
                 stmt.setString(1, p.getAsin());
                 stmt.setLong(2, personId);
+                stmt.addBatch();
+            }
+            
+            stmt.executeBatch();
+        }
+    }
+
+    /**
+     * Create all Tracks of a BookCD object in the Track Table. 
+     * @param con DB Connection Obj. 
+     * @param p The MusicCD to insert.
+     * @throws SQLException thrown on SQL execution problems.
+     */
+    public void insertTracks(Connection con, BookCD p) throws SQLException {
+        String sql = """
+            INSERT INTO media_store.buch_cd_titel (
+                produkt_nr,
+                name
+            )
+            VALUES (?, ?)
+        """;
+
+        try (PreparedStatement stmt = con.prepareStatement(sql)) {
+            for (String track : p.getTrackNames()) {
+                stmt.setString(1, p.getAsin());
+                stmt.setString(2, track);
                 stmt.addBatch();
             }
             

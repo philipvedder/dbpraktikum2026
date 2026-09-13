@@ -1,6 +1,8 @@
 package de.unileipzig.dbpraktikum.loader.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Element;
@@ -44,14 +46,22 @@ public class DOMUtil {
      * @param element Element. The XML Element to build the Map for
      * @return Map<String, Element>. The resulting Map. 
      */
-    public static Map<String, Element> createChildMap(Element element) {
-        Map<String, Element> result = new HashMap<>();
+    public static Map<String, List<Element>> createChildMap(Element element) {
+        Map<String, List<Element>> result = new HashMap<>();
         Node child = element.getFirstChild();
 
         //Iterate over all childs
         while (child != null) {
             if (child.getNodeType() == Node.ELEMENT_NODE) { //Only Element type nodes are mapped.
-                result.put(((Element) child).getTagName(), (Element) child.cloneNode(true));
+                String key = ((Element) child).getTagName();
+                Element em = (Element) child.cloneNode(true);
+                if (em == null) continue;                
+
+                if (result.containsKey(key)) {          
+                    result.get(key).add(em);
+                } else {
+                    result.put(key, new ArrayList<>(List.of(em)));
+                }
             }
 
             child = child.getNextSibling(); //Next child

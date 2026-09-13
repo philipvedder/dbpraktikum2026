@@ -21,13 +21,13 @@ public class MusicRaw extends ProductRaw {
         String salesrank, 
         String imgUrl,
         List<String> similarProductIds, 
-        PriceRaw offer, 
+        List<PriceRaw> offers, 
         MusicSpecRaw musicSpec, 
         List<String> labels, 
         List<String> artists, 
         List<String> tracks
     ) {
-        super(asin, type, title, salesrank, imgUrl, similarProductIds, offer);
+        super(asin, type, title, salesrank, imgUrl, similarProductIds, offers);
 
         this.musicSpec = musicSpec;
         this.labels = labels;

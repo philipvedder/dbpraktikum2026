@@ -87,7 +87,10 @@ public class ShopValidator extends Validator {
         Integer salesrank = requireNonNegativeInt(p.getSalesrank(), "salesrank", null); //optional
         List<String> similarIds = validateSimilars(asin, p.getSimilarProductIds());
 
-        Offer offer = validateOffer(p.getOffer(), exceptions);
+        List<Offer> offers = new ArrayList<>();
+        for (PriceRaw o : p.getOffers()) {
+            offers.add(validateOffer(o, exceptions));
+        }
 
         //Specific fields for the different SubTypes. 
         //The validated Product data is set via a lateSet method. 
@@ -97,21 +100,28 @@ public class ShopValidator extends Validator {
             case BOOK:
                 Book book = validateBook((BookRaw) p, exceptions);
                 if (book != null)
-                    book.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offer);
+                    book.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offers);
                 finalProduct = book;
+                break;
+
+            case BOOK_CD:
+                BookCD bookCD = validateBookCD((BookCDRaw) p, exceptions);
+                if (bookCD != null)
+                    bookCD.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offers);
+                finalProduct = bookCD;
                 break;
 
             case MUSIC_CD:
                 Music music = validateMusic((MusicRaw) p, exceptions);
                 if (music != null)
-                    music.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offer);
+                    music.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offers);
                 finalProduct = music;
                 break;
                 
             case DVD:
                 DVD dvd = validateDVD((DVDRaw) p, exceptions);
                 if (dvd != null)
-                    dvd.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offer);
+                    dvd.lateSetProductData(asin, type, title, salesrank, imgUrl, similarIds, offers);
                 finalProduct = dvd;
                 break;
 
@@ -239,5 +249,33 @@ public class ShopValidator extends Validator {
         if (!exceptions.isEmpty()) return null;
 
         return new Book(publisherName, authorNames, isbn, pages, publication);
+    }
+
+    /**
+     * Validates the BookCD specific content of the XML file. Returns a typed BookCD object, or null if errors occur. 
+     * @param p BookCDRaw object with raw String objects. 
+     * @param exceptions List<ValidationException> to add ValidationExceptions to. 
+     * @return Typed and validated Book object or NULL
+     */
+    private static BookCD validateBookCD(BookCDRaw p, List<ValidationException> exceptions) {
+        List<String> publisherNames = cleanList(p.getPublishers());
+        String publisherName = getFirstFromList(publisherNames, "publisher", exceptions); //We take only the first object in the list. 
+
+        List<String> authorNames = cleanList(p.getAuthors());
+        getFirstFromList(authorNames, "authors", exceptions); // Implicitly checks if there is at least one item in the list. 
+
+        BookSpecRaw spec = requireNotNull(p.getBookSpec(), "bookspec", exceptions);
+        
+        String isbn = requireNonBlank(spec.isbn(), "bookspec:isbn", exceptions);
+        isbn = requireStringMaxLength(isbn, 10, "bookspec:isbn", exceptions); //ISBN are max length 10
+
+        Date publication = requireDate(spec.publication(), "bookspec:publication", exceptions);
+
+        List<String> tracks = cleanList(p.getTracks());
+        getFirstFromList(tracks, "tracks", exceptions); // Implicitly checks if there is at least one item in the list. 
+
+        if (!exceptions.isEmpty()) return null;
+
+        return new BookCD(publisherName, authorNames, isbn, publication, tracks);
     }
 }

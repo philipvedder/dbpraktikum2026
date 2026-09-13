@@ -8,6 +8,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
+import de.unileipzig.dbpraktikum.loader.model.raw.BookCDRaw;
 import de.unileipzig.dbpraktikum.loader.model.raw.BookRaw;
 import de.unileipzig.dbpraktikum.loader.model.raw.BookSpecRaw;
 import de.unileipzig.dbpraktikum.loader.model.raw.DVDRaw;
@@ -66,20 +67,23 @@ public class XMLShopParser {
         //String ean = DOMUtil.attr(item, "ean"); UNUSED
 
         // General Child Nodes
-        Map<String, Element> childMap = DOMUtil.createChildMap(item);
+        Map<String, List<Element>> childMap = DOMUtil.createChildMap(item);
 
-        String title = DOMUtil.childText(childMap.get("title"));
-        PriceRaw price = parsePrice(childMap.get("price"));
-        List<String> similars = parseSimilars(childMap.get("similars"));
+        // These can only exist once
+        String title = DOMUtil.childText(getFirstOrNull(childMap.get("title")));
+        List<String> similars = parseSimilars(getFirstOrNull(childMap.get("similars")));
+        
+        // Can have multiple prices
+        List<PriceRaw> prices = parsePrices(childMap.get("price"));
 
         // Parse specific child content and return the Subtypes of ProductRaw
         switch (type) {
             case MUSIC_CD:
-                List<String> labels = parseNamedEntities(childMap.get("labels"), "label");
-                List<String> artists = parseNamedEntities(childMap.get("artists"), "artist");
-                List<String> tracks = parseTitles(childMap.get("tracks"));
+                List<String> labels = parseNamedEntities(getFirstOrNull(childMap.get("labels")), "label");
+                List<String> artists = parseNamedEntities(getFirstOrNull(childMap.get("artists")), "artist");
+                List<String> tracks = parseTitles(getFirstOrNull(childMap.get("tracks")));
 
-                MusicSpecRaw musicSpec = parseMusicSpec(childMap.get("musicspec"));
+                MusicSpecRaw musicSpec = parseMusicSpec(getFirstOrNull(childMap.get("musicspec")));
 
                 return new MusicRaw(
                     asin, 
@@ -88,7 +92,7 @@ public class XMLShopParser {
                     salesRank, 
                     picture, 
                     similars, 
-                    price, 
+                    prices, 
                     musicSpec,
                     labels,
                     artists,
@@ -96,12 +100,12 @@ public class XMLShopParser {
                 );
 
             case DVD:
-                List<String> actors = parseNamedEntities(childMap.get("actors"), "actor");
-                List<String> creators = parseNamedEntities(childMap.get("creators"), "creator");
-                List<String> directors = parseNamedEntities(childMap.get("directors"), "director");
+                List<String> actors = parseNamedEntities(getFirstOrNull(childMap.get("actors")), "actor");
+                List<String> creators = parseNamedEntities(getFirstOrNull(childMap.get("creators")), "creator");
+                List<String> directors = parseNamedEntities(getFirstOrNull(childMap.get("directors")), "director");
                 //List<String> studios = parseNamedEntities(childMap.get("studios"), "studio"); UNUSED
 
-                DVDSpecRaw dvdSpec = parseDVDSpec(childMap.get("dvdspec"));
+                DVDSpecRaw dvdSpec = parseDVDSpec(getFirstOrNull(childMap.get("dvdspec")));
 
                 return new DVDRaw(
                     asin,
@@ -110,7 +114,7 @@ public class XMLShopParser {
                     salesRank,
                     picture,
                     similars,
-                    price,
+                    prices,
                     dvdSpec,
                     directors,
                     actors,
@@ -118,10 +122,29 @@ public class XMLShopParser {
                 );
                 
             case BOOK:
-                List<String> authors = parseNamedEntities(childMap.get("authors"), "author");
-                List<String> publishers = parseNamedEntities(childMap.get("publishers"), "publisher");
+                List<String> authors = parseNamedEntities(getFirstOrNull(childMap.get("authors")), "author");
+                List<String> publishers = parseNamedEntities(getFirstOrNull(childMap.get("publishers")), "publisher");
 
-                BookSpecRaw bookSpec = parseBookSpec(childMap.get("bookspec"));
+                BookSpecRaw bookSpec = parseBookSpec(getFirstOrNull(childMap.get("bookspec")));
+
+                //Book CDs: No Pages tag, but titles.
+                List<String> book_tracks = parseTitles(getFirstOrNull(childMap.get("tracks")));
+                if (book_tracks.size() != 0) {
+                    return new BookCDRaw(
+                        asin, 
+                        ProductType.BOOK_CD,
+                        title,
+                        salesRank,
+                        picture,
+                        similars,
+                        prices,
+                        bookSpec,
+                        publishers,
+                        authors,
+                        book_tracks
+                    );
+                }
+
                 
                 return new BookRaw(
                     asin, 
@@ -130,7 +153,7 @@ public class XMLShopParser {
                     salesRank,
                     picture,
                     similars,
-                    price,
+                    prices,
                     bookSpec,
                     publishers,
                     authors
@@ -149,11 +172,11 @@ public class XMLShopParser {
      */
     private static BookSpecRaw parseBookSpec(Element item) {
         if (item == null || item.getNodeType() != Node.ELEMENT_NODE) return null;
-        Map<String, Element> childElements = DOMUtil.createChildMap(item);
+        Map<String, List<Element>> childElements = DOMUtil.createChildMap(item);
 
-        String pages = DOMUtil.childText(childElements.get("pages"));
-        String publication = DOMUtil.attr(childElements.get("publication"), "date");
-        String isbn = DOMUtil.attr(childElements.get("isbn"), "val");
+        String pages = DOMUtil.childText(getFirstOrNull(childElements.get("pages")));
+        String publication = DOMUtil.attr(getFirstOrNull(childElements.get("publication")), "date");
+        String isbn = DOMUtil.attr(getFirstOrNull(childElements.get("isbn")), "val");
 
         return new BookSpecRaw(isbn, pages, publication);
     }
@@ -166,9 +189,9 @@ public class XMLShopParser {
      */
     private static MusicSpecRaw parseMusicSpec(Element item) {
         if (item == null || item.getNodeType() != Node.ELEMENT_NODE) return null;
-        Map<String, Element> childElements = DOMUtil.createChildMap(item);
+        Map<String, List<Element>> childElements = DOMUtil.createChildMap(item);
 
-        String releasedate = DOMUtil.childText(childElements.get("releasedate"));
+        String releasedate = DOMUtil.childText(getFirstOrNull(childElements.get("releasedate")));
 
         return new MusicSpecRaw(releasedate);
     }
@@ -181,11 +204,11 @@ public class XMLShopParser {
      */
     private static DVDSpecRaw parseDVDSpec(Element item) {
         if (item == null || item.getNodeType() != Node.ELEMENT_NODE) return null;
-        Map<String, Element> childElements = DOMUtil.createChildMap(item);
+        Map<String, List<Element>> childElements = DOMUtil.createChildMap(item);
 
-        String format = DOMUtil.childText(childElements.get("format"));
-        String regioncode = DOMUtil.childText(childElements.get("regioncode"));
-        String runningtime = DOMUtil.childText(childElements.get("runningtime"));
+        String format = DOMUtil.childText(getFirstOrNull(childElements.get("format")));
+        String regioncode = DOMUtil.childText(getFirstOrNull(childElements.get("regioncode")));
+        String runningtime = DOMUtil.childText(getFirstOrNull(childElements.get("runningtime")));
 
         return new DVDSpecRaw(format, regioncode, runningtime);
     }
@@ -219,7 +242,7 @@ public class XMLShopParser {
 
     /**
      * Helper method to parse each Element which has childs, where each child has name Attribute. 
-     * Example: <artists> <artist name="Ward Churchill"/> <artist name="test"/> </artists>
+     * Example: <artists> <artist name="Ward Churchill"/> <artist>This is also okay</artist> </artists>
      * @param item Parent XML Element, which has the named childs 
      * @param elementTag Tag of the named childs. In the Example, this would be "artist"
      * @return Returns a list of Strings, where each String is the content of the corresponding name attribute. 
@@ -235,7 +258,18 @@ public class XMLShopParser {
                 Element e = (Element) child;
 
                 if (e.getTagName().toLowerCase().trim().equals(elementTag.toLowerCase().trim())) { //Only parse elements with correct Tag. 
-                    result.add(DOMUtil.attr(e, "name")); //Store content of name attribute. 
+                    // Look at "name" tag.
+                    String content = DOMUtil.attr(e, "name");
+
+                    // Fall back to tag content if possible
+                    if (content == null) {
+                        content = DOMUtil.childText(e);
+                    }
+
+                    if (content != null && !content.isBlank()) {
+                        result.add(content);
+                    }
+
                 }
             }
 
@@ -273,8 +307,8 @@ public class XMLShopParser {
             }
 
             //Build child map, and extract only the asin number. 
-            Map<String, Element> childMap = DOMUtil.createChildMap((Element) simProductItem);
-            String simAsin = DOMUtil.childText(childMap.get("asin"));
+            Map<String, List<Element>> childMap = DOMUtil.createChildMap((Element) simProductItem);
+            String simAsin = DOMUtil.childText(getFirstOrNull(childMap.get("asin")));
             results.add(simAsin);
 
             //next child
@@ -285,19 +319,40 @@ public class XMLShopParser {
     }
 
     /**
-     * Parse a <price> XML Element into a PriceRaw object, constructed of String objects. 
+     * Parse a set of <price> XML Elements into PriceRaw objects, constructed of String objects. 
      * Returns null if not existent. 
-     * @param item <price> XML Element
-     * @return PriceRaw object with content as Strings.
+     * @param item <price> XML Elements
+     * @return List<PriceRaw> object with content as Strings.
      */
-    private static PriceRaw parsePrice(Element item) {
-        if (item == null || item.getNodeType() != Node.ELEMENT_NODE) return null;
+    private static List<PriceRaw> parsePrices(List<Element> items) {
+        if (items == null || items.size() == 0) {
+            return null;
+        }
 
-        String mult = DOMUtil.attr(item, "mult");
-        String state = DOMUtil.attr(item, "state");
-        String currency = DOMUtil.attr(item, "currency");
-        String price = DOMUtil.childText(item);
+        List<PriceRaw> result = new ArrayList<>();
 
-        return new PriceRaw(price, mult, state, currency);
+        for (Element item : items) {
+            if (item == null || item.getNodeType() != Node.ELEMENT_NODE) continue; //not an real element
+
+            String mult = DOMUtil.attr(item, "mult");
+            String state = DOMUtil.attr(item, "state");
+            String currency = DOMUtil.attr(item, "currency");
+            String price = DOMUtil.childText(item);
+
+            result.add(new PriceRaw(price, mult, state, currency));
+        }
+
+        return result;
+    }
+
+    /**
+     * GetFirstOrNull utility helper for lists. Returns the first list element, or NULL if list is empty
+     * @param <T> Type of list
+     * @param list list to search in
+     * @return First element or Null
+     */
+    public static <T> T getFirstOrNull(List<T> list) {
+        if (list == null) return null;
+        return list.isEmpty() ? null : list.get(0);
     }
 }

@@ -6,6 +6,7 @@ package de.unileipzig.dbpraktikum.loader.model.enums;
 public enum ProductType {
     BOOK,
     MUSIC_CD,
+    BOOK_CD,
     DVD;
 
     /**

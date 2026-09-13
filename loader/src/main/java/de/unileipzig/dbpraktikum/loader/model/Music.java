@@ -22,13 +22,13 @@ public class Music extends Product {
         Integer salesrank, 
         String imgUrl,
         List<String> similarProductIds,
-        Offer offer,
+        List<Offer> offers,
         String labelName,
         List<String> artistNames,
         List<String> trackNames,
         Date releaseDate
     ) {
-        super(asin, type, title, salesrank, imgUrl, similarProductIds, offer);
+        super(asin, type, title, salesrank, imgUrl, similarProductIds, offers);
         
         this.labelName = labelName;
         this.artistNames = artistNames;

@@ -9,14 +9,14 @@ import de.unileipzig.dbpraktikum.loader.model.enums.ProductType;
  * Typed Book model class. 
  * Extends Product with specific attributes. 
  */
-public class Book extends Product {
+public class BookCD extends Product {
     private String publisherName;
     private List<String> authorNames;
     private String isbn;
-    private int pages;
     private Date publication;
+    private List<String> trackNames;
 
-    public Book(
+    public BookCD(
         String asin, 
         ProductType type, 
         String title,
@@ -27,33 +27,50 @@ public class Book extends Product {
         String publisherName,
         List<String> authorNames,
         String isbn,
-        int pages,
-        Date publication
+        Date publication,
+        List<String> trackNames
     ) {
         super(asin, type, title, salesrank, imgUrl, similarProductIds, offers);
         
         this.authorNames = authorNames;
         this.isbn = isbn;
-        this.pages = pages;
         this.publication = publication;
         this.publisherName = publisherName;
+        this.trackNames = trackNames;
     }
 
     // Constructor for only Book specific variables
-    public Book(
+    public BookCD(
         String publisherName,
         List<String> authorNames,
         String isbn,
-        int pages,
-        Date publication
+        Date publication,
+        List<String> trackNames
     ) {
         super();
 
         this.authorNames = authorNames;
         this.isbn = isbn;
-        this.pages = pages;
         this.publication = publication;
         this.publisherName = publisherName;
+        this.trackNames = trackNames;
+    }
+
+    public Book asBook() {
+        return new Book(
+            this.getAsin(), 
+            ProductType.BOOK_CD, 
+            this.getTitle(), 
+            this.getSalesrank(), 
+            this.getImgUrl(), 
+            this.getSimilarProductIds(), 
+            this.getOffers(), 
+            this.getPublisherName(), 
+            this.getAuthorNames(), 
+            this.getIsbn(), 
+            0, 
+            this.getPublication()
+        );
     }
 
     //Getters
@@ -69,13 +86,11 @@ public class Book extends Product {
         return isbn;
     }
 
-    public int getPages() {
-        return pages;
-    }
-
     public Date getPublication() {
         return publication;
     }
 
-    
+    public List<String> getTrackNames() {
+        return trackNames;
+    }
 }

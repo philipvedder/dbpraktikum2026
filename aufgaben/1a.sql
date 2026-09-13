@@ -3,7 +3,7 @@ CREATE SCHEMA media_store;
 SET search_path TO media_store;
 
 -- ENUMS
-CREATE TYPE produkttyp_enum AS ENUM('BOOK', 'MUSIC_CD', 'DVD');
+CREATE TYPE produkttyp_enum AS ENUM('BOOK', 'MUSIC_CD', 'DVD', 'BOOK_CD');
 
 CREATE TYPE dvd_rolle_enum AS ENUM('ACTOR', 'CREATOR', 'DIRECTOR');
 
@@ -54,7 +54,7 @@ CREATE TABLE buch (
   CONSTRAINT pk_buch PRIMARY KEY (produkt_nr),
   CONSTRAINT fk_buch_produkt FOREIGN KEY (produkt_nr) REFERENCES produkt (produkt_nr) ON UPDATE CASCADE ON DELETE CASCADE,
   CONSTRAINT fk_buch_verlag FOREIGN KEY (verlag_id) REFERENCES verlag (verlag_id) ON UPDATE CASCADE ON DELETE RESTRICT,
-  CONSTRAINT chk_buch_seitenzahl_pos CHECK (seitenzahl > 0)
+  CONSTRAINT chk_buch_seitenzahl_pos CHECK (seitenzahl >= 0)
 );
 
 CREATE TABLE musik_cd (
@@ -116,6 +116,14 @@ CREATE TABLE musik_cd_titel (
   name TEXT NOT NULL,
   CONSTRAINT pk_musik_cd_titel PRIMARY KEY (track_id),
   CONSTRAINT fk_musik_cd_titel_musik_cd FOREIGN KEY (produkt_nr) REFERENCES musik_cd (produkt_nr) ON UPDATE CASCADE ON DELETE CASCADE
+);
+
+CREATE TABLE buch_cd_titel (
+  track_id BIGINT GENERATED ALWAYS AS IDENTITY,
+  produkt_nr VARCHAR(10) NOT NULL,
+  name TEXT NOT NULL,
+  CONSTRAINT pk_buch_cd_titel PRIMARY KEY (track_id),
+  CONSTRAINT fk_buch_cd_titel_buch FOREIGN KEY (produkt_nr) REFERENCES buch (produkt_nr) ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 -- Kategorie
@@ -246,9 +254,12 @@ ON dvd_format (format_id);
 CREATE INDEX idx_dvd_beteiligung_person
 ON dvd_beteiligung (person_id);
 
--- Tracks einer Musik-CD
+-- Tracks
 CREATE INDEX idx_musik_cd_titel_produkt
 ON musik_cd_titel (produkt_nr);
+
+CREATE INDEX idx_buch_cd_titel_produkt
+ON buch_cd_titel (produkt_nr);
 
 -- Kategoriebaum und Produkte in Kategorien
 CREATE INDEX idx_produkt_kategorie_kategorie_id

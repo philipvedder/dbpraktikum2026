@@ -23,7 +23,7 @@ public class DVD extends Product {
         Integer salesrank, 
         String imgUrl,
         List<String> similarProductIds,
-        Offer offer,
+        List<Offer> offers,
         List<String> directorNames,
         List<String> actorNames,
         List<String> creatorNames,
@@ -31,7 +31,7 @@ public class DVD extends Product {
         int runningtime,
         int regioncode
     ) {
-        super(asin, type, title, salesrank, imgUrl, similarProductIds, offer);
+        super(asin, type, title, salesrank, imgUrl, similarProductIds, offers);
         
         this.directorNames = directorNames;
         this.actorNames = actorNames;

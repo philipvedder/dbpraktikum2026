@@ -21,13 +21,13 @@ public class DVDRaw extends ProductRaw {
         String salesrank, 
         String imgUrl,
         List<String> similarProductIds, 
-        PriceRaw offer, 
+        List<PriceRaw> offers, 
         DVDSpecRaw dvdSpec,
         List<String> directors, 
         List<String> actors,
         List<String> creators
     ) {
-        super(asin, type, title, salesrank, imgUrl, similarProductIds, offer);
+        super(asin, type, title, salesrank, imgUrl, similarProductIds, offers);
 
         this.dvdSpec = dvdSpec;
         this.directors = directors;

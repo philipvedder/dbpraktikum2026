@@ -14,18 +14,18 @@ public class Product {
     private Integer salesrank; //Optional
     private String imgUrl; //Optional
     private List<String> similarProductIds;
-    private Offer offer; //Price information
+    private List<Offer> offers; //Price information
 
     public Product() {};
     
-    public Product(String asin, ProductType type, String title, Integer salesrank, String imgUrl, List<String> similarProductIds, Offer offer) {
+    public Product(String asin, ProductType type, String title, Integer salesrank, String imgUrl, List<String> similarProductIds, List<Offer> offers) {
         this.asin = asin;
         this.type = type;
         this.title = title;
         this.salesrank = salesrank;
         this.imgUrl = imgUrl;
         this.similarProductIds = similarProductIds;
-        this.offer = offer;
+        this.offers = offers;
     }
 
     //Method to set the product data late, for subclasses. 
@@ -36,7 +36,7 @@ public class Product {
         Integer salesrank, 
         String imgUrl,
         List<String> similarProductIds,
-        Offer offer
+        List<Offer> offers
     ) {
         this.asin = asin;
         this.type = type;
@@ -44,7 +44,7 @@ public class Product {
         this.salesrank = salesrank;
         this.imgUrl = imgUrl;
         this.similarProductIds = similarProductIds;
-        this.offer = offer;   
+        this.offers = offers;   
     }
 
     //Getters
@@ -72,8 +72,8 @@ public class Product {
         return similarProductIds;
     }
 
-    public Offer getOffer() {
-        return offer;
+    public List<Offer> getOffers() {
+        return offers;
     }
 
     
