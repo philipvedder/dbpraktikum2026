@@ -61,16 +61,12 @@ public class MediaStoreCliInterface {
     private static DBInterface createDBInterface(Properties properties) throws ReflectiveOperationException {
         String className = properties.getProperty(DB_INTERFACE_CLASS_PROPERTY);
         if (className == null || className.trim().isEmpty()) {
-            throw new IllegalArgumentException(
-                "Missing property: " + DB_INTERFACE_CLASS_PROPERTY
-            );
+            throw new IllegalArgumentException("Missing property: " + DB_INTERFACE_CLASS_PROPERTY);
         }
 
         Class<?> implementationClass = Class.forName(className.trim());
         if (!DBInterface.class.isAssignableFrom(implementationClass)) {
-            throw new IllegalArgumentException(
-                className + " does not implement " + DBInterface.class.getName()
-            );
+            throw new IllegalArgumentException(className + " does not implement CBInterface");
         }
 
         return DBInterface.class.cast(implementationClass.getDeclaredConstructor().newInstance());
