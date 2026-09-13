@@ -1,15 +1,16 @@
 package de.unileipzig.dbpraktikum.cli_interface.model;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
-import org.hibernate.annotations.SQLJoinTableRestriction;
-
+import de.unileipzig.dbpraktikum.cli_interface.model.enums.DVDRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 
@@ -29,32 +30,8 @@ public class DVD extends Product {
     )
     private Set<Format> formats;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "dvd_beteiligung", 
-        joinColumns = { @JoinColumn(name = "produkt_nr") }, 
-        inverseJoinColumns = { @JoinColumn(name = "person_id") }
-    )
-    @SQLJoinTableRestriction("rolle = 'ACTOR'")
-    private Set<Person> actors;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "dvd_beteiligung", 
-        joinColumns = { @JoinColumn(name = "produkt_nr") }, 
-        inverseJoinColumns = { @JoinColumn(name = "person_id") }
-    )
-    @SQLJoinTableRestriction("rolle = 'CREATOR'")
-    private Set<Person> creators;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "dvd_beteiligung", 
-        joinColumns = { @JoinColumn(name = "produkt_nr") }, 
-        inverseJoinColumns = { @JoinColumn(name = "person_id") }
-    )
-    @SQLJoinTableRestriction("rolle = 'DIRECTOR'")
-    private Set<Person> directors;
+    @OneToMany(mappedBy = "dvd", fetch = FetchType.EAGER)
+    private Set<DVDParticipation> participations;
 
     @Column(name = "laufzeit_minuten")
     private Integer runtime;
@@ -68,15 +45,15 @@ public class DVD extends Product {
     }
 
     public Set<Person> getActors() {
-        return actors;
+        return getPeopleByRole(DVDRole.ACTOR);
     }
 
     public Set<Person> getCreators() {
-        return creators;
+        return getPeopleByRole(DVDRole.CREATOR);
     }
 
     public Set<Person> getDirectors() {
-        return directors;
+        return getPeopleByRole(DVDRole.DIRECTOR);
     }
 
     public Integer getRuntime() {
@@ -87,5 +64,10 @@ public class DVD extends Product {
         return regionCode;
     }
 
-    
+    private Set<Person> getPeopleByRole(DVDRole role) {
+        return participations.stream()
+            .filter(participation -> participation.getRole() == role)
+            .map(DVDParticipation::getPerson)
+            .collect(Collectors.toSet());
+    }
 }

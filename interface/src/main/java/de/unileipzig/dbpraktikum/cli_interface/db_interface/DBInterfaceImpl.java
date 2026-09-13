@@ -24,6 +24,7 @@ import de.unileipzig.dbpraktikum.cli_interface.model.CD;
 import de.unileipzig.dbpraktikum.cli_interface.model.Category;
 import de.unileipzig.dbpraktikum.cli_interface.model.Customer;
 import de.unileipzig.dbpraktikum.cli_interface.model.DVD;
+import de.unileipzig.dbpraktikum.cli_interface.model.DVDParticipation;
 import de.unileipzig.dbpraktikum.cli_interface.model.Format;
 import de.unileipzig.dbpraktikum.cli_interface.model.Label;
 import de.unileipzig.dbpraktikum.cli_interface.model.Offer;
@@ -69,6 +70,7 @@ public class DBInterfaceImpl implements DBInterface {
         config.addAnnotatedClass(CD.class);
         config.addAnnotatedClass(Customer.class);
         config.addAnnotatedClass(DVD.class);
+        config.addAnnotatedClass(DVDParticipation.class);
         config.addAnnotatedClass(Format.class);
         config.addAnnotatedClass(Label.class);
         config.addAnnotatedClass(Offer.class);
