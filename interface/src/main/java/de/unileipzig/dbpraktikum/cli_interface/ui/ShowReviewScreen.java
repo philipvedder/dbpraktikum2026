@@ -63,7 +63,7 @@ public class ShowReviewScreen {
         Panel textPanel = new Panel(new LinearLayout(Direction.VERTICAL));
         Label textLabel = new Label("");
         textLabel.setLabelWidth(100);
-        textLabel.setText(review.getText());
+        textLabel.setText(FormatUtil.formatText(review.getText()));
         textPanel.addComponent(textLabel);
 
         // --- Add bottom buttons

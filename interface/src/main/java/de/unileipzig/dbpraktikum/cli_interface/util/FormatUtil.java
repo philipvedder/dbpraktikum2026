@@ -26,8 +26,18 @@ public class FormatUtil {
      * @return truncated String
      */
     public static String trunc(String s, int length) {
-        return s.substring(0, Math.min(length, s.length()));
-    }    
+        String value = formatText(s);
+        return value.substring(0, Math.min(length, value.length()));
+    }
+
+    /**
+     * Format optional text. "-" is returned if the value is null.
+     * @param s Text to format
+     * @return formatted text
+     */
+    public static String formatText(String s) {
+        return s == null ? "-" : s;
+    }
 
     /**
      * Format a integer as String. "-" if Null
@@ -66,6 +76,6 @@ public class FormatUtil {
      * @return Formatted String
      */
     public static String formatDateAndTime(Timestamp t) {
-        return new SimpleDateFormat("dd-MM-yyyy hh:mm:ss").format(t);
+        return new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(t);
     }
 }
