@@ -12,12 +12,21 @@ import com.googlecode.lanterna.terminal.Terminal;
 import de.unileipzig.dbpraktikum.cli_interface.db_interface.DBInterface;
 
 public class TuiApplication {
+    /**
+     * TUi application entry point
+     */
+
+    // DB Interface, must be given
     private final DBInterface db;
 
     public TuiApplication(DBInterface db) {
         this.db = db;
     }
 
+    /**
+     * Run the TUI Appliction, with the Main Menu as entry.
+     * @throws IOException Thrown on Terminal creation errors
+     */
     public void run() throws IOException {
         DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
         Terminal terminal = terminalFactory.createTerminalEmulator();

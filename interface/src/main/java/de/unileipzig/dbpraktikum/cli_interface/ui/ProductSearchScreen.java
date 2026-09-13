@@ -19,9 +19,15 @@ import de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry;
 import de.unileipzig.dbpraktikum.cli_interface.ui.components.ProductListEntryTableComponent;
 
 public class ProductSearchScreen {
+    /**
+     * Lanterna TUI Screen for searching products in a list.
+     */
+
+    // Lanterna TUI and DB Interface
     private final WindowBasedTextGUI gui;
     private final DBInterface db;
     
+    // Component storage
     private ProductListEntryTableComponent productTable;
 
     public ProductSearchScreen(WindowBasedTextGUI gui, DBInterface db) {
@@ -30,6 +36,9 @@ public class ProductSearchScreen {
         this.productTable = new ProductListEntryTableComponent(gui, db);
     }
 
+    /**
+     * Constructs and shows the TUI window
+     */
     public void show() {
         // Setup terminal and screen layers
         BasicWindow window = new BasicWindow("Product List");
@@ -70,6 +79,10 @@ public class ProductSearchScreen {
         gui.addWindowAndWait(window);
     }
 
+    /**
+     * Searches for products whose name matches the given pattern, and updates the table.
+     * @param pattern String pattern to search for.
+     */
     private void onTextChange(String pattern) {
         String sqlPattern = pattern == null || pattern.isEmpty() ? null : "%" + pattern + "%";
         List<ProductListEntry> result = db.getProducts(sqlPattern);

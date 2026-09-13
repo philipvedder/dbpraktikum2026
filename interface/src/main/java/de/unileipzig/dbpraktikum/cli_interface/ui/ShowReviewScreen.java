@@ -14,10 +14,16 @@ import de.unileipzig.dbpraktikum.cli_interface.model.Review;
 import de.unileipzig.dbpraktikum.cli_interface.util.FormatUtil;
 
 public class ShowReviewScreen {
+    /**
+     * Lanterna TUI Screen for showing a single Review
+     */
     private final WindowBasedTextGUI gui;
     private final DBInterface db;    
+
+    // Current review
     private Review review;
 
+    // Component storage
     BasicWindow window = null;
 
     public ShowReviewScreen(WindowBasedTextGUI gui, DBInterface db, Review r) {
@@ -26,6 +32,9 @@ public class ShowReviewScreen {
         this.review = r;
     }    
 
+    /**
+     * Constructs and shows the TUI window
+     */
     public void show() {
         // Setup terminal and screen layers
         window = new BasicWindow("Product List");

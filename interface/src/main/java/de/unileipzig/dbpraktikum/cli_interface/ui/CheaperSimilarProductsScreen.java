@@ -15,10 +15,18 @@ import de.unileipzig.dbpraktikum.cli_interface.model.Product;
 import de.unileipzig.dbpraktikum.cli_interface.ui.components.ProductTableComponent;
 
 public class CheaperSimilarProductsScreen {
+    /**
+     * Lanterna TUI Screen for viewing cheaper similar products
+     */
+
+    // Lanterna TUI and DB Interface
     private final WindowBasedTextGUI gui;
     private final DBInterface db;
+
+    // Current product
     private final Product p;
-    
+
+    // Component storage
     private ProductTableComponent productTable;
 
     public CheaperSimilarProductsScreen(WindowBasedTextGUI gui, DBInterface db, Product p) {
@@ -28,6 +36,9 @@ public class CheaperSimilarProductsScreen {
         this.productTable = new ProductTableComponent(gui, db);
     }
 
+    /**
+     * Constructs and shows the TUI window
+     */
     public void show() {
         // Setup terminal and screen layers
         BasicWindow window = new BasicWindow("Product List");
@@ -55,6 +66,9 @@ public class CheaperSimilarProductsScreen {
         gui.addWindowAndWait(window);
     }
 
+    /**
+     * Loads the list of cheaper similar products from db and updates the table
+     */
     private void load() {
         // Fetch and update table
         List<Product> result = db.getSimilarCheaperProducts(p);

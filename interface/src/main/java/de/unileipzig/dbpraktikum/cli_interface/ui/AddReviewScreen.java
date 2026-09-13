@@ -17,12 +17,19 @@ import de.unileipzig.dbpraktikum.cli_interface.model.Product;
 import de.unileipzig.dbpraktikum.cli_interface.model.Review;
 
 public class AddReviewScreen {
+    /**
+     * Lanterna TUI Screen for adding reviews
+     */
+    // Lanterna TUI and DB Interface
     private final WindowBasedTextGUI gui;
-    private final DBInterface db;    
-    private Product product = null;
+    private final DBInterface db;   
+    
+    // Current product
+    private final Product product;
 
-    BasicWindow window = null;
-    Label errorLabel = null;
+    // Component storage
+    private BasicWindow window = null;
+    private Label errorLabel = null;
 
     public AddReviewScreen(WindowBasedTextGUI gui, DBInterface db, Product p) {
         this.gui = gui;
@@ -30,6 +37,9 @@ public class AddReviewScreen {
         this.product = p;
     }    
 
+    /**
+     * Constructs and shows the TUI window
+     */
     public void show() {
         // Setup terminal and screen layers
         window = new BasicWindow("Product List");
@@ -75,6 +85,12 @@ public class AddReviewScreen {
         gui.addWindowAndWait(window);
     }
 
+    /**
+     * Save a review to db
+     * @param username Username of review
+     * @param points Number of points for review
+     * @param text Optional review text
+     */
     private void save(String username, Integer points, String text) {
         // Validate
         String cleanUsername = username.trim().toLowerCase();

@@ -8,6 +8,10 @@ import com.googlecode.lanterna.gui2.WindowBasedTextGUI;
 import de.unileipzig.dbpraktikum.cli_interface.db_interface.DBInterface;
 
 public class MainMenuScreen {
+    /**
+     * Lanter TUI Main Menu Screen
+     */
+    // Lanterna TUI and DB Interface
     private final WindowBasedTextGUI gui;
     private final DBInterface db;
 
@@ -16,6 +20,9 @@ public class MainMenuScreen {
         this.db = db;
     }
 
+    /**
+     * Constructs and shows the TUI window
+     */
     public void show() {
         // Setup terminal and screen layers
         BasicWindow window = new BasicWindow("Media Store");

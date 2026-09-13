@@ -15,9 +15,14 @@ import de.unileipzig.dbpraktikum.cli_interface.db_interface.DBInterface;
 import de.unileipzig.dbpraktikum.cli_interface.model.Product;
 
 public class ProductIdScreen {
+    /**
+     * Lanterna TUI Screen for searching for a Product by ID
+     */
+    // Lanterna TUI and DB Interface
     private final WindowBasedTextGUI gui;
     private final DBInterface db;
 
+    // Component Storage
     private Label errorLabel;
     
     public ProductIdScreen(WindowBasedTextGUI gui, DBInterface db) {
@@ -25,6 +30,9 @@ public class ProductIdScreen {
         this.db = db;
     }
 
+    /**
+     * Constructs and shows the TUI window
+     */
     public void show() {
         // Setup terminal and screen layers
         BasicWindow window = new BasicWindow("Product List");
@@ -58,6 +66,10 @@ public class ProductIdScreen {
         gui.addWindowAndWait(window);
     }
 
+    /**
+     * Find a Product for a specified ID, and show Product Detail screen if found. 
+     * @param id Product Id to search
+     */
     private void findProduct(String id) {
         Product p = db.getProduct(id.trim());
 

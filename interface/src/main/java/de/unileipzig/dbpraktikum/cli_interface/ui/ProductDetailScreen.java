@@ -27,19 +27,39 @@ import de.unileipzig.dbpraktikum.cli_interface.model.Track;
 import de.unileipzig.dbpraktikum.cli_interface.util.FormatUtil;
 
 public class ProductDetailScreen {
+    /**
+     * Lanterna TUI Screen for Product detail view
+     */
+
+    // Lanterna TUI and DB Interface
     private final WindowBasedTextGUI gui;
     private final DBInterface db;
+
+    // Current product
     private final String productId;
-    
     private Product product = null;
+
+    // Component storage
     private BasicWindow window = null;
 
+    /**
+     * Constructor with only PID. Will trigger load from DB. 
+     * @param gui Lanterna WindowBasedTextGUI
+     * @param db DBInterface
+     * @param productId Current productId
+     */
     public ProductDetailScreen(WindowBasedTextGUI gui, DBInterface db, String productId) {
         this.gui = gui;
         this.db = db;
         this.productId = productId;
     }
 
+    /**
+     * Constructor with Product. Skip loading.
+     * @param gui Lanterna WindowBasedTextGUI
+     * @param db DBInterface
+     * @param p Current Product
+     */
     public ProductDetailScreen(WindowBasedTextGUI gui, DBInterface db, Product p) {
         this.gui = gui;
         this.db = db;
@@ -47,10 +67,18 @@ public class ProductDetailScreen {
         this.product = p;
     }
 
+    /**
+     * Constructs and shows the TUI window (the first time)
+     */
     public void show() {
         this.show(false);
     }
 
+    /**
+     * Constructs and shows the TUI window
+     * @param update If show is triggered as part of an update, set this true. 
+     * The window will be updated instead of freshly build.
+     */
     public void show(boolean update) {
         // Get Product
         if (product == null) 
@@ -116,11 +144,17 @@ public class ProductDetailScreen {
         }
     }
 
+    /**
+     * Show cheaper Similars screen for product
+     */
     private void showCheaperSimilars() {
         // Open Screen
         new CheaperSimilarProductsScreen(gui, db, product).show();
     }
 
+    /**
+     * Show add Review screen for product, update view afterwards.
+     */
     private void showAddReviewScreen() {
         // Open Screen
         new AddReviewScreen(gui, db, product).show();
@@ -129,6 +163,10 @@ public class ProductDetailScreen {
 
     }
 
+    /**
+     * Open the review screen for the review at the given table row 
+     * @param selectedRow selected table row
+     */
     private void openSelectedReview(int selectedRow) {
         // Ensure list is not empty
         if (product.getReviews().isEmpty()) {
@@ -143,6 +181,10 @@ public class ProductDetailScreen {
         
     }
 
+    /**
+     * Get the Offer Table Component
+     * @return Table<String> String Table Component
+     */
     private Table<String> getOfferTable() {
         Table<String> t = new Table<>("Shop", "Condition", "Price", "Currency");
         t.setCellSelection(false); //No independent cell selection
@@ -159,6 +201,10 @@ public class ProductDetailScreen {
         return t;
     }
 
+    /**
+     * Get the Review Table Component
+     * @return Table<String> String Table Component
+     */
     private Table<String> getReviewTable() {
         Table<String> t = new Table<>("Customer", "Date", "Points", "Text");
         t.setCellSelection(false); //No independent cell selection
@@ -176,6 +222,10 @@ public class ProductDetailScreen {
         return t;
     }
 
+    /**
+     * Build a Panel for general Product Data
+     * @return Laterna Panel
+     */
     private Panel getGeneralProductData() {
         Panel generalDetails = new Panel(new GridLayout(2));
 
@@ -211,6 +261,10 @@ public class ProductDetailScreen {
         return genData;
     }
 
+    /**
+     * Build a Panel for CD specific Data
+     * @return Lanterna Panel
+     */
     private Panel getCdData() {
         CD c = (CD) product;
 
@@ -246,6 +300,10 @@ public class ProductDetailScreen {
         return cdData;
     }
 
+    /**
+     * Build a Panel for DVD specific Data
+     * @return Lanterna Panel
+     */
     private Panel getDvdData() {
         DVD d = (DVD) product;
 
@@ -297,6 +355,10 @@ public class ProductDetailScreen {
         return dvdData;
     }
 
+    /**
+     * Build a Panel for Book specific Data
+     * @return Lanterna Panel
+     */
     private Panel getBookData() {
         Book b = (Book) product;
 
@@ -329,6 +391,10 @@ public class ProductDetailScreen {
         return bookData;
     }
 
+    /**
+     * Get Specific Data Panel, according to Product type.
+     * @return Lanterna Panel
+     */
     private Panel getSpecificProductData() {
         switch (product.getType()) {
             case BOOK:

@@ -20,9 +20,14 @@ import de.unileipzig.dbpraktikum.cli_interface.model.dto.ProductListEntry;
 import de.unileipzig.dbpraktikum.cli_interface.ui.components.ProductListEntryTableComponent;
 
 public class TopProductsScreen {
+    /**
+     * Lanterna TUI Screen for showing the top k products
+     */
+    // Lanterna TUI and DB Interface
     private final WindowBasedTextGUI gui;
     private final DBInterface db;
     
+    // Component Storage
     private ProductListEntryTableComponent productTable;
     private Label status;
 
@@ -32,6 +37,9 @@ public class TopProductsScreen {
         this.productTable = new ProductListEntryTableComponent(gui, db);
     }
 
+    /**
+     * Constructs and shows the TUI window
+     */
     public void show() {
         // Setup terminal and screen layers
         BasicWindow window = new BasicWindow("Top Products");
@@ -71,6 +79,10 @@ public class TopProductsScreen {
         gui.addWindowAndWait(window);
     }
 
+    /**
+     * Load the top k products and updates the table. 
+     * @param input String for a text field to specify k
+     */
     private void load(String input) {
         final int amount;
         try {
