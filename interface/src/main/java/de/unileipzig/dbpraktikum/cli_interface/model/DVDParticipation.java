@@ -9,6 +9,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 import jakarta.persistence.Table;
 
+/** Maps a person's role in a DVD production. */
 @Entity
 @Table(name = "dvd_beteiligung")
 public class DVDParticipation {

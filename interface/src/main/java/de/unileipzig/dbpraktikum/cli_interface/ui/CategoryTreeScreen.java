@@ -30,6 +30,7 @@ public class CategoryTreeScreen {
     private final WindowBasedTextGUI gui;
     private final DBInterface db;
     private final Set<Long> expandedIds = new HashSet<>();
+    // These lists mirror the table rows to retain both the entity and its full path.
     private final List<Category> visibleCategories = new ArrayList<>();
     private final List<List<String>> visibleCategoryPaths = new ArrayList<>();
 
@@ -114,6 +115,7 @@ public class CategoryTreeScreen {
         }
     }
 
+    /** Adds a category and its expanded descendants to the visible table rows. */
     private void appendCategory(Category category, int depth, List<String> parentPath) {
         List<Category> children = childrenOf(category);
         boolean expanded = expandedIds.contains(category.getId());

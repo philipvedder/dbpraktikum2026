@@ -8,6 +8,7 @@ import java.util.Properties;
 import de.unileipzig.dbpraktikum.cli_interface.db_interface.DBInterface;
 import de.unileipzig.dbpraktikum.cli_interface.ui.TuiApplication;
 
+/** Starts the CLI with a configurable database interface. */
 public class MediaStoreCliInterface {
     private static final String DEFAULT_PROPERTIES_FILE = "hibernate.properties";
     private static final String DB_INTERFACE_CLASS_PROPERTY = "db.interface.class";
@@ -19,6 +20,7 @@ public class MediaStoreCliInterface {
             Properties properties = loadProperties(args);
             db = createDBInterface(properties);
 
+            // The implementation setting is only used by the CLI, not by Hibernate.
             Properties databaseProperties = new Properties();
             databaseProperties.putAll(properties);
             databaseProperties.remove(DB_INTERFACE_CLASS_PROPERTY);
@@ -37,6 +39,7 @@ public class MediaStoreCliInterface {
         }
     }
 
+    /** Loads an explicitly supplied configuration or the bundled default. */
     private static Properties loadProperties(String[] args) throws IOException {
         Properties properties = new Properties();
 
@@ -58,6 +61,7 @@ public class MediaStoreCliInterface {
         return properties;
     }
 
+    /** Creates the configured DBInterface implementation via reflection. */
     private static DBInterface createDBInterface(Properties properties) throws ReflectiveOperationException {
         String className = properties.getProperty(DB_INTERFACE_CLASS_PROPERTY);
         if (className == null || className.trim().isEmpty()) {

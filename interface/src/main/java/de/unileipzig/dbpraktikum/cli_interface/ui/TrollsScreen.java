@@ -63,6 +63,7 @@ public class TrollsScreen {
 
         final float threshold;
         try {
+            // Accept both decimal separators used in the task's input examples.
             threshold = Float.parseFloat(input.trim().replace(',', '.'));
             if (!Float.isFinite(threshold)) {
                 throw new NumberFormatException("Threshold must be finite");

@@ -9,6 +9,7 @@ import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 
+/** Composite key identifying a person, DVD, and role combination. */
 @Embeddable
 public class DVDParticipationId implements Serializable {
     private static final long serialVersionUID = 1L;
