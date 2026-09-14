@@ -3,11 +3,13 @@
 Please find the SQL script for Task 1a in /aufgaben/1a.sql.
 Please find tasks 2a and 2b in /aufgaben/2a_anfragen_und_ergebnisse.md, /aufgaben/2b_integritaetssicherung.md and /aufgaben/2b_trigger.sql.
 
-## Running the CLI Interface
+## Running the CLI Interface / TUI
 
+The CLI Interface and corresponding TUI can be found in the /interface directory. Run from that directory via
 ```
 mvn exec:java -Dexec.mainClass=de.unileipzig.dbpraktikum.cli_interface.MediaStoreCliInterface
 ```
+You can edit connection properties in the interface/src/main/resources/hibernate.properties file. 
 
 ## Running the Loader
 
