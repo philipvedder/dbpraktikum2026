@@ -84,6 +84,7 @@ public class TopProductsScreen {
      * @param input String for a text field to specify k
      */
     private void load(String input) {
+        // sanitize int
         final int amount;
         try {
             amount = Integer.parseInt(input.trim());
@@ -96,6 +97,7 @@ public class TopProductsScreen {
             return;
         }
 
+        // Show results
         try {
             List<ProductListEntry> result = db.getTopProducts(amount);
             productTable.update(result);

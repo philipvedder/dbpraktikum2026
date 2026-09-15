@@ -10,7 +10,10 @@ import de.unileipzig.dbpraktikum.cli_interface.ui.TuiApplication;
 
 /** Starts the CLI with a configurable database interface. */
 public class MediaStoreCliInterface {
+    // Default hibernate properties file
     private static final String DEFAULT_PROPERTIES_FILE = "hibernate.properties";
+
+    // Default name of DB Interface class
     private static final String DB_INTERFACE_CLASS_PROPERTY = "db.interface.class";
 
     public static void main(String[] args) {
